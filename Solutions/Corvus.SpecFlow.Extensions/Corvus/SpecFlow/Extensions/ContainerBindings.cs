@@ -2,7 +2,7 @@
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
-namespace Corvus.SpecFlow.Bindings
+namespace Corvus.SpecFlow.Extensions
 {
     using System;
     using Microsoft.Extensions.DependencyInjection;
