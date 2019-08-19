@@ -141,30 +141,49 @@ namespace Corvus.SpecFlow.Bindings
         /// </summary>
         public void TeardownFunctions()
         {
-            this.output.Keys.ForEachFailEnd(
-                p =>
+            List<Exception> aggregate = null;
+            foreach (Process p in this.output.Keys)
+            {
+                try
+                {
+                    DateTimeOffset killTime = DateTimeOffset.Now;
+                    KillProcessAndChildren(p.Id);
+
+                    p.WaitForExit();
+
+                    string name =
+                        $"{p.StartInfo.FileName} {p.StartInfo.Arguments}, working directory {p.StartInfo.WorkingDirectory}";
+
+                    Console.WriteLine($"\nStdOut for process {name} killed at {killTime}:");
+                    Console.WriteLine(this.output[p].StandardOutputText);
+                    Console.WriteLine();
+
+                    string stdErr = this.output[p].StandardErrorText;
+
+                    if (!string.IsNullOrEmpty(stdErr))
                     {
-                        DateTimeOffset killTime = DateTimeOffset.Now;
-                        KillProcessAndChildren(p.Id);
-
-                        p.WaitForExit();
-
-                        string name =
-                            $"{p.StartInfo.FileName} {p.StartInfo.Arguments}, working directory {p.StartInfo.WorkingDirectory}";
-
-                        Console.WriteLine($"\nStdOut for process {name} killed at {killTime}:");
-                        Console.WriteLine(this.output[p].StandardOutputText);
+                        Console.WriteLine($"\nStdErr for process {name} killed at {killTime}:");
+                        Console.WriteLine(stdErr);
                         Console.WriteLine();
+                    }
+                }
+                catch (Exception e)
+                {
+                    if (aggregate == null)
+                    {
+                        aggregate = new List<Exception> { e };
+                    }
+                    else
+                    {
+                        aggregate.Add(e);
+                    }
+                }
+            }
 
-                        string stdErr = this.output[p].StandardErrorText;
-
-                        if (!string.IsNullOrEmpty(stdErr))
-                        {
-                            Console.WriteLine($"\nStdErr for process {name} killed at {killTime}:");
-                            Console.WriteLine(stdErr);
-                            Console.WriteLine();
-                        }
-                    });
+            if (aggregate != null)
+            {
+                throw new AggregateException(aggregate);
+            }
         }
 
         /// <summary>
