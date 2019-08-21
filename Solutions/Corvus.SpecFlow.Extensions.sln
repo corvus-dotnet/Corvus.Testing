@@ -5,7 +5,14 @@ VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.SpecFlow.Extensions", "Corvus.SpecFlow.Extensions\Corvus.SpecFlow.Extensions.csproj", "{C967AE54-BC32-422F-AA8A-E63731C8AB22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Corvus.SpecFlow.Extensions.Specs", "Corvus.SpecFlow.Extensions.Specs\Corvus.SpecFlow.Extensions.Specs.csproj", "{0E316623-3DB4-4397-BFE2-43D0E4007845}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.SpecFlow.Extensions.Specs", "Corvus.SpecFlow.Extensions.Specs\Corvus.SpecFlow.Extensions.Specs.csproj", "{0E316623-3DB4-4397-BFE2-43D0E4007845}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevOps", "DevOps", "{B5276693-CCCC-4EB4-AA78-909D9C5F656E}"
+	ProjectSection(SolutionItems) = preProject
+		..\azure-pipelines.release.yml = ..\azure-pipelines.release.yml
+		..\azure-pipelines.yml = ..\azure-pipelines.yml
+		..\imm.yaml = ..\imm.yaml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
