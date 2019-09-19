@@ -22,7 +22,7 @@ namespace Corvus.SpecFlow.Extensions
     /// <remarks>
     /// <para>
     /// This class supports a limited degree of thread safety: you can have multiple calls to
-    /// <see cref="StartFunctionsInstance(TechTalk.SpecFlow.FeatureContext, TechTalk.SpecFlow.ScenarioContext, string, int)"/> in progress simultaneously for a single
+    /// <see cref="StartFunctionsInstance(FeatureContext, ScenarioContext, string, int, string, string)"/> in progress simultaneously for a single
     /// instance of this class, but <see cref="TeardownFunctions"/> must not be called concurrently
     /// with any other calls into this class. The intention is to enable tests to spin up multiple
     /// functions simultaneously. This is useful because function startup can be the dominant
@@ -43,17 +43,19 @@ namespace Corvus.SpecFlow.Extensions
         /// <param name="scenarioContext">The current scenario context.</param>
         /// <param name="path">The location of the functions project.</param>
         /// <param name="port">The port on which to start the functions instance.</param>
+        /// <param name="runtime">The runtime version, defaults to netcoreapp2.1.</param>
+        /// <param name="provider">The functions provider. Defaults to csharp.</param>
         /// <returns>A task that completes once the function instance has started.</returns>
-        public async Task StartFunctionsInstance(FeatureContext featureContext, ScenarioContext scenarioContext, string path, int port)
+        public async Task StartFunctionsInstance(FeatureContext featureContext, ScenarioContext scenarioContext, string path, int port, string runtime = "netcoreapp2.1", string provider = "csharp")
         {
             Console.WriteLine($"Starting a function instance for project {path} on port {port}");
 
-            string directoryExtension = @"\bin\release\netstandard2.0";
+            string directoryExtension = $"\\bin\\release\\{runtime}";
 
             string lowerInvariantCurrentDirectory = TestContext.CurrentContext.TestDirectory.ToLowerInvariant();
             if (lowerInvariantCurrentDirectory.Contains("debug"))
             {
-                directoryExtension = @"\bin\debug\netstandard2.0";
+                directoryExtension = $"\\bin\\debug\\{runtime}";
             }
 
             Console.WriteLine($"\tCurrent directory: {lowerInvariantCurrentDirectory}");
@@ -79,7 +81,7 @@ namespace Corvus.SpecFlow.Extensions
 
             Console.WriteLine($"\tStarting process");
 
-            var startInfo = new ProcessStartInfo(toolPath, $"host start --port {port}")
+            var startInfo = new ProcessStartInfo(toolPath, $"host start --{provider} --port {port}")
             {
                 WorkingDirectory = root + path + directoryExtension,
                 UseShellExecute = false,
