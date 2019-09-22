@@ -52,7 +52,7 @@ namespace Corvus.SpecFlow.Extensions
         [Given("I start a functions instance for the local project '(.*)' on port (.*) with runtime '(.*)'")]
         public Task StartAFunctionsInstance(string path, int port, string runtime)
         {
-            return this.functionsController.StartFunctionsInstance(this.featureContext, this.scenarioContext, path, port, runtime);
+            return this.functionsController.StartFunctionsInstance(this.featureContext, this.scenarioContext, path, port, runtime, "csharp");
         }
 
         /// <summary>
