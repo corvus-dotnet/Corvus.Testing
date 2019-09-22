@@ -43,6 +43,19 @@ namespace Corvus.SpecFlow.Extensions
         }
 
         /// <summary>
+        ///     Start a functions instance.
+        /// </summary>
+        /// <param name="path">The location of the functions project.</param>
+        /// <param name="port">The port on which to start the functions instance.</param>
+        /// <param name="runtime">The id of the runtime to use.</param>
+        /// <returns>A task that completes once the function instance has started.</returns>
+        [Given("I start a functions instance for the local project '(.*)' on port (.*) with runtime '(.*)'")]
+        public Task StartAFunctionsInstance(string path, int port, string runtime)
+        {
+            return this.functionsController.StartFunctionsInstance(this.featureContext, this.scenarioContext, path, port, runtime);
+        }
+
+        /// <summary>
         ///     Tear down the running functions instances for the scenario.
         /// </summary>
         [AfterScenario]
