@@ -72,7 +72,7 @@ namespace Corvus.SpecFlow.Extensions
                 @"node_modules\azure-functions-core-tools\bin");
             Assert.IsTrue(
                 Directory.Exists(toolsFolder),
-                $"Azure Functions runtime not found at {toolsFolder}. Have you run: 'npm install -g azure-functions-core-tools@core --unsafe-perm true'?");
+                $"Azure Functions runtime not found at {toolsFolder}. Have you run: 'npm install -g azure-functions-core-tools --unsafe-perm true'?");
             string toolPath = Path.Combine(
                 toolsFolder,
                 "func");
