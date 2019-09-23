@@ -81,7 +81,7 @@ namespace Corvus.SpecFlow.Extensions
 
             Console.WriteLine($"\tStarting process");
 
-            var startInfo = new ProcessStartInfo(toolPath, $"host start --{provider} --port {port}")
+            var startInfo = new ProcessStartInfo(toolPath, $"host start --port {port} --{provider}")
             {
                 WorkingDirectory = root + path + directoryExtension,
                 UseShellExecute = false,
