@@ -38,7 +38,7 @@ namespace Corvus.SpecFlow.Extensions
         /// <param name="configure">Callback that will be invoked with the service collection.</param>
         /// <remarks>
         /// Call this from a <c>BeforeFeature</c> binding. You must specify an <c>Order</c> that is
-        /// greated than or equal to <see cref="ContainerBeforeFeatureOrder.PopulateServiceCollection"/>
+        /// greater than or equal to <see cref="ContainerBeforeFeatureOrder.PopulateServiceCollection"/>
         /// and less than <see cref="ContainerBeforeFeatureOrder.BuildServiceProvider"/>.
         /// </remarks>
         public static void ConfigureServices(
@@ -62,7 +62,7 @@ namespace Corvus.SpecFlow.Extensions
         /// </summary>
         /// <param name="featureContext">SpecFlow-supplied context.</param>
         /// <remarks>We expect features run in parallel to be executing in separate app domains.</remarks>
-        [BeforeFeature("@setupContainer", Order = ContainerBeforeFeatureOrder.PopulateServiceCollection)]
+        [BeforeFeature("@setupContainer", Order = ContainerBeforeFeatureOrder.BuildServiceProvider)]
         public static void CompleteFeatureContainerSetup(FeatureContext featureContext)
         {
             featureContext.Set(false, ContainerBindingPhaseKey);
