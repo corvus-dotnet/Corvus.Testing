@@ -11,23 +11,23 @@
 @runPerFeatureContainerTests
 
 Feature: PerFeatureContainer
-	In cases where my tests need a DI container that persists across all the scenarios in a feature
-	As a developer
-	I want to be able to define container services in a BeforeFeature binding and then use those services later in the test
+    In cases where my tests need a DI container that persists across all the scenarios in a feature
+    As a developer
+    I want to be able to define container services in a BeforeFeature binding and then use those services later in the test
 
 Background:
-	Given I have specified the perFeatureContainer tag
+    Given I have specified the perFeatureContainer tag
 
 Scenario: Services added during PopulateServiceCollection BeforeFeature phase are in Service Provider available to tests
     Given I use feature ContainerBindings.GetServiceProvider during a Given step
-	When I use feature ContainerBindings.GetServiceProvider during a When step
+    When I use feature ContainerBindings.GetServiceProvider during a When step
     Then if I also use feature ContainerBindings.GetServiceProvider during a Then step
-	Then services added during the PopulateServiceCollection BeforeFeature phase should be available during 'Given' steps
-	And services added during the PopulateServiceCollection BeforeFeature phase should be available during 'When' steps
-	And services added during the PopulateServiceCollection BeforeFeature phase should be available during 'Then' steps
+    Then services added during the PopulateServiceCollection BeforeFeature phase should be available during 'Given' steps
+    And services added during the PopulateServiceCollection BeforeFeature phase should be available during 'When' steps
+    And services added during the PopulateServiceCollection BeforeFeature phase should be available during 'Then' steps
 
 Scenario: Service Provider is available during ServiceProviderAvailable BeforeFeature phase
-	Then during the ServiceProviderAvailable BeforeFeature phase, services added during the PopulateServiceCollection BeforeFeature phase should have been available
+    Then during the ServiceProviderAvailable BeforeFeature phase, services added during the PopulateServiceCollection BeforeFeature phase should have been available
 
 @useServiceProviderBeforeScenarioInPerFeatureContainerTests
 Scenario: Service Provider is available during BeforeScenario phase
