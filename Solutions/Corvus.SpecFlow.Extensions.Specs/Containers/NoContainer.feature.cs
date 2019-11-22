@@ -31,8 +31,8 @@ namespace Corvus.SpecFlow.Extensions.Specs.Containers
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "NoContainer", "\tIn cases where my tests don\'t need a DI container\r\n\tAs a developer\r\n\tI don\'t wan" +
-                    "t a container to be set up unless I asked for it", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "NoContainer", "    In cases where my tests don\'t need a DI container\r\n    As a developer\r\n    I " +
+                    "don\'t want a container to be set up unless I asked for it", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -79,9 +79,9 @@ namespace Corvus.SpecFlow.Extensions.Specs.Containers
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 7
- testRunner.When("I call ContainerBindings.GetServiceProvider", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.When("I call ContainerBindings.GetServiceProvider", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 8
- testRunner.Then("it should throw an InvalidOperationException", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.Then("it should throw an InvalidOperationException", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

@@ -1,4 +1,8 @@
-﻿namespace Corvus.SpecFlow.Extensions.Specs.Containers
+﻿// <copyright file="NoContainerSteps.cs" company="Endjin Limited">
+// Copyright (c) Endjin Limited. All rights reserved.
+// </copyright>
+
+namespace Corvus.SpecFlow.Extensions.Specs.Containers
 {
     using System;
     using Corvus.SpecFlow.Extensions;
@@ -8,8 +12,8 @@
     [Binding]
     public class NoContainerSteps
     {
-        private Exception exceptionFromGetServiceProvider;
         private readonly FeatureContext featureContext;
+        private Exception exceptionFromGetServiceProvider;
 
         public NoContainerSteps(FeatureContext featureContext)
         {

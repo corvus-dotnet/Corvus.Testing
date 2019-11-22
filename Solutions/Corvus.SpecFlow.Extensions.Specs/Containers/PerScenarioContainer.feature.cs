@@ -33,9 +33,9 @@ namespace Corvus.SpecFlow.Extensions.Specs.Containers
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "PerScenarioContainer", "\tWhen I write a test scenario that needs its own DI container\r\n\tAs a developer\r\n\t" +
-                    "I want to be able to define container services in a BeforeScenario binding and t" +
-                    "hen use those services later in the test", ProgrammingLanguage.CSharp, new string[] {
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "PerScenarioContainer", "    When I write a test scenario that needs its own DI container\r\n    As a develo" +
+                    "per\r\n    I want to be able to define container services in a BeforeScenario bind" +
+                    "ing and then use those services later in the test", ProgrammingLanguage.CSharp, new string[] {
                         "perScenarioContainer",
                         "runPerScenarioContainerTests"});
             testRunner.OnFeatureStart(featureInfo);
@@ -79,7 +79,7 @@ namespace Corvus.SpecFlow.Extensions.Specs.Containers
         {
 #line 18
 #line 19
- testRunner.Given("I have specified the perScenarioContainer tag", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+    testRunner.Given("I have specified the perScenarioContainer tag", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
         }
         
@@ -98,17 +98,17 @@ this.FeatureBackground();
 #line 22
     testRunner.Given("I use scenario ContainerBindings.GetServiceProvider during a Given step", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 23
- testRunner.When("I use scenario ContainerBindings.GetServiceProvider during a When step", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.When("I use scenario ContainerBindings.GetServiceProvider during a When step", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 24
     testRunner.Then("if I also use scenario ContainerBindings.GetServiceProvider during a Then step", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 25
- testRunner.Then("services added during the PopulateServiceCollection BeforeScenario phase should b" +
+    testRunner.Then("services added during the PopulateServiceCollection BeforeScenario phase should b" +
                     "e available during \'Given\' steps", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 26
- testRunner.And("services added during the PopulateServiceCollection BeforeScenario phase should b" +
+    testRunner.And("services added during the PopulateServiceCollection BeforeScenario phase should b" +
                     "e available during \'When\' steps", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 27
- testRunner.And("services added during the PopulateServiceCollection BeforeScenario phase should b" +
+    testRunner.And("services added during the PopulateServiceCollection BeforeScenario phase should b" +
                     "e available during \'Then\' steps", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -127,7 +127,7 @@ this.ScenarioInitialize(scenarioInfo);
 #line 18
 this.FeatureBackground();
 #line 30
- testRunner.Then("during the ServiceProviderAvailable BeforeScenario phase, services added during t" +
+    testRunner.Then("during the ServiceProviderAvailable BeforeScenario phase, services added during t" +
                     "he PopulateServiceCollection BeforeScenario phase should have been available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

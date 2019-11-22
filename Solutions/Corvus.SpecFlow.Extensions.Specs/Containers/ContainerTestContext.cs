@@ -1,4 +1,8 @@
-﻿namespace Corvus.SpecFlow.Extensions.Specs.Containers
+﻿// <copyright file="ContainerTestContext.cs" company="Endjin Limited">
+// Copyright (c) Endjin Limited. All rights reserved.
+// </copyright>
+
+namespace Corvus.SpecFlow.Extensions.Specs.Containers
 {
     using System;
     using System.Collections.Generic;
@@ -13,17 +17,18 @@
     /// </summary>
     internal abstract class ContainerTestContext
     {
-        public Dictionary<Phase, RootService> ExtractedServices = new Dictionary<Phase, RootService>();
-
         private protected ContainerTestContext()
         {
         }
+
+        public Dictionary<Phase, RootService> ExtractedServices { get; } = new Dictionary<Phase, RootService>();
 
         // We need to check that the services we supply at this stage are available later on. For this test, it
         // doesn't greatly matter what those services are, so we just created a couple of random objects that we
         // can look for again later. The RootService will pick these up because these are the types its constructor
         // shows that it depends on.
         public CultureInfo CultureOriginallySuppliedToContainer { get; } = new CultureInfo("fr-CA"); // Bonjour, eh?
+
         public IComparer<string> ComparerOriginallySuppliedToContainer { get; } = new Mock<IComparer<string>>().Object;
 
         private protected abstract IServiceProvider ServiceProvider { get; }

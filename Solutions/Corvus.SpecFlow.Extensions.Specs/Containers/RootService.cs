@@ -1,4 +1,8 @@
-﻿namespace Corvus.SpecFlow.Extensions.Specs.Containers
+﻿// <copyright file="RootService.cs" company="Endjin Limited">
+// Copyright (c) Endjin Limited. All rights reserved.
+// </copyright>
+
+namespace Corvus.SpecFlow.Extensions.Specs.Containers
 {
     using System.Collections.Generic;
     using System.Globalization;
@@ -15,6 +19,7 @@
         }
 
         public CultureInfo CultureInfo { get; }
+
         public IComparer<string> Comparer { get; }
     }
 }

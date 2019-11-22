@@ -14,6 +14,6 @@ namespace Corvus.SpecFlow.Extensions.Specs.Containers
         BeforeScenarioServiceProviderAvailable,
         Given,
         When,
-        Then
+        Then,
     }
 }

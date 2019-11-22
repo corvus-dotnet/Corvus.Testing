@@ -3,7 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <NoWarn>RCS1029;SA0001</NoWarn>
+    <!-- Disabling SA1204 because it prioritizes static/non-static over public/non-public, which doesn't fit very well
+         with bindings in SpecFlow.
+         Disabling SA1600, SA1602 (all public types and members to be documented) because test projects need to make lots of types
+         public for technical reasaons, but they are not meant for public consumption, so XML doc comments are only
+         appropriate if they aid understanding within the project.
+    -->
+    <NoWarn>RCS1029;SA0001;SA1204;SA1600;SA1602</NoWarn>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -26,6 +32,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
   </ItemGroup>
 
   <ItemGroup>

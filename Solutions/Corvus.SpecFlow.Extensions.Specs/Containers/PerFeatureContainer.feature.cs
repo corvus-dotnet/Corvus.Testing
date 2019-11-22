@@ -33,9 +33,10 @@ namespace Corvus.SpecFlow.Extensions.Specs.Containers
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "PerFeatureContainer", "\tIn cases where my tests need a DI container that persists across all the scenari" +
-                    "os in a feature\r\n\tAs a developer\r\n\tI want to be able to define container service" +
-                    "s in a BeforeFeature binding and then use those services later in the test", ProgrammingLanguage.CSharp, new string[] {
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "PerFeatureContainer", "    In cases where my tests need a DI container that persists across all the scen" +
+                    "arios in a feature\r\n    As a developer\r\n    I want to be able to define containe" +
+                    "r services in a BeforeFeature binding and then use those services later in the t" +
+                    "est", ProgrammingLanguage.CSharp, new string[] {
                         "perFeatureContainer",
                         "runPerFeatureContainerTests"});
             testRunner.OnFeatureStart(featureInfo);
@@ -79,7 +80,7 @@ namespace Corvus.SpecFlow.Extensions.Specs.Containers
         {
 #line 18
 #line 19
- testRunner.Given("I have specified the perFeatureContainer tag", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+    testRunner.Given("I have specified the perFeatureContainer tag", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
         }
         
@@ -98,17 +99,17 @@ this.FeatureBackground();
 #line 22
     testRunner.Given("I use feature ContainerBindings.GetServiceProvider during a Given step", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 23
- testRunner.When("I use feature ContainerBindings.GetServiceProvider during a When step", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.When("I use feature ContainerBindings.GetServiceProvider during a When step", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 24
     testRunner.Then("if I also use feature ContainerBindings.GetServiceProvider during a Then step", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 25
- testRunner.Then("services added during the PopulateServiceCollection BeforeFeature phase should be" +
+    testRunner.Then("services added during the PopulateServiceCollection BeforeFeature phase should be" +
                     " available during \'Given\' steps", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 26
- testRunner.And("services added during the PopulateServiceCollection BeforeFeature phase should be" +
+    testRunner.And("services added during the PopulateServiceCollection BeforeFeature phase should be" +
                     " available during \'When\' steps", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 27
- testRunner.And("services added during the PopulateServiceCollection BeforeFeature phase should be" +
+    testRunner.And("services added during the PopulateServiceCollection BeforeFeature phase should be" +
                     " available during \'Then\' steps", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -127,7 +128,7 @@ this.ScenarioInitialize(scenarioInfo);
 #line 18
 this.FeatureBackground();
 #line 30
- testRunner.Then("during the ServiceProviderAvailable BeforeFeature phase, services added during th" +
+    testRunner.Then("during the ServiceProviderAvailable BeforeFeature phase, services added during th" +
                     "e PopulateServiceCollection BeforeFeature phase should have been available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -147,7 +148,7 @@ this.ScenarioInitialize(scenarioInfo);
 this.FeatureBackground();
 #line 34
     testRunner.Then("services added during the PopulateServiceCollection BeforeFeature phase should be" +
-                    " available during the earliest BeforeScenario processing", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+                    " available during the earliest BeforeScenarioproces", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

@@ -123,7 +123,7 @@ namespace Corvus.SpecFlow.Extensions
                 Task.Delay(TimeSpan.FromSeconds(StartupTimeout))).ConfigureAwait(false);
             if (bufferHandler.ExitCode.IsCompleted)
             {
-                int exitCode = await bufferHandler.ExitCode;
+                int exitCode = await bufferHandler.ExitCode.ConfigureAwait(false);
                 Assert.Fail($"Function host process terminated unexpectedly with exit code {exitCode}. Error output: {bufferHandler.StandardErrorText}");
             }
             else if (!bufferHandler.JobHostStarted.IsCompleted)
