@@ -22,7 +22,7 @@ namespace Corvus.SpecFlow.Extensions
         /// <summary>
         /// The <c>Order</c> at which the <c>ServiceCollection</c> for the container is created.
         /// </summary>
-        public const int CreateServiceCollection = 0;
+        public const int CreateServiceCollection = 10000;
 
         /// <summary>
         /// The minimum <c>Order</c> to specify on <c>BeforeFeature</c> bindings that use
@@ -40,7 +40,7 @@ namespace Corvus.SpecFlow.Extensions
         /// <c>ServiceCollection</c> that was available from when the order reached
         /// <see cref="PopulateServiceCollection"/>.
         /// </summary>
-        public const int BuildServiceProvider = 10000;
+        public const int BuildServiceProvider = 20000;
 
         /// <summary>
         /// The <c>Order</c> at which the <c>IServiceProvider</c> built during the
