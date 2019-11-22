@@ -1,4 +1,4 @@
-﻿// <copyright file="ContainerBeforeFeatureOrder.cs" company="Endjin Limited">
+﻿// <copyright file="ContainerBeforeScenarioOrder.cs" company="Endjin Limited">
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
@@ -9,15 +9,11 @@ namespace Corvus.SpecFlow.Extensions
 
     /// <summary>
     /// Defines constants to use for <see cref="HookAttribute.Order"/> property on a
-    /// <see cref="BeforeFeatureAttribute"/> to ensure that initialization occurs in the correct order when using
-    /// <see cref="ContainerBindings"/> at feature scope. Tests must specify the <c>@perFeatureContainer</c> tag to opt
+    /// <see cref="BeforeScenarioAttribute"/> to ensure that initialization occurs in the correct order when using
+    /// <see cref="ContainerBindings"/> at scenario scope. Tests must specify the <c>@perScenarioContainer</c> tag to opt
     /// into this functionality.
     /// </summary>
-    /// <remarks>
-    /// For backwards compatibility, the <c>@setupContainer</c> tag may also be used. However, this is deprecated
-    /// because the addition of per-scenario container support made the meaning of that tag unclear.
-    /// </remarks>
-    public static class ContainerBeforeFeatureOrder
+    public static class ContainerBeforeScenarioOrder
     {
         /// <summary>
         /// The <c>Order</c> at which the <c>ServiceCollection</c> for the container is created.
@@ -25,7 +21,7 @@ namespace Corvus.SpecFlow.Extensions
         public const int CreateServiceCollection = 10000;
 
         /// <summary>
-        /// The minimum <c>Order</c> to specify on <c>BeforeFeature</c> bindings that use
+        /// The minimum <c>Order</c> to specify on <c>BeforeScenario</c> bindings that use
         /// <see cref="ContainerBindings.ConfigureServices(FeatureContext, Action{Microsoft.Extensions.DependencyInjection.IServiceCollection})"/>.
         /// </summary>
         /// <remarks>
