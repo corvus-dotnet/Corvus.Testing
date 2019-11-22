@@ -16,7 +16,7 @@
             this.featureContext = featureContext;
         }
 
-        [When(@"I call ContainerBindings\.GetServiceProvider inside a try block")]
+        [When(@"I call ContainerBindings\.GetServiceProvider")]
         public void WhenICallContainerBindings_GetServiceProviderInsideATryBlock()
         {
             try

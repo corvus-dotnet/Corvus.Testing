@@ -4,5 +4,5 @@
 	I don't want a container to be set up unless I asked for it
 
 Scenario: Container not present
-	When I call ContainerBindings.GetServiceProvider inside a try block
+	When I call ContainerBindings.GetServiceProvider
 	Then it should throw an InvalidOperationException

@@ -79,7 +79,7 @@ namespace Corvus.SpecFlow.Extensions.Specs.Containers
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 7
- testRunner.When("I call ContainerBindings.GetServiceProvider inside a try block", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I call ContainerBindings.GetServiceProvider", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 8
  testRunner.Then("it should throw an InvalidOperationException", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
