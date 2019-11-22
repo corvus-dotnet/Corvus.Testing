@@ -123,7 +123,7 @@ namespace Corvus.SpecFlow.Extensions
         [BeforeFeature("@perFeatureContainer", "@setupContainer", Order = ContainerBeforeFeatureOrder.BuildServiceProvider)]
         public static void CompleteFeatureContainerSetup(FeatureContext featureContext)
         {
-            CompleteScenarioContainerSetup(featureContext);
+            CompleteContainerSetup(featureContext);
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Corvus.SpecFlow.Extensions
         [BeforeScenario("@perScenarioContainer", Order = ContainerBeforeScenarioOrder.BuildServiceProvider)]
         public static void CompleteScenarioContainerSetup(ScenarioContext scenarioContext)
         {
-            CompleteScenarioContainerSetup(scenarioContext);
+            CompleteContainerSetup(scenarioContext);
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Corvus.SpecFlow.Extensions
             scenarioContext.Set(serviceCollection, ServiceCollectionKey);
         }
 
-        private static void CompleteScenarioContainerSetup(SpecFlowContext context)
+        private static void CompleteContainerSetup(SpecFlowContext context)
         {
             context.Set(false, ContainerBindingPhaseKey);
 
