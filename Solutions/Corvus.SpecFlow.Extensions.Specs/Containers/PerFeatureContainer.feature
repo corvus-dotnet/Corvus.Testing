@@ -31,6 +31,6 @@ Scenario: Service Provider is available during ServiceProviderAvailable BeforeFe
 
 @useServiceProviderBeforeScenarioInPerFeatureContainerTests
 Scenario: Service Provider is available during BeforeScenario phase
-    Then services added during the PopulateServiceCollection BeforeFeature phase should be available during the earliest BeforeScenarioproces
+    Then services added during the PopulateServiceCollection BeforeFeature phase should be available during the earliest BeforeScenario processing
 # TODO: there's no good end-to-end way to verify here that the container is disposed because the very thing we want to
 # test by definition happens after our tests have finished!
