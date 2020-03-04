@@ -10,7 +10,7 @@
          public for technical reasaons, but they are not meant for public consumption, so XML doc comments are only
          appropriate if they aid understanding within the project.
     -->
-    <NoWarn>RCS1029;SA0001;SA1204;SA1600;SA1602;SA1600;CS1591</NoWarn>
+    <NoWarn>RCS1029;SA0001;SA1204;SA1600;SA1602;CS1591</NoWarn>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>

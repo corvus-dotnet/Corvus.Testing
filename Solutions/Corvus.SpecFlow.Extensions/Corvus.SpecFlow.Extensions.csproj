@@ -10,6 +10,7 @@
     <PackageDescription></PackageDescription>
     <PackageTags></PackageTags>
     <PackageReleaseNotes></PackageReleaseNotes>
+    <RootNamespace />
   </PropertyGroup>
 
   <ItemGroup>
