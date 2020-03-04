@@ -1,4 +1,8 @@
-﻿namespace Corvus.SpecFlow.Extensions.Specs.Functions
+﻿// <copyright file="DemoFunctionPerFeatureHooks.cs" company="Endjin Limited">
+// Copyright (c) Endjin Limited. All rights reserved.
+// </copyright>
+
+namespace Corvus.SpecFlow.Extensions.Demo.AzureFunctionsTesting
 {
     using System.Threading.Tasks;
     using Corvus.SpecFlow.Extensions;
