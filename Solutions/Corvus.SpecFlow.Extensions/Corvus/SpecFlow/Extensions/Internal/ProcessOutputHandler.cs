@@ -137,12 +137,10 @@ namespace Corvus.SpecFlow.Extensions.Internal
         private void OnErrorDataReceived(object sender, DataReceivedEventArgs e)
         {
             string line = e.Data;
-            if (line != null)
+
+            lock (this.standardError)
             {
-                lock (this.standardError)
-                {
-                    this.standardError.AppendLine(line);
-                }
+                this.standardError.AppendLine(line);
             }
 
             this.OnStandardErrorLine(line);
