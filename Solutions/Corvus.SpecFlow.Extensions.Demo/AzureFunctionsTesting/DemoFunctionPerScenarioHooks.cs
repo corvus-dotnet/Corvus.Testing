@@ -22,7 +22,7 @@ namespace Corvus.SpecFlow.Extensions.Demo.AzureFunctionsTesting
                 scenarioContext,
                 "Corvus.SpecFlow.Extensions.DemoFunction",
                 7075,
-                "netcoreapp3.0");
+                "netcoreapp3.1");
         }
 
         [BeforeScenario("usingDemoFunctionPerScenarioWithAdditionalConfiguration")]
