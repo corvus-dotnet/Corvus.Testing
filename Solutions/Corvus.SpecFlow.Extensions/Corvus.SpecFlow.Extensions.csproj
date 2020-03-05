@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Nullable>enable</Nullable>
     <Copyright>Copyright (c) Endjin Limited 2020. All rights reserved.</Copyright>
   </PropertyGroup>
 

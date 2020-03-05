@@ -40,13 +40,19 @@ namespace Corvus.SpecFlow.Extensions
         ///     Start a functions instance.
         /// </summary>
         /// <param name="featureContext">The current feature context.</param>
-        /// <param name="scenarioContext">The current scenario context.</param>
+        /// <param name="scenarioContext">The current scenario context. Not required if using this class per-feature.</param>
         /// <param name="path">The location of the functions project.</param>
         /// <param name="port">The port on which to start the functions instance.</param>
         /// <param name="runtime">The runtime version, defaults to netcoreapp2.1.</param>
         /// <param name="provider">The functions provider. Defaults to csharp.</param>
         /// <returns>A task that completes once the function instance has started.</returns>
-        public async Task StartFunctionsInstance(FeatureContext featureContext, ScenarioContext scenarioContext, string path, int port, string runtime = "netcoreapp2.1", string provider = "csharp")
+        public async Task StartFunctionsInstance(
+            FeatureContext featureContext,
+            ScenarioContext? scenarioContext,
+            string path,
+            int port,
+            string runtime = "netcoreapp2.1",
+            string provider = "csharp")
         {
             Console.WriteLine($"Starting a function instance for project {path} on port {port}");
 
@@ -92,7 +98,7 @@ namespace Corvus.SpecFlow.Extensions
                 WindowStyle = ProcessWindowStyle.Normal,
             };
 
-            FunctionConfiguration functionConfiguration = null;
+            FunctionConfiguration? functionConfiguration = null;
             scenarioContext?.TryGetValue(out functionConfiguration);
 
             if (functionConfiguration == null)
@@ -143,7 +149,7 @@ namespace Corvus.SpecFlow.Extensions
         /// </summary>
         public void TeardownFunctions()
         {
-            List<Exception> aggregate = null;
+            var aggregate = new List<Exception>();
             foreach (Process p in this.output.Keys)
             {
                 try
@@ -171,18 +177,11 @@ namespace Corvus.SpecFlow.Extensions
                 }
                 catch (Exception e)
                 {
-                    if (aggregate == null)
-                    {
-                        aggregate = new List<Exception> { e };
-                    }
-                    else
-                    {
-                        aggregate.Add(e);
-                    }
+                    aggregate.Add(e);
                 }
             }
 
-            if (aggregate != null)
+            if (aggregate.Count > 0)
             {
                 throw new AggregateException(aggregate);
             }

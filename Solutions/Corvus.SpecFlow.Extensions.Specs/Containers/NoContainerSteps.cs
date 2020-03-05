@@ -13,7 +13,7 @@ namespace Corvus.SpecFlow.Extensions.Specs.Containers
     public class NoContainerSteps
     {
         private readonly FeatureContext featureContext;
-        private Exception exceptionFromGetServiceProvider;
+        private Exception? exceptionFromGetServiceProvider;
 
         public NoContainerSteps(FeatureContext featureContext)
         {

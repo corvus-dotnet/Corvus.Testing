@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -42,11 +42,11 @@
   <ItemGroup>
     <ProjectReference Include="..\Corvus.SpecFlow.Extensions\Corvus.SpecFlow.Extensions.csproj" />
   </ItemGroup>
- 
+
   <ItemGroup>
     <None Update="specflow.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
- 
+
 </Project>

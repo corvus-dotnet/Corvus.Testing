@@ -73,9 +73,9 @@ namespace Corvus.SpecFlow.Extensions.Specs.Containers
 
         public void VerifyServicesFromPhase(Phase phase)
         {
-            Assert.IsTrue(this.ExtractedServices.TryGetValue(phase, out RootService root), $"No services obtained for phase {phase}");
+            Assert.IsTrue(this.ExtractedServices.TryGetValue(phase, out RootService? root), $"No services obtained for phase {phase}");
 
-            Assert.AreSame(this.CultureOriginallySuppliedToContainer, root.CultureInfo, "CultureInfo");
+            Assert.AreSame(this.CultureOriginallySuppliedToContainer, root!.CultureInfo, "CultureInfo");
             Assert.AreSame(this.ComparerOriginallySuppliedToContainer, root.Comparer, "Comparer");
         }
 
