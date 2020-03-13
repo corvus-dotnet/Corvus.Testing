@@ -104,10 +104,7 @@
 -
     Name: Insights
     Id: 71a02488-2dc9-4d25-94fa-8c2346169f8b
-    Measures:
-        -
-            Score: 0
-            Description: None
+    OptOut: true
 -
     Name: Packaging
     Id: 547fd9f5-9caf-449f-82d9-4fba9e7ce13a
