@@ -12,7 +12,7 @@ namespace Corvus.SpecFlow.Extensions.Internal
     /// <summary>
     ///     Provides simplified access to a process's text output.
     /// </summary>
-    public class ProcessOutputHandler
+    public class ProcessOutputHandler : IProcessOutput
     {
         /// <summary>
         ///     Provides the task for <see cref="ExitCode"/>, enabling users of this class to
@@ -58,6 +58,11 @@ namespace Corvus.SpecFlow.Extensions.Internal
         public Process Process { get; }
 
         /// <summary>
+        ///     Gets the <see cref="ProcessStartInfo"/> for the process being monitored.
+        /// </summary>
+        public ProcessStartInfo ProcessStartInfo => this.Process.StartInfo;
+
+        /// <summary>
         ///     Gets a task that produces the exit code of the process once it completes.
         /// </summary>
         public Task<int> ExitCode => this.exitCodeCompletionSource.Task;
@@ -86,6 +91,28 @@ namespace Corvus.SpecFlow.Extensions.Internal
                 lock (this.standardError)
                 {
                     return this.standardError.ToString();
+                }
+            }
+        }
+
+        /// <inheritdoc />
+        public void ClearAllOutput()
+        {
+            lock (this.standardOutput)
+            {
+                lock (this.standardError)
+                {
+                    if (this.standardOutput.Length > 0)
+                    {
+                        this.standardOutput.Clear();
+                        this.standardOutput.Append("Output cleared at ").AppendLine(DateTime.UtcNow.ToString());
+                    }
+
+                    if (this.standardError.Length > 0)
+                    {
+                        this.standardError.Clear();
+                        this.standardError.Append("Output cleared at ").AppendLine(DateTime.UtcNow.ToString());
+                    }
                 }
             }
         }
