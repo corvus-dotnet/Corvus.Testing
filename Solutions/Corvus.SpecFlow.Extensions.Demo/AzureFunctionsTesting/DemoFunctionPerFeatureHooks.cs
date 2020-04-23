@@ -25,7 +25,7 @@ namespace Corvus.SpecFlow.Extensions.Demo.AzureFunctionsTesting
                 "netcoreapp3.1");
         }
 
-        [BeforeScenario("usingDemoFunctionPerFeatureWithAdditionalConfiguration")]
+        [BeforeFeature("usingDemoFunctionPerFeatureWithAdditionalConfiguration")]
         public static Task StartFunctionWithAdditionalConfigurationAsync(FeatureContext featureContext)
         {
             var functionConfiguration = new FunctionConfiguration();
@@ -33,6 +33,13 @@ namespace Corvus.SpecFlow.Extensions.Demo.AzureFunctionsTesting
             featureContext.Set(functionConfiguration);
 
             return StartFunctionsAsync(featureContext);
+        }
+
+        [AfterScenario("usingDemoFunctionPerFeature", "usingDemoFunctionPerFeatureWithAdditionalConfiguration")]
+        public static void WriteOutput(FeatureContext featureContext)
+        {
+            FunctionsController functionsController = featureContext.Get<FunctionsController>();
+            functionsController.GetFunctionsOutput().WriteAllToConsoleAndClear();
         }
 
         [AfterFeature("usingDemoFunctionPerFeature", "usingDemoFunctionPerFeatureWithAdditionalConfiguration")]

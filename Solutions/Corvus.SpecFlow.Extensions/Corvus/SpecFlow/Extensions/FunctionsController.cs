@@ -8,6 +8,7 @@ namespace Corvus.SpecFlow.Extensions
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;
+    using System.Linq;
     using System.Management;
     using System.Threading.Tasks;
 
@@ -33,7 +34,7 @@ namespace Corvus.SpecFlow.Extensions
     {
         private const long StartupTimeout = 60;
 
-        private readonly IDictionary<Process, FunctionOutputBufferHandler> output = new Dictionary<Process, FunctionOutputBufferHandler>();
+        private readonly List<FunctionOutputBufferHandler> output = new List<FunctionOutputBufferHandler>();
         private readonly object sync = new object();
 
         /// <summary>
@@ -118,7 +119,7 @@ namespace Corvus.SpecFlow.Extensions
 
             lock (this.sync)
             {
-                this.output[bufferHandler.Process] = bufferHandler;
+                this.output.Add(bufferHandler);
             }
 
             Console.WriteLine($"\tProcess started; waiting for initialisation to complete");
@@ -144,42 +145,36 @@ namespace Corvus.SpecFlow.Extensions
         }
 
         /// <summary>
+        /// Provides access to the output.
+        /// </summary>
+        public IEnumerable<IProcessOutput> GetFunctionsOutput()
+        {
+            return this.output.AsReadOnly();
+        }
+
+        /// <summary>
         /// Tear down the running functions instances. Should be called from inside a "RunAndStoreExceptions"
         /// block to ensure any issues do not cause test cleanup to be abandoned.
         /// </summary>
         public void TeardownFunctions()
         {
             var aggregate = new List<Exception>();
-            foreach (Process p in this.output.Keys)
+            foreach (FunctionOutputBufferHandler outputHandler in this.output)
             {
                 try
                 {
                     DateTimeOffset killTime = DateTimeOffset.Now;
-                    KillProcessAndChildren(p.Id);
+                    KillProcessAndChildren(outputHandler.Process.Id);
 
-                    p.WaitForExit();
-
-                    string name =
-                        $"{p.StartInfo.FileName} {p.StartInfo.Arguments}, working directory {p.StartInfo.WorkingDirectory}";
-
-                    Console.WriteLine($"\nStdOut for process {name} killed at {killTime}:");
-                    Console.WriteLine(this.output[p].StandardOutputText);
-                    Console.WriteLine();
-
-                    string stdErr = this.output[p].StandardErrorText;
-
-                    if (!string.IsNullOrEmpty(stdErr))
-                    {
-                        Console.WriteLine($"\nStdErr for process {name} killed at {killTime}:");
-                        Console.WriteLine(stdErr);
-                        Console.WriteLine();
-                    }
+                    outputHandler.Process.WaitForExit();
                 }
                 catch (Exception e)
                 {
                     aggregate.Add(e);
                 }
             }
+
+            this.output.WriteAllToConsoleAndClear();
 
             if (aggregate.Count > 0)
             {
