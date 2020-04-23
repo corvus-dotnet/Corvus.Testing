@@ -105,13 +105,13 @@ namespace Corvus.SpecFlow.Extensions.Internal
                     if (this.standardOutput.Length > 0)
                     {
                         this.standardOutput.Clear();
-                        this.standardOutput.AppendLine($"Log cleared at {DateTime.UtcNow.ToString()}");
+                        this.standardOutput.Append("Output cleared at ").AppendLine(DateTime.UtcNow.ToString());
                     }
 
                     if (this.standardError.Length > 0)
                     {
                         this.standardError.Clear();
-                        this.standardError.AppendLine($"Log cleared at {DateTime.UtcNow.ToString()}");
+                        this.standardError.Append("Output cleared at ").AppendLine(DateTime.UtcNow.ToString());
                     }
                 }
             }
