@@ -218,30 +218,13 @@ namespace Corvus.SpecFlow.Extensions
             Console.WriteLine($"Starting a function instance for project {path} on port {port}");
             Console.WriteLine("\tStarting process");
 
-            var startInfo = new ProcessStartInfo(toolPath, $"host start --port {port} --{provider}")
-            {
-                WorkingDirectory = GetWorkingDirectory(
-                    TestContext.CurrentContext.TestDirectory,
-                    path,
-                    runtime),
-
-                UseShellExecute = false,
-                CreateNoWindow = false,
-                RedirectStandardError = true,
-                RedirectStandardOutput = true,
-                RedirectStandardInput = true,
-                WindowStyle = ProcessWindowStyle.Normal,
-            };
-
-            if (functionConfiguration != null)
-            {
-                foreach (KeyValuePair<string, string> kvp in functionConfiguration.EnvironmentVariables)
-                {
-                    startInfo.EnvironmentVariables[kvp.Key] = kvp.Value;
-                }
-            }
-
-            var bufferHandler = new FunctionOutputBufferHandler(startInfo);
+            string workingDirectory = GetWorkingDirectory(TestContext.CurrentContext.TestDirectory, path, runtime);
+            FunctionOutputBufferHandler bufferHandler = StartFunctionHostProcess(
+                port,
+                provider,
+                toolPath,
+                workingDirectory,
+                functionConfiguration);
 
             lock (this.sync)
             {
@@ -326,6 +309,36 @@ namespace Corvus.SpecFlow.Extensions
 
             Console.WriteLine($"\tRoot: {root}");
             return root + path + directoryExtension;
+        }
+
+        private static FunctionOutputBufferHandler StartFunctionHostProcess(
+            int port,
+            string provider,
+            string toolPath,
+            string workingDirectory,
+            FunctionConfiguration? functionConfiguration)
+        {
+            var startInfo = new ProcessStartInfo(toolPath, $"host start --port {port} --{provider}")
+            {
+                WorkingDirectory = workingDirectory,
+                UseShellExecute = false,
+                CreateNoWindow = false,
+                RedirectStandardError = true,
+                RedirectStandardOutput = true,
+                RedirectStandardInput = true,
+                WindowStyle = ProcessWindowStyle.Normal,
+            };
+
+            if (functionConfiguration != null)
+            {
+                foreach (KeyValuePair<string, string> kvp in functionConfiguration.EnvironmentVariables)
+                {
+                    startInfo.EnvironmentVariables[kvp.Key] = kvp.Value;
+                }
+            }
+
+            var bufferHandler = new FunctionOutputBufferHandler(startInfo);
+            return bufferHandler;
         }
     }
 }
