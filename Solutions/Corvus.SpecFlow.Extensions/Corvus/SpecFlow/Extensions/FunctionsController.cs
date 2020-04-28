@@ -220,7 +220,11 @@ namespace Corvus.SpecFlow.Extensions
 
             var startInfo = new ProcessStartInfo(toolPath, $"host start --port {port} --{provider}")
             {
-                WorkingDirectory = GetWorkingDirectory(path, runtime),
+                WorkingDirectory = GetWorkingDirectory(
+                    TestContext.CurrentContext.TestDirectory,
+                    path,
+                    runtime),
+
                 UseShellExecute = false,
                 CreateNoWindow = false,
                 RedirectStandardError = true,
@@ -304,11 +308,11 @@ namespace Corvus.SpecFlow.Extensions
             }
         }
 
-        private static string GetWorkingDirectory(string path, string runtime)
+        private static string GetWorkingDirectory(string currentTestDirectory, string path, string runtime)
         {
             string directoryExtension = $"\\bin\\release\\{runtime}";
 
-            string lowerInvariantCurrentDirectory = TestContext.CurrentContext.TestDirectory.ToLowerInvariant();
+            string lowerInvariantCurrentDirectory = currentTestDirectory.ToLowerInvariant();
             if (lowerInvariantCurrentDirectory.Contains("debug"))
             {
                 directoryExtension = $"\\bin\\debug\\{runtime}";
@@ -316,9 +320,9 @@ namespace Corvus.SpecFlow.Extensions
 
             Console.WriteLine($"\tCurrent directory: {lowerInvariantCurrentDirectory}");
 
-            string root = TestContext.CurrentContext.TestDirectory.Substring(
+            string root = currentTestDirectory.Substring(
                 0,
-                TestContext.CurrentContext.TestDirectory.IndexOf(@"\Solutions\") + 11);
+                currentTestDirectory.IndexOf(@"\Solutions\") + 11);
 
             Console.WriteLine($"\tRoot: {root}");
             return root + path + directoryExtension;
