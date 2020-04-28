@@ -216,28 +216,11 @@ namespace Corvus.SpecFlow.Extensions
                 provider);
 
             Console.WriteLine($"Starting a function instance for project {path} on port {port}");
-
-            string directoryExtension = $"\\bin\\release\\{runtime}";
-
-            string lowerInvariantCurrentDirectory = TestContext.CurrentContext.TestDirectory.ToLowerInvariant();
-            if (lowerInvariantCurrentDirectory.Contains("debug"))
-            {
-                directoryExtension = $"\\bin\\debug\\{runtime}";
-            }
-
-            Console.WriteLine($"\tCurrent directory: {lowerInvariantCurrentDirectory}");
-
-            string root = TestContext.CurrentContext.TestDirectory.Substring(
-                0,
-                TestContext.CurrentContext.TestDirectory.IndexOf(@"\Solutions\") + 11);
-
-            Console.WriteLine($"\tRoot: {root}");
-
             Console.WriteLine("\tStarting process");
 
             var startInfo = new ProcessStartInfo(toolPath, $"host start --port {port} --{provider}")
             {
-                WorkingDirectory = root + path + directoryExtension,
+                WorkingDirectory = GetWorkingDirectory(path, runtime),
                 UseShellExecute = false,
                 CreateNoWindow = false,
                 RedirectStandardError = true,
@@ -319,6 +302,26 @@ namespace Corvus.SpecFlow.Extensions
             {
                 throw new AggregateException(aggregate);
             }
+        }
+
+        private static string GetWorkingDirectory(string path, string runtime)
+        {
+            string directoryExtension = $"\\bin\\release\\{runtime}";
+
+            string lowerInvariantCurrentDirectory = TestContext.CurrentContext.TestDirectory.ToLowerInvariant();
+            if (lowerInvariantCurrentDirectory.Contains("debug"))
+            {
+                directoryExtension = $"\\bin\\debug\\{runtime}";
+            }
+
+            Console.WriteLine($"\tCurrent directory: {lowerInvariantCurrentDirectory}");
+
+            string root = TestContext.CurrentContext.TestDirectory.Substring(
+                0,
+                TestContext.CurrentContext.TestDirectory.IndexOf(@"\Solutions\") + 11);
+
+            Console.WriteLine($"\tRoot: {root}");
+            return root + path + directoryExtension;
         }
     }
 }
