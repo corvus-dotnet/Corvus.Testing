@@ -12,7 +12,7 @@ namespace Corvus.SpecFlow.Extensions
     using System.Management;
     using System.Threading.Tasks;
     using Corvus.AzureFunctions;
-    using Corvus.SpecFlow.Extensions.Internal;
+    using Corvus.AzureFunctions.Internal;
     using NUnit.Framework;
 
     using TechTalk.SpecFlow;
@@ -147,6 +147,7 @@ namespace Corvus.SpecFlow.Extensions
         /// <summary>
         /// Provides access to the output.
         /// </summary>
+        /// <returns>All output from the function host process.</returns>
         public IEnumerable<IProcessOutput> GetFunctionsOutput()
         {
             return this.output.AsReadOnly();
