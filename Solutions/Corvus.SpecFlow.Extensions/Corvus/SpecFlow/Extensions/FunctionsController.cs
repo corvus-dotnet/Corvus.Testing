@@ -11,7 +11,7 @@ namespace Corvus.SpecFlow.Extensions
     using System.Linq;
     using System.Management;
     using System.Threading.Tasks;
-
+    using Corvus.AzureFunctions;
     using Corvus.SpecFlow.Extensions.Internal;
     using NUnit.Framework;
 
