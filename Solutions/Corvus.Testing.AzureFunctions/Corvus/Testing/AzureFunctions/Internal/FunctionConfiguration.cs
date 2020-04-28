@@ -2,7 +2,7 @@
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
-namespace Corvus.AzureFunctions
+namespace Corvus.Testing.AzureFunctions.Internal
 {
     using System.Collections.Generic;
 

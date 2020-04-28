@@ -8,11 +8,11 @@ namespace Corvus.SpecFlow.Extensions.Demo.AzureFunctionsTesting
     using System.Net.Http;
     using System.Text;
     using System.Threading.Tasks;
-    using Corvus.AzureFunctions;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using NUnit.Framework;
     using TechTalk.SpecFlow;
+    using Corvus.Testing.AzureFunctions.Internal;
 
     [Binding]
     public class StepBindings
