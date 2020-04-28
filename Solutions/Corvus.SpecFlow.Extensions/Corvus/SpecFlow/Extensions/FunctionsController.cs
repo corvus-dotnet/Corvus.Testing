@@ -58,6 +58,96 @@ namespace Corvus.SpecFlow.Extensions
         {
             return Task.CompletedTask;
         }
+
+        /// <summary>
+        /// Kill a process, and all of its children, grandchildren, etc.
+        /// </summary>
+        /// <param name="pid">Process ID.</param>
+        private static void KillProcessAndChildren(int pid)
+        {
+            // Cannot close 'system idle process'.
+            if (pid == 0)
+            {
+                return;
+            }
+
+            using (var searcher = new ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" + pid))
+            {
+                foreach (ManagementObject mo in searcher.Get())
+                {
+                    KillProcessAndChildren(Convert.ToInt32(mo["ProcessID"]));
+                }
+            }
+
+            try
+            {
+                var proc = Process.GetProcessById(pid);
+                proc.Kill();
+            }
+            catch (ArgumentException)
+            {
+                // Process already exited.
+            }
+        }
+
+        /// <summary>
+        /// Discover npm's global prefix (the parent of its global module cache location).
+        /// </summary>
+        /// <returns>
+        /// The global prefix reported by npm.
+        /// </returns>
+        /// <remarks>
+        /// <para>
+        /// To run Azure Functions locally in tests, we need to run the <c>func</c> command
+        /// from the <c>azure-functions-core-tools</c> npm package.
+        /// </para>
+        /// <para>
+        /// Unfortunately, npm ends up putting this in different places on different machines.
+        /// Debugging locally, and also on private build agents, the global module cache is
+        /// typically in <c>%APPDATA%\npm\npm_modules</c>. However, on hosted build agents it
+        /// currently resides in <c>c:\npm\prefix</c>.
+        /// </para>
+        /// <para>
+        /// The most dependable way to find where npm puts these things is to ask npm, by
+        /// running the command <c>npm prefix -g</c>, which is what this function does.
+        /// </para>
+        /// </remarks>
+        private static async Task<string> GetNpmPrefix()
+        {
+            // Running npm directly can run into weird PATH issues, so it's more reliable to run
+            // cmd.exe, and then ask it to run our command - that way we get the same PATH
+            // behaviour we'd get running the command manually.
+            var processHandler = new ProcessOutputHandler(
+                new ProcessStartInfo("cmd.exe", "/c npm prefix -g")
+                {
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                });
+
+            await Task.WhenAny(
+                processHandler.ExitCode,
+                Task.Delay(TimeSpan.FromSeconds(10))).ConfigureAwait(false);
+
+            if (!processHandler.ExitCode.IsCompleted)
+            {
+                Assert.Fail(
+                    "npm task did not exit before timeout. Stdout: {0}. Stderr: {1}",
+                    processHandler.StandardOutputText,
+                    processHandler.StandardErrorText);
+            }
+
+            processHandler.EnsureComplete();
+
+            if (processHandler.Process.ExitCode != 0)
+            {
+                Assert.Fail("Unable to run npm: {0}", processHandler.StandardErrorText);
+            }
+
+            // We get a newline character on the end of the standard output, so we need to
+            // trim before returning.
+            return processHandler.StandardOutputText.Trim();
+        }
     }
 
     /// <summary>
@@ -218,96 +308,6 @@ namespace Corvus.SpecFlow.Extensions
             {
                 throw new AggregateException(aggregate);
             }
-        }
-
-        /// <summary>
-        /// Kill a process, and all of its children, grandchildren, etc.
-        /// </summary>
-        /// <param name="pid">Process ID.</param>
-        private static void KillProcessAndChildren(int pid)
-        {
-            // Cannot close 'system idle process'.
-            if (pid == 0)
-            {
-                return;
-            }
-
-            using (var searcher = new ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" + pid))
-            {
-                foreach (ManagementObject mo in searcher.Get())
-                {
-                    KillProcessAndChildren(Convert.ToInt32(mo["ProcessID"]));
-                }
-            }
-
-            try
-            {
-                var proc = Process.GetProcessById(pid);
-                proc.Kill();
-            }
-            catch (ArgumentException)
-            {
-                // Process already exited.
-            }
-        }
-
-        /// <summary>
-        /// Discover npm's global prefix (the parent of its global module cache location).
-        /// </summary>
-        /// <returns>
-        /// The global prefix reported by npm.
-        /// </returns>
-        /// <remarks>
-        /// <para>
-        /// To run Azure Functions locally in tests, we need to run the <c>func</c> command
-        /// from the <c>azure-functions-core-tools</c> npm package.
-        /// </para>
-        /// <para>
-        /// Unfortunately, npm ends up putting this in different places on different machines.
-        /// Debugging locally, and also on private build agents, the global module cache is
-        /// typically in <c>%APPDATA%\npm\npm_modules</c>. However, on hosted build agents it
-        /// currently resides in <c>c:\npm\prefix</c>.
-        /// </para>
-        /// <para>
-        /// The most dependable way to find where npm puts these things is to ask npm, by
-        /// running the command <c>npm prefix -g</c>, which is what this function does.
-        /// </para>
-        /// </remarks>
-        private static async Task<string> GetNpmPrefix()
-        {
-            // Running npm directly can run into weird PATH issues, so it's more reliable to run
-            // cmd.exe, and then ask it to run our command - that way we get the same PATH
-            // behaviour we'd get running the command manually.
-            var processHandler = new ProcessOutputHandler(
-                new ProcessStartInfo("cmd.exe", "/c npm prefix -g")
-                {
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                });
-
-            await Task.WhenAny(
-                processHandler.ExitCode,
-                Task.Delay(TimeSpan.FromSeconds(10))).ConfigureAwait(false);
-
-            if (!processHandler.ExitCode.IsCompleted)
-            {
-                Assert.Fail(
-                    "npm task did not exit before timeout. Stdout: {0}. Stderr: {1}",
-                    processHandler.StandardOutputText,
-                    processHandler.StandardErrorText);
-            }
-
-            processHandler.EnsureComplete();
-
-            if (processHandler.Process.ExitCode != 0)
-            {
-                Assert.Fail("Unable to run npm: {0}", processHandler.StandardErrorText);
-            }
-
-            // We get a newline character on the end of the standard output, so we need to
-            // trim before returning.
-            return processHandler.StandardOutputText.Trim();
         }
     }
 }
