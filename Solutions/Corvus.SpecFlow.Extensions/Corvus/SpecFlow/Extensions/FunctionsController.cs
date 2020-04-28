@@ -165,6 +165,26 @@ namespace Corvus.SpecFlow.Extensions
             // trim before returning.
             return processHandler.StandardOutputText.Trim();
         }
+
+        private static string GetWorkingDirectory(string currentTestDirectory, string path, string runtime)
+        {
+            string directoryExtension = $"\\bin\\release\\{runtime}";
+
+            string lowerInvariantCurrentDirectory = currentTestDirectory.ToLowerInvariant();
+            if (lowerInvariantCurrentDirectory.Contains("debug"))
+            {
+                directoryExtension = $"\\bin\\debug\\{runtime}";
+            }
+
+            Console.WriteLine($"\tCurrent directory: {lowerInvariantCurrentDirectory}");
+
+            string root = currentTestDirectory.Substring(
+                0,
+                currentTestDirectory.IndexOf(@"\Solutions\") + 11);
+
+            Console.WriteLine($"\tRoot: {root}");
+            return root + path + directoryExtension;
+        }
     }
 
     /// <summary>
@@ -289,26 +309,6 @@ namespace Corvus.SpecFlow.Extensions
             {
                 throw new AggregateException(aggregate);
             }
-        }
-
-        private static string GetWorkingDirectory(string currentTestDirectory, string path, string runtime)
-        {
-            string directoryExtension = $"\\bin\\release\\{runtime}";
-
-            string lowerInvariantCurrentDirectory = currentTestDirectory.ToLowerInvariant();
-            if (lowerInvariantCurrentDirectory.Contains("debug"))
-            {
-                directoryExtension = $"\\bin\\debug\\{runtime}";
-            }
-
-            Console.WriteLine($"\tCurrent directory: {lowerInvariantCurrentDirectory}");
-
-            string root = currentTestDirectory.Substring(
-                0,
-                currentTestDirectory.IndexOf(@"\Solutions\") + 11);
-
-            Console.WriteLine($"\tRoot: {root}");
-            return root + path + directoryExtension;
         }
 
         private static FunctionOutputBufferHandler StartFunctionHostProcess(
