@@ -93,6 +93,44 @@ namespace Corvus.SpecFlow.Extensions
             }
         }
 
+        /// <summary>
+        /// Provides access to the output.
+        /// </summary>
+        /// <returns>All output from the function host process.</returns>
+        public IEnumerable<IProcessOutput> GetFunctionsOutput()
+        {
+            return this.output.AsReadOnly();
+        }
+
+        /// <summary>
+        /// Tear down the running functions instances. Should be called from inside a "RunAndStoreExceptions"
+        /// block to ensure any issues do not cause test cleanup to be abandoned.
+        /// </summary>
+        public void TeardownFunctions()
+        {
+            var aggregate = new List<Exception>();
+            foreach (FunctionOutputBufferHandler outputHandler in this.output)
+            {
+                try
+                {
+                    KillProcessAndChildren(outputHandler.Process.Id);
+
+                    outputHandler.Process.WaitForExit();
+                }
+                catch (Exception e)
+                {
+                    aggregate.Add(e);
+                }
+            }
+
+            this.output.WriteAllToConsoleAndClear();
+
+            if (aggregate.Count > 0)
+            {
+                throw new AggregateException(aggregate);
+            }
+        }
+
         private static async Task<string> GetToolPath()
         {
             string npmPrefix = await GetNpmPrefix().ConfigureAwait(false);
@@ -298,44 +336,6 @@ namespace Corvus.SpecFlow.Extensions
                 runtime,
                 provider,
                 functionConfiguration);
-        }
-
-        /// <summary>
-        /// Provides access to the output.
-        /// </summary>
-        /// <returns>All output from the function host process.</returns>
-        public IEnumerable<IProcessOutput> GetFunctionsOutput()
-        {
-            return this.output.AsReadOnly();
-        }
-
-        /// <summary>
-        /// Tear down the running functions instances. Should be called from inside a "RunAndStoreExceptions"
-        /// block to ensure any issues do not cause test cleanup to be abandoned.
-        /// </summary>
-        public void TeardownFunctions()
-        {
-            var aggregate = new List<Exception>();
-            foreach (FunctionOutputBufferHandler outputHandler in this.output)
-            {
-                try
-                {
-                    KillProcessAndChildren(outputHandler.Process.Id);
-
-                    outputHandler.Process.WaitForExit();
-                }
-                catch (Exception e)
-                {
-                    aggregate.Add(e);
-                }
-            }
-
-            this.output.WriteAllToConsoleAndClear();
-
-            if (aggregate.Count > 0)
-            {
-                throw new AggregateException(aggregate);
-            }
         }
     }
 }
