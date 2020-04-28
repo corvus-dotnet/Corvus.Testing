@@ -8,7 +8,6 @@ namespace Corvus.SpecFlow.Extensions
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;
-    using System.Linq;
     using System.Management;
     using System.Threading.Tasks;
     using Corvus.AzureFunctions;
@@ -38,7 +37,7 @@ namespace Corvus.SpecFlow.Extensions
         private readonly object sync = new object();
 
         /// <summary>
-        ///     Start a functions instance.
+        /// Start a functions instance.
         /// </summary>
         /// <param name="featureContext">The current feature context.</param>
         /// <param name="scenarioContext">The current scenario context. Not required if using this class per-feature.</param>
@@ -86,7 +85,7 @@ namespace Corvus.SpecFlow.Extensions
 
             Console.WriteLine($"\tToolsPath: {toolPath}");
 
-            Console.WriteLine($"\tStarting process");
+            Console.WriteLine("\tStarting process");
 
             var startInfo = new ProcessStartInfo(toolPath, $"host start --port {port} --{provider}")
             {
@@ -122,7 +121,7 @@ namespace Corvus.SpecFlow.Extensions
                 this.output.Add(bufferHandler);
             }
 
-            Console.WriteLine($"\tProcess started; waiting for initialisation to complete");
+            Console.WriteLine("\tProcess started; waiting for initialisation to complete");
 
             await Task.WhenAny(
                 bufferHandler.JobHostStarted,
@@ -164,7 +163,6 @@ namespace Corvus.SpecFlow.Extensions
             {
                 try
                 {
-                    DateTimeOffset killTime = DateTimeOffset.Now;
                     KillProcessAndChildren(outputHandler.Process.Id);
 
                     outputHandler.Process.WaitForExit();
@@ -184,7 +182,7 @@ namespace Corvus.SpecFlow.Extensions
         }
 
         /// <summary>
-        ///     Kill a process, and all of its children, grandchildren, etc.
+        /// Kill a process, and all of its children, grandchildren, etc.
         /// </summary>
         /// <param name="pid">Process ID.</param>
         private static void KillProcessAndChildren(int pid)
@@ -215,25 +213,25 @@ namespace Corvus.SpecFlow.Extensions
         }
 
         /// <summary>
-        ///     Discover npm's global prefix (the parent of its global module cache location).
+        /// Discover npm's global prefix (the parent of its global module cache location).
         /// </summary>
         /// <returns>
-        ///     The global prefix reported by npm.
+        /// The global prefix reported by npm.
         /// </returns>
         /// <remarks>
         /// <para>
-        ///     To run Azure Functions locally in tests, we need to run the <c>func</c> command
-        ///     from the <c>azure-functions-core-tools</c> npm package.
+        /// To run Azure Functions locally in tests, we need to run the <c>func</c> command
+        /// from the <c>azure-functions-core-tools</c> npm package.
         /// </para>
         /// <para>
-        ///     Unfortunately, npm ends up putting this in different places on different machines.
-        ///     Debugging locally, and also on private build agents, the global module cache is
-        ///     typically in <c>%APPDATA%\npm\npm_modules</c>. However, on hosted build agents it
-        ///     currently resides in <c>c:\npm\prefix</c>.
+        /// Unfortunately, npm ends up putting this in different places on different machines.
+        /// Debugging locally, and also on private build agents, the global module cache is
+        /// typically in <c>%APPDATA%\npm\npm_modules</c>. However, on hosted build agents it
+        /// currently resides in <c>c:\npm\prefix</c>.
         /// </para>
         /// <para>
-        ///     The most dependable way to find where npm puts these things is to ask npm, by
-        ///     running the command <c>npm prefix -g</c>, which is what this function does.
+        /// The most dependable way to find where npm puts these things is to ask npm, by
+        /// running the command <c>npm prefix -g</c>, which is what this function does.
         /// </para>
         /// </remarks>
         private static async Task<string> GetNpmPrefix()
