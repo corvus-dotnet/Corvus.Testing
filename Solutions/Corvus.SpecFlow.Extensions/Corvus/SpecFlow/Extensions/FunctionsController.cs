@@ -77,20 +77,20 @@ namespace Corvus.SpecFlow.Extensions
                 bufferHandler.JobHostStarted,
                 bufferHandler.ExitCode,
                 Task.Delay(TimeSpan.FromSeconds(StartupTimeout))).ConfigureAwait(false);
+
             if (bufferHandler.ExitCode.IsCompleted)
             {
                 int exitCode = await bufferHandler.ExitCode.ConfigureAwait(false);
-                Assert.Fail($"Function host process terminated unexpectedly with exit code {exitCode}. Error output: {bufferHandler.StandardErrorText}");
+                throw new ProcessStartupException($"Function host process terminated unexpectedly with exit code {exitCode}.", stderr: bufferHandler.StandardErrorText);
             }
-            else if (!bufferHandler.JobHostStarted.IsCompleted)
+
+            if (!bufferHandler.JobHostStarted.IsCompleted)
             {
-                Assert.Fail("Timed out while starting functions instance.");
+                throw new ProcessStartupException("Timed out while starting functions instance.");
             }
-            else
-            {
-                Console.WriteLine();
-                Console.WriteLine("\tStarted");
-            }
+
+            Console.WriteLine();
+            Console.WriteLine("\tStarted");
         }
 
         /// <summary>
@@ -137,9 +137,14 @@ namespace Corvus.SpecFlow.Extensions
             string toolsFolder = Path.Combine(
                 npmPrefix,
                 @"node_modules\azure-functions-core-tools\bin");
-            Assert.IsTrue(
-                Directory.Exists(toolsFolder),
-                $"Azure Functions runtime not found at {toolsFolder}. Have you run: 'npm install -g azure-functions-core-tools --unsafe-perm true'?");
+
+            if (!Directory.Exists(toolsFolder))
+            {
+                throw new FunctionStartupException(
+                    $"Azure Functions runtime not found at {toolsFolder}. Have you run: " +
+                    "'npm install -g azure-functions-core-tools@3 --unsafe-perm true'?");
+            }
+
             string toolPath = Path.Combine(
                 toolsFolder,
                 "func");
@@ -220,17 +225,17 @@ namespace Corvus.SpecFlow.Extensions
 
             if (!processHandler.ExitCode.IsCompleted)
             {
-                Assert.Fail(
-                    "npm task did not exit before timeout. Stdout: {0}. Stderr: {1}",
-                    processHandler.StandardOutputText,
-                    processHandler.StandardErrorText);
+                throw new ProcessStartupException(
+                    "npm task did not exit before timeout.",
+                    stdout: processHandler.StandardOutputText,
+                    stderr: processHandler.StandardErrorText);
             }
 
             processHandler.EnsureComplete();
 
             if (processHandler.Process.ExitCode != 0)
             {
-                Assert.Fail("Unable to run npm: {0}", processHandler.StandardErrorText);
+                throw new ProcessStartupException("Unable to run npm.", stderr: processHandler.StandardErrorText);
             }
 
             // We get a newline character on the end of the standard output, so we need to
