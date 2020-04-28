@@ -48,7 +48,7 @@ namespace Corvus.SpecFlow.Extensions
         /// <param name="configuration">A <see cref="FunctionConfiguration"/> instance, for conveying
         /// configuration values via environment variables to the function host process.</param>
         /// <returns>A task that completes once the function instance has started.</returns>
-        public async Task<string> StartFunctionsInstance(
+        public async Task StartFunctionsInstance(
             string testDirectory,
             string path,
             int port,
@@ -56,7 +56,41 @@ namespace Corvus.SpecFlow.Extensions
             string provider = "csharp",
             FunctionConfiguration? configuration = null)
         {
-            return await GetToolPath();
+            Console.WriteLine($"Starting a function instance for project {path} on port {port}");
+            Console.WriteLine("\tStarting process");
+
+            FunctionOutputBufferHandler bufferHandler = StartFunctionHostProcess(
+                port,
+                provider,
+                await GetToolPath(),
+                GetWorkingDirectory(testDirectory, path, runtime),
+                configuration);
+
+            lock (this.sync)
+            {
+                this.output.Add(bufferHandler);
+            }
+
+            Console.WriteLine("\tProcess started; waiting for initialisation to complete");
+
+            await Task.WhenAny(
+                bufferHandler.JobHostStarted,
+                bufferHandler.ExitCode,
+                Task.Delay(TimeSpan.FromSeconds(StartupTimeout))).ConfigureAwait(false);
+            if (bufferHandler.ExitCode.IsCompleted)
+            {
+                int exitCode = await bufferHandler.ExitCode.ConfigureAwait(false);
+                Assert.Fail($"Function host process terminated unexpectedly with exit code {exitCode}. Error output: {bufferHandler.StandardErrorText}");
+            }
+            else if (!bufferHandler.JobHostStarted.IsCompleted)
+            {
+                Assert.Fail("Timed out while starting functions instance.");
+            }
+            else
+            {
+                Console.WriteLine();
+                Console.WriteLine("\tStarted");
+            }
         }
 
         private static async Task<string> GetToolPath()
@@ -212,8 +246,7 @@ namespace Corvus.SpecFlow.Extensions
                 }
             }
 
-            var bufferHandler = new FunctionOutputBufferHandler(startInfo);
-            return bufferHandler;
+            return new FunctionOutputBufferHandler(startInfo);
         }
     }
 
@@ -258,49 +291,13 @@ namespace Corvus.SpecFlow.Extensions
                 featureContext.TryGetValue(out functionConfiguration);
             }
 
-            string toolPath = await this.StartFunctionsInstance(
+            await this.StartFunctionsInstance(
                 TestContext.CurrentContext.TestDirectory,
                 path,
                 port,
                 runtime,
-                provider);
-
-            Console.WriteLine($"Starting a function instance for project {path} on port {port}");
-            Console.WriteLine("\tStarting process");
-
-            string workingDirectory = GetWorkingDirectory(TestContext.CurrentContext.TestDirectory, path, runtime);
-            FunctionOutputBufferHandler bufferHandler = StartFunctionHostProcess(
-                port,
                 provider,
-                toolPath,
-                workingDirectory,
                 functionConfiguration);
-
-            lock (this.sync)
-            {
-                this.output.Add(bufferHandler);
-            }
-
-            Console.WriteLine("\tProcess started; waiting for initialisation to complete");
-
-            await Task.WhenAny(
-                bufferHandler.JobHostStarted,
-                bufferHandler.ExitCode,
-                Task.Delay(TimeSpan.FromSeconds(StartupTimeout))).ConfigureAwait(false);
-            if (bufferHandler.ExitCode.IsCompleted)
-            {
-                int exitCode = await bufferHandler.ExitCode.ConfigureAwait(false);
-                Assert.Fail($"Function host process terminated unexpectedly with exit code {exitCode}. Error output: {bufferHandler.StandardErrorText}");
-            }
-            else if (!bufferHandler.JobHostStarted.IsCompleted)
-            {
-                Assert.Fail("Timed out while starting functions instance.");
-            }
-            else
-            {
-                Console.WriteLine();
-                Console.WriteLine("\tStarted");
-            }
         }
 
         /// <summary>
