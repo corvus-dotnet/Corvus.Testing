@@ -25,7 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo", "Demo", "{C07A8D88-6
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.SpecFlow.Extensions.Demo", "Corvus.SpecFlow.Extensions.Demo\Corvus.SpecFlow.Extensions.Demo.csproj", "{D70C5802-E069-4F7E-9342-DEEDD4F2502F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Corvus.AzureFunctions", "Corvus.AzureFunctions\Corvus.AzureFunctions.csproj", "{3F86ECD4-674C-4026-9DC6-342FB43A84D6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Corvus.Testing.AzureFunctions", "Corvus.Testing.AzureFunctions\Corvus.Testing.AzureFunctions.csproj", "{3F86ECD4-674C-4026-9DC6-342FB43A84D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Corvus.AzureFunctions\Corvus.AzureFunctions.csproj" />
+    <ProjectReference Include="..\Corvus.Testing.AzureFunctions\Corvus.Testing.AzureFunctions.csproj" />
   </ItemGroup>
 
 </Project>
