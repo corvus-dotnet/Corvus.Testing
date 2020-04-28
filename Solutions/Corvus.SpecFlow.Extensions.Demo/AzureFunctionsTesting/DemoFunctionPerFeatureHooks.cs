@@ -5,10 +5,11 @@
 namespace Corvus.SpecFlow.Extensions.Demo.AzureFunctionsTesting
 {
     using System.Threading.Tasks;
-    using Corvus.SpecFlow.Extensions;
-    using TechTalk.SpecFlow;
     using Corvus.Testing.AzureFunctions;
     using Corvus.Testing.AzureFunctions.Internal;
+    using TechTalk.SpecFlow;
+
+    using FunctionsController=Corvus.SpecFlow.Extensions.FunctionsController;
 
     [Binding]
     public static class DemoFunctionPerFeatureHooks
