@@ -48,7 +48,7 @@ namespace Corvus.SpecFlow.Extensions
         /// <param name="configuration">A <see cref="FunctionConfiguration"/> instance, for conveying
         /// configuration values via environment variables to the function host process.</param>
         /// <returns>A task that completes once the function instance has started.</returns>
-        public Task StartFunctionsInstance(
+        public async Task<string> StartFunctionsInstance(
             string testDirectory,
             string path,
             int port,
@@ -56,7 +56,24 @@ namespace Corvus.SpecFlow.Extensions
             string provider = "csharp",
             FunctionConfiguration? configuration = null)
         {
-            return Task.CompletedTask;
+            return await GetToolPath();
+        }
+
+        private static async Task<string> GetToolPath()
+        {
+            string npmPrefix = await GetNpmPrefix().ConfigureAwait(false);
+            string toolsFolder = Path.Combine(
+                npmPrefix,
+                @"node_modules\azure-functions-core-tools\bin");
+            Assert.IsTrue(
+                Directory.Exists(toolsFolder),
+                $"Azure Functions runtime not found at {toolsFolder}. Have you run: 'npm install -g azure-functions-core-tools --unsafe-perm true'?");
+            string toolPath = Path.Combine(
+                toolsFolder,
+                "func");
+
+            Console.WriteLine($"\tToolsPath: {toolPath}");
+            return toolPath;
         }
 
         /// <summary>
@@ -191,7 +208,7 @@ namespace Corvus.SpecFlow.Extensions
                 featureContext.TryGetValue(out functionConfiguration);
             }
 
-            await this.StartFunctionsInstance(
+            string toolPath = await this.StartFunctionsInstance(
                 TestContext.CurrentContext.TestDirectory,
                 path,
                 port,
@@ -215,19 +232,6 @@ namespace Corvus.SpecFlow.Extensions
                 TestContext.CurrentContext.TestDirectory.IndexOf(@"\Solutions\") + 11);
 
             Console.WriteLine($"\tRoot: {root}");
-
-            string npmPrefix = await GetNpmPrefix().ConfigureAwait(false);
-            string toolsFolder = Path.Combine(
-                npmPrefix,
-                @"node_modules\azure-functions-core-tools\bin");
-            Assert.IsTrue(
-                Directory.Exists(toolsFolder),
-                $"Azure Functions runtime not found at {toolsFolder}. Have you run: 'npm install -g azure-functions-core-tools --unsafe-perm true'?");
-            string toolPath = Path.Combine(
-                toolsFolder,
-                "func");
-
-            Console.WriteLine($"\tToolsPath: {toolPath}");
 
             Console.WriteLine("\tStarting process");
 
