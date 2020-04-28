@@ -183,6 +183,21 @@ namespace Corvus.SpecFlow.Extensions
             string runtime = "netcoreapp2.1",
             string provider = "csharp")
         {
+            FunctionConfiguration? functionConfiguration = null;
+            scenarioContext?.TryGetValue(out functionConfiguration);
+
+            if (functionConfiguration == null)
+            {
+                featureContext.TryGetValue(out functionConfiguration);
+            }
+
+            await this.StartFunctionsInstance(
+                TestContext.CurrentContext.TestDirectory,
+                path,
+                port,
+                runtime,
+                provider);
+
             Console.WriteLine($"Starting a function instance for project {path} on port {port}");
 
             string directoryExtension = $"\\bin\\release\\{runtime}";
@@ -226,14 +241,6 @@ namespace Corvus.SpecFlow.Extensions
                 RedirectStandardInput = true,
                 WindowStyle = ProcessWindowStyle.Normal,
             };
-
-            FunctionConfiguration? functionConfiguration = null;
-            scenarioContext?.TryGetValue(out functionConfiguration);
-
-            if (functionConfiguration == null)
-            {
-                featureContext.TryGetValue(out functionConfiguration);
-            }
 
             if (functionConfiguration != null)
             {
