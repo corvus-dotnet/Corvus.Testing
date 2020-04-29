@@ -217,6 +217,8 @@ namespace Corvus.Testing.AzureFunctions
                     RedirectStandardError = true,
                 });
 
+            processHandler.Start();
+
             await Task.WhenAny(
                 processHandler.ExitCode,
                 Task.Delay(TimeSpan.FromSeconds(10))).ConfigureAwait(false);
@@ -287,7 +289,10 @@ namespace Corvus.Testing.AzureFunctions
                 }
             }
 
-            return new FunctionOutputBufferHandler(startInfo);
+            var processHandler = new FunctionOutputBufferHandler(startInfo);
+            processHandler.Start();
+
+            return processHandler;
         }
     }
 }

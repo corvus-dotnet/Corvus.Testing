@@ -45,11 +45,6 @@ namespace Corvus.Testing.AzureFunctions.Internal
             this.Process.OutputDataReceived += this.OnOutputDataReceived;
             this.Process.ErrorDataReceived += this.OnErrorDataReceived;
             this.Process.EnableRaisingEvents = true;
-
-            this.Process.Start();
-
-            this.Process.BeginOutputReadLine();
-            this.Process.BeginErrorReadLine();
         }
 
         /// <summary>
@@ -93,6 +88,17 @@ namespace Corvus.Testing.AzureFunctions.Internal
                     return this.standardError.ToString();
                 }
             }
+        }
+
+        /// <summary>
+        /// Starts the wrapped process.
+        /// </summary>
+        public void Start()
+        {
+            this.Process.Start();
+
+            this.Process.BeginOutputReadLine();
+            this.Process.BeginErrorReadLine();
         }
 
         /// <inheritdoc />
