@@ -28,5 +28,13 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
             Then_I_receive(HttpStatusCode.OK);
             await And_the_response_body_contains("Hello, Jon");
         }
+
+        [Fact]
+        public async Task A_Get_request_without_providing_a_name_in_the_querystring_fails()
+        {
+            await When_I_GET($"http://localhost:{Port}/");
+
+            Then_I_receive(HttpStatusCode.BadRequest);
+        }
     }
 }
