@@ -48,7 +48,7 @@ namespace Corvus.Testing.AzureFunctions
             string testDirectory,
             string path,
             int port,
-            string runtime = "netcoreapp2.1",
+            string runtime = "netcoreapp3.1",
             string provider = "csharp",
             FunctionConfiguration? configuration = null)
         {

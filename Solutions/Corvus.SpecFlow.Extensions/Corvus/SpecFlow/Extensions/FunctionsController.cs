@@ -51,7 +51,7 @@ namespace Corvus.SpecFlow.Extensions
             ScenarioContext? scenarioContext,
             string path,
             int port,
-            string runtime = "netcoreapp2.1",
+            string runtime = "netcoreapp3.1",
             string provider = "csharp")
         {
             FunctionConfiguration? functionConfiguration = null;
