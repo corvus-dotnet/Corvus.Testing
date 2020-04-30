@@ -12,7 +12,7 @@ namespace Corvus.SpecFlow.Extensions.Demo.AzureFunctionsTesting
     using Newtonsoft.Json.Linq;
     using NUnit.Framework;
     using TechTalk.SpecFlow;
-    using Corvus.Testing.AzureFunctions.Internal;
+    using Corvus.Testing.AzureFunctions;
 
     [Binding]
     public class StepBindings

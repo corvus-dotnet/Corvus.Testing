@@ -5,9 +5,9 @@
 namespace Corvus.SpecFlow.Extensions.Demo.AzureFunctionsTesting
 {
     using System.Threading.Tasks;
-    using Corvus.SpecFlow.Extensions;
-    using Corvus.Testing.AzureFunctions.Internal;
+    using Corvus.Testing.AzureFunctions;
     using TechTalk.SpecFlow;
+    using FunctionsController = Corvus.SpecFlow.Extensions.FunctionsController;
 
     [Binding]
     public class DemoFunctionPerScenarioHooks

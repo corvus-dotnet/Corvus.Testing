@@ -5,7 +5,7 @@
 namespace Corvus.SpecFlow.Extensions
 {
     using System.Collections.Generic;
-    using Corvus.Testing.AzureFunctions.Internal;
+    using Corvus.Testing.AzureFunctions;
     using Microsoft.Extensions.Configuration;
     using TechTalk.SpecFlow;
 

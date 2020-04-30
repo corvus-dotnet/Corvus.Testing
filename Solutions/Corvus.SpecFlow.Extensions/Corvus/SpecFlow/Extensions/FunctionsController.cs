@@ -7,7 +7,6 @@ namespace Corvus.SpecFlow.Extensions
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Corvus.Testing.AzureFunctions;
-    using Corvus.Testing.AzureFunctions.Internal;
     using NUnit.Framework;
 
     using TechTalk.SpecFlow;
