@@ -54,5 +54,22 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
             Then_I_receive(HttpStatusCode.OK);
             await And_the_response_body_contains("Hello, Jon");
         }
+
+        [Fact]
+        public async Task A_Post_request_including_names_in_the_querystring_and_request_body_uses_the_name_in_the_querystring()
+        {
+            await this.When_I_POST($"http://localhost:{Port}/?name=Jon", new { name = "Jonathan" });
+
+            Then_I_receive(HttpStatusCode.OK);
+            await And_the_response_body_contains("Hello, Jon");
+        }
+
+        [Fact]
+        public async Task A_Post_request_without_a_query_string_or_request_body_fails()
+        {
+            await this.When_I_POST($"http://localhost:{Port}/");
+
+            Then_I_receive(HttpStatusCode.BadRequest);
+        }
     }
 }
