@@ -45,5 +45,14 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
             Then_I_receive(HttpStatusCode.OK);
             await And_the_response_body_contains("Hello, Jon");
         }
+
+        [Fact]
+        public async Task A_Post_request_including_a_name_in_the_request_body_is_successful()
+        {
+            await this.When_I_POST($"http://localhost:{Port}/", new { name = "Jon" });
+
+            Then_I_receive(HttpStatusCode.OK);
+            await And_the_response_body_contains("Hello, Jon");
+        }
     }
 }
