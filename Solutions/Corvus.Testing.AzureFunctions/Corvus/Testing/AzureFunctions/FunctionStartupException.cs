@@ -9,12 +9,20 @@ namespace Corvus.Testing.AzureFunctions
     /// <inheritdoc />
     public class FunctionStartupException : Exception
     {
-        /// <summary>
-        /// Instantiates a new FunctionStartupException with the provided message.
-        /// </summary>
-        /// <param name="message">The exception message, describing what went wrong.</param>
+        /// <inheritdoc cref="Exception"/>
+        public FunctionStartupException()
+        {
+        }
+
+        /// <inheritdoc cref="Exception"/>
         public FunctionStartupException(string message)
             : base(message)
+        {
+        }
+
+        /// <inheritdoc cref="Exception"/>
+        public FunctionStartupException(string message, Exception innerException)
+            : base(message, innerException)
         {
         }
     }
