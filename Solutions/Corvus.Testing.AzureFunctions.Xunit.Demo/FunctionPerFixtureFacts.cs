@@ -13,17 +13,16 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
     {
         private readonly AzureFunctionFixture fixture;
 
-        public FunctionPerFixtureFacts(AzureFunctionFixture fixture)
-        {
-            this.fixture = fixture;
-        }
+        public FunctionPerFixtureFacts(AzureFunctionFixture fixture) => this.fixture = fixture;
 
-        public int Port => fixture.Port;
+        private int Port => fixture.Port;
+
+        private string Uri => $"http://localhost:{this.Port}/";
 
         [Fact]
         public async Task A_Get_request_including_a_name_in_the_querystring_is_successful()
         {
-            await When_I_GET($"http://localhost:{Port}/?name=Jon");
+            await When_I_GET($"{Uri}?name=Jon");
 
             Then_I_receive(HttpStatusCode.OK);
             await And_the_response_body_contains("Hello, Jon");
@@ -32,7 +31,7 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
         [Fact]
         public async Task A_Get_request_without_providing_a_name_in_the_querystring_fails()
         {
-            await When_I_GET($"http://localhost:{Port}/");
+            await this.When_I_GET($"http://localhost:{this.Port}/");
 
             Then_I_receive(HttpStatusCode.BadRequest);
         }
@@ -40,7 +39,7 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
         [Fact]
         public async Task A_Post_request_including_a_name_in_the_querystring_is_successful()
         {
-            await this.When_I_POST($"http://localhost:{Port}/?name=Jon");
+            await this.When_I_POST($"{Uri}?name=Jon");
 
             Then_I_receive(HttpStatusCode.OK);
             await And_the_response_body_contains("Hello, Jon");
@@ -49,7 +48,7 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
         [Fact]
         public async Task A_Post_request_including_a_name_in_the_request_body_is_successful()
         {
-            await this.When_I_POST($"http://localhost:{Port}/", new { name = "Jon" });
+            await this.When_I_POST(Uri, new { name = "Jon" });
 
             Then_I_receive(HttpStatusCode.OK);
             await And_the_response_body_contains("Hello, Jon");
@@ -58,7 +57,7 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
         [Fact]
         public async Task A_Post_request_including_names_in_the_querystring_and_request_body_uses_the_name_in_the_querystring()
         {
-            await this.When_I_POST($"http://localhost:{Port}/?name=Jon", new { name = "Jonathan" });
+            await this.When_I_POST($"{Uri}?name=Jon", new { name = "Jonathan" });
 
             Then_I_receive(HttpStatusCode.OK);
             await And_the_response_body_contains("Hello, Jon");
@@ -67,7 +66,7 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
         [Fact]
         public async Task A_Post_request_without_a_query_string_or_request_body_fails()
         {
-            await this.When_I_POST($"http://localhost:{Port}/");
+            await this.When_I_POST(Uri);
 
             Then_I_receive(HttpStatusCode.BadRequest);
         }
