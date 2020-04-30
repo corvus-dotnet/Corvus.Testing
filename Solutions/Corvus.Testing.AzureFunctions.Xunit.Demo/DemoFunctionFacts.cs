@@ -24,6 +24,11 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
             this.lastHttpResponseMessage = await this.client.GetAsync(uri).ConfigureAwait(false);
         }
 
+        protected async Task When_I_POST(string uri)
+        {
+            this.lastHttpResponseMessage = await this.client.PostAsync(uri, null).ConfigureAwait(false);
+        }
+
         protected void Then_I_receive(HttpStatusCode expected)
         {
             Assert.NotNull(this.lastHttpResponseMessage);
