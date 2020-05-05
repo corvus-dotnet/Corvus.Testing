@@ -77,14 +77,14 @@ namespace Corvus.Testing.AzureFunctions
             if (bufferHandler.ExitCode.IsCompleted)
             {
                 int exitCode = await bufferHandler.ExitCode.ConfigureAwait(false);
-                throw new ProcessStartupException(
+                throw new FunctionStartupException(
                     $"Function host process terminated unexpectedly with exit code {exitCode}.",
                     stderr: bufferHandler.StandardErrorText);
             }
 
             if (!bufferHandler.JobHostStarted.IsCompleted)
             {
-                throw new ProcessStartupException("Timed out while starting functions instance.");
+                throw new FunctionStartupException("Timed out while starting functions instance.");
             }
 
             Console.WriteLine();
@@ -225,7 +225,7 @@ namespace Corvus.Testing.AzureFunctions
 
             if (!processHandler.ExitCode.IsCompleted)
             {
-                throw new ProcessStartupException(
+                throw new FunctionStartupException(
                     "npm task did not exit before timeout.",
                     stdout: processHandler.StandardOutputText,
                     stderr: processHandler.StandardErrorText);
@@ -235,7 +235,7 @@ namespace Corvus.Testing.AzureFunctions
 
             if (processHandler.Process.ExitCode != 0)
             {
-                throw new ProcessStartupException("Unable to run npm.", stderr: processHandler.StandardErrorText);
+                throw new FunctionStartupException("Unable to run npm.", stderr: processHandler.StandardErrorText);
             }
 
             // We get a newline character on the end of the standard output, so we need to
