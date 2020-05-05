@@ -31,14 +31,12 @@ namespace Corvus.SpecFlow.Extensions.Demo.AzureFunctionsTesting
         [Given("I have set additional configuration for functions instances")]
         public void GivenIHaveSetAdditionalConfigurationForFunctionsInstances(Table table)
         {
-            var functionConfiguration = new FunctionConfiguration();
+            FunctionConfiguration functionConfiguration = FunctionsBindings.GetFunctionConfiguration(this.scenarioContext);
 
             foreach (TableRow row in table.Rows)
             {
                 functionConfiguration.EnvironmentVariables.Add(row[0], row[1]);
             }
-
-            this.scenarioContext.Set(functionConfiguration);
         }
 
         [When("I send a GET request to '(.*)'")]

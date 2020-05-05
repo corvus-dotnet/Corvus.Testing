@@ -5,7 +5,8 @@
 namespace Corvus.SpecFlow.Extensions
 {
     using System.Threading.Tasks;
-
+    using Corvus.Testing.AzureFunctions;
+    using NUnit.Framework;
     using TechTalk.SpecFlow;
 
     /// <summary>
@@ -14,20 +15,55 @@ namespace Corvus.SpecFlow.Extensions
     [Binding]
     public class FunctionsBindings
     {
-        private readonly FunctionsController functionsController;
-        private readonly FeatureContext featureContext;
         private readonly ScenarioContext scenarioContext;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FunctionsBindings"/> class.
         /// </summary>
-        /// <param name="featureContext">The current feature context.</param>
         /// <param name="scenarioContext">The current scenario context.</param>
-        public FunctionsBindings(FeatureContext featureContext, ScenarioContext scenarioContext)
+        public FunctionsBindings(ScenarioContext scenarioContext)
         {
-            this.functionsController = new FunctionsController();
-            this.featureContext = featureContext;
             this.scenarioContext = scenarioContext;
+        }
+
+        /// <summary>
+        /// Retrieves the current functions controller from the supplied context.
+        /// </summary>
+        /// <param name="context">The SpecFlow context to retrieve from.</param>
+        /// <returns>The FunctionsController.</returns>
+        /// <remarks>
+        /// If the controller hasn't already been added to the context, this method will create
+        /// and add a new instance.
+        /// </remarks>
+        public static FunctionsController GetFunctionsController(SpecFlowContext context)
+        {
+            if (!context.TryGetValue(out FunctionsController controller))
+            {
+                controller = new FunctionsController();
+                context.Set(controller);
+            }
+
+            return controller;
+        }
+
+        /// <summary>
+        /// Retrieves the <see cref="FunctionConfiguration"/> from the context.
+        /// </summary>
+        /// <param name="testContext">The context in which the configuration is stored.</param>
+        /// <returns>The <see cref="FunctionConfiguration"/>.</returns>
+        /// <remarks>
+        /// If a <see cref="FunctionConfiguration"/> hasn't already been added to the context,
+        /// this method will create and add a new instance.
+        /// </remarks>
+        public static FunctionConfiguration GetFunctionConfiguration(SpecFlowContext testContext)
+        {
+            if (!testContext.TryGetValue(out FunctionConfiguration value))
+            {
+                value = new FunctionConfiguration();
+                testContext.Set(value);
+            }
+
+            return value;
         }
 
         /// <summary>
@@ -39,7 +75,8 @@ namespace Corvus.SpecFlow.Extensions
         [Given("I start a functions instance for the local project '(.*)' on port (.*)")]
         public Task StartAFunctionsInstance(string path, int port)
         {
-            return this.functionsController.StartFunctionsInstance(this.featureContext, this.scenarioContext, path, port);
+            return GetFunctionsController(this.scenarioContext)
+                .StartFunctionsInstance(TestContext.CurrentContext.TestDirectory, path, port);
         }
 
         /// <summary>
@@ -52,7 +89,15 @@ namespace Corvus.SpecFlow.Extensions
         [Given("I start a functions instance for the local project '(.*)' on port (.*) with runtime '(.*)'")]
         public Task StartAFunctionsInstance(string path, int port, string runtime)
         {
-            return this.functionsController.StartFunctionsInstance(this.featureContext, this.scenarioContext, path, port, runtime, "csharp");
+            FunctionConfiguration configuration = FunctionsBindings.GetFunctionConfiguration(this.scenarioContext);
+            return GetFunctionsController(this.scenarioContext)
+                .StartFunctionsInstance(
+                    TestContext.CurrentContext.TestDirectory,
+                    path,
+                    port,
+                    runtime,
+                    "csharp",
+                    configuration);
         }
 
         /// <summary>
@@ -61,7 +106,8 @@ namespace Corvus.SpecFlow.Extensions
         [AfterScenario]
         public void TeardownFunctionsAfterScenario()
         {
-            this.scenarioContext.RunAndStoreExceptions(this.functionsController.TeardownFunctions);
+            this.scenarioContext.RunAndStoreExceptions(
+                GetFunctionsController(this.scenarioContext).TeardownFunctions);
         }
     }
 }
