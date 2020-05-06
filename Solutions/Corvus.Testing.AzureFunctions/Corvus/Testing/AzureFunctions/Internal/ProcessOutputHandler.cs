@@ -2,7 +2,7 @@
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
-namespace Corvus.SpecFlow.Extensions.Internal
+namespace Corvus.Testing.AzureFunctions.Internal
 {
     using System;
     using System.Diagnostics;
@@ -45,11 +45,6 @@ namespace Corvus.SpecFlow.Extensions.Internal
             this.Process.OutputDataReceived += this.OnOutputDataReceived;
             this.Process.ErrorDataReceived += this.OnErrorDataReceived;
             this.Process.EnableRaisingEvents = true;
-
-            this.Process.Start();
-
-            this.Process.BeginOutputReadLine();
-            this.Process.BeginErrorReadLine();
         }
 
         /// <summary>
@@ -93,6 +88,17 @@ namespace Corvus.SpecFlow.Extensions.Internal
                     return this.standardError.ToString();
                 }
             }
+        }
+
+        /// <summary>
+        /// Starts the wrapped process.
+        /// </summary>
+        public void Start()
+        {
+            this.Process.Start();
+
+            this.Process.BeginOutputReadLine();
+            this.Process.BeginErrorReadLine();
         }
 
         /// <inheritdoc />

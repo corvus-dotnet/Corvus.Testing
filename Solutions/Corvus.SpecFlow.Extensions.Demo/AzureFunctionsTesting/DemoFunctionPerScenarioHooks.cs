@@ -5,40 +5,40 @@
 namespace Corvus.SpecFlow.Extensions.Demo.AzureFunctionsTesting
 {
     using System.Threading.Tasks;
-    using Corvus.SpecFlow.Extensions;
+    using Corvus.Testing.AzureFunctions;
+    using NUnit.Framework;
     using TechTalk.SpecFlow;
 
     [Binding]
     public class DemoFunctionPerScenarioHooks
     {
         [BeforeScenario("usingDemoFunctionPerScenario")]
-        public Task StartFunctionsAsync(FeatureContext featureContext, ScenarioContext scenarioContext)
+        public Task StartFunctionsAsync(ScenarioContext scenarioContext)
         {
-            var functionsController = new FunctionsController();
-            scenarioContext.Set(functionsController);
+            FunctionsController functionsController = FunctionsBindings.GetFunctionsController(scenarioContext);
+            FunctionConfiguration functionConfiguration = FunctionsBindings.GetFunctionConfiguration(scenarioContext);
 
             return functionsController.StartFunctionsInstance(
-                featureContext,
-                scenarioContext,
+                TestContext.CurrentContext.TestDirectory,
                 "Corvus.SpecFlow.Extensions.DemoFunction",
                 7075,
-                "netcoreapp3.1");
+                "netcoreapp3.1",
+                configuration: functionConfiguration);
         }
 
         [BeforeScenario("usingDemoFunctionPerScenarioWithAdditionalConfiguration")]
-        public Task StartFunctionWithAdditionalConfigurationAsync(FeatureContext featureContext, ScenarioContext scenarioContext)
+        public Task StartFunctionWithAdditionalConfigurationAsync(ScenarioContext scenarioContext)
         {
-            var functionConfiguration = new FunctionConfiguration();
+            FunctionConfiguration functionConfiguration = FunctionsBindings.GetFunctionConfiguration(scenarioContext);
             functionConfiguration.EnvironmentVariables.Add("ResponseMessage", "Welcome, {name}");
-            scenarioContext.Set(functionConfiguration);
 
-            return this.StartFunctionsAsync(featureContext, scenarioContext);
+            return this.StartFunctionsAsync(scenarioContext);
         }
 
         [AfterScenario("usingDemoFunctionPerScenario", "usingDemoFunctionPerScenarioWithAdditionalConfiguration")]
         public void StopFunction(ScenarioContext scenarioContext)
         {
-            FunctionsController functionsController = scenarioContext.Get<FunctionsController>();
+            FunctionsController functionsController = FunctionsBindings.GetFunctionsController(scenarioContext);
             functionsController.TeardownFunctions();
         }
     }

@@ -2,7 +2,7 @@
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
-namespace Corvus.SpecFlow.Extensions.Internal
+namespace Corvus.Testing.AzureFunctions.Internal
 {
     using System.Diagnostics;
     using System.Threading.Tasks;

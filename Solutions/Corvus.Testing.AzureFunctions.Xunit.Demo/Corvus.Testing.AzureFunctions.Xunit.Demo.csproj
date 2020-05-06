@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <Nullable>enable</Nullable>
+
+    <!-- Disabling IDE0009, SA1101 (prefix `this`) to reduce language cruft in the test methods.
+         Disabling SA1600, SA1602 (all public types and members to be documented) because test projects need to make lots of types
+         public for technical reasons, but they are not meant for public consumption, so XML doc comments are only
+         appropriate if they aid understanding within the project.
+    -->
+    <NoWarn>IDE0009;SA1101;SA1600;SA1602;CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Endjin.RecommendedPractices" Version="0.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Corvus.SpecFlow.Extensions.DemoFunction\Corvus.SpecFlow.Extensions.DemoFunction.csproj" />
+    <ProjectReference Include="..\Corvus.Testing.AzureFunctions\Corvus.Testing.AzureFunctions.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -4,6 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Nullable>enable</Nullable>
     <Copyright>Copyright (c) Endjin Limited 2020. All rights reserved.</Copyright>
+    <NoWarn>RCS1194</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -19,16 +20,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
-    <PackageReference Include="NUnit" Version="3.12.0" />
-    <PackageReference Include="SpecFlow" Version="3.0.225" />
     <PackageReference Include="System.Management" Version="4.7.0" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Corvus.Testing.AzureFunctions\Corvus.Testing.AzureFunctions.csproj" />
-  </ItemGroup>
-
 </Project>
