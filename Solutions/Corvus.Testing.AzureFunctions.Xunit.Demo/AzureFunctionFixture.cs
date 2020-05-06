@@ -27,7 +27,7 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
         {
             await this.function.StartFunctionsInstance(
                 Environment.CurrentDirectory,
-                "Corvus.SpecFlow.Extensions.DemoFunction",
+                "Corvus.Testing.AzureFunctions.DemoFunction",
                 this.Port,
                 "netcoreapp3.1");
         }
