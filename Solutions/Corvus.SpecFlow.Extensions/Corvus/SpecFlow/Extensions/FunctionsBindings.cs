@@ -49,18 +49,18 @@ namespace Corvus.SpecFlow.Extensions
         /// <summary>
         /// Retrieves the <see cref="FunctionConfiguration"/> from the context.
         /// </summary>
-        /// <param name="testContext">The context in which the configuration is stored.</param>
+        /// <param name="context">The context in which the configuration is stored.</param>
         /// <returns>The <see cref="FunctionConfiguration"/>.</returns>
         /// <remarks>
         /// If a <see cref="FunctionConfiguration"/> hasn't already been added to the context,
         /// this method will create and add a new instance.
         /// </remarks>
-        public static FunctionConfiguration GetFunctionConfiguration(SpecFlowContext testContext)
+        public static FunctionConfiguration GetFunctionConfiguration(SpecFlowContext context)
         {
-            if (!testContext.TryGetValue(out FunctionConfiguration value))
+            if (!context.TryGetValue(out FunctionConfiguration value))
             {
                 value = new FunctionConfiguration();
-                testContext.Set(value);
+                context.Set(value);
             }
 
             return value;
