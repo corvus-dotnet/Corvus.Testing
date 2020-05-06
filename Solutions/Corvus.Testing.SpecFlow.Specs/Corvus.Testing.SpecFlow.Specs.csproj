@@ -40,7 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Corvus.SpecFlow.Extensions\Corvus.SpecFlow.Extensions.csproj" />
+    <ProjectReference Include="..\Corvus.Testing.SpecFlow\Corvus.Testing.SpecFlow.csproj" />
   </ItemGroup>
  
   <ItemGroup>
