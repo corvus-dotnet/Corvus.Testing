@@ -39,7 +39,7 @@ namespace Corvus.Testing.AzureFunctions
         /// usually available from your testing framework's context object(s).</param>
         /// <param name="path">The location of the functions project.</param>
         /// <param name="port">The port on which to start the functions instance.</param>
-        /// <param name="runtime">The runtime version, defaults to netcoreapp2.1.</param>
+        /// <param name="runtime">The runtime version for use with the function host (e.g. netcoreapp3.1).</param>
         /// <param name="provider">The functions provider. Defaults to csharp.</param>
         /// <param name="configuration">A <see cref="FunctionConfiguration"/> instance, for conveying
         /// configuration values via environment variables to the function host process.</param>
@@ -48,7 +48,7 @@ namespace Corvus.Testing.AzureFunctions
             string testDirectory,
             string path,
             int port,
-            string runtime = "netcoreapp3.1",
+            string runtime,
             string provider = "csharp",
             FunctionConfiguration? configuration = null)
         {

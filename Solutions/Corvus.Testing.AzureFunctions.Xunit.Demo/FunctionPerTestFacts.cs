@@ -81,7 +81,8 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
             await this.function.StartFunctionsInstance(
                 Environment.CurrentDirectory,
                 "Corvus.SpecFlow.Extensions.DemoFunction",
-                this.Port);
+                this.Port,
+                "netcoreapp3.1");
         }
 
         public Task DisposeAsync()

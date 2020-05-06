@@ -25,6 +25,7 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
                 Environment.CurrentDirectory,
                 "Corvus.SpecFlow.Extensions.DemoFunction",
                 this.Port,
+                "netcoreapp3.1",
                 configuration: configuration);
         }
 

@@ -22,6 +22,7 @@ namespace Corvus.SpecFlow.Extensions.Demo.AzureFunctionsTesting
                 TestContext.CurrentContext.TestDirectory,
                 "Corvus.SpecFlow.Extensions.DemoFunction",
                 7075,
+                "netcoreapp3.1",
                 configuration: functionConfiguration);
         }
 

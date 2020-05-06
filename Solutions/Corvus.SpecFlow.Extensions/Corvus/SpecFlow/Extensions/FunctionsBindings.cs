@@ -76,7 +76,7 @@ namespace Corvus.SpecFlow.Extensions
         public Task StartAFunctionsInstance(string path, int port)
         {
             return GetFunctionsController(this.scenarioContext)
-                .StartFunctionsInstance(TestContext.CurrentContext.TestDirectory, path, port);
+                .StartFunctionsInstance(TestContext.CurrentContext.TestDirectory, path, port, "netcoreapp3.1");
         }
 
         /// <summary>
