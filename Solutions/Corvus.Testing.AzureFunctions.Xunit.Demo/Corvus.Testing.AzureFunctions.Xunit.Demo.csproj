@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Corvus.SpecFlow.Extensions.DemoFunction\Corvus.SpecFlow.Extensions.DemoFunction.csproj" />
     <ProjectReference Include="..\Corvus.Testing.AzureFunctions\Corvus.Testing.AzureFunctions.csproj" />
   </ItemGroup>
 

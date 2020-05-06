@@ -5,8 +5,8 @@
 namespace Corvus.Testing.AzureFunctions.SpecFlow
 {
     using System.Threading.Tasks;
-    using Corvus.SpecFlow.Extensions;
     using Corvus.Testing.AzureFunctions;
+    using Corvus.Testing.SpecFlow;
     using NUnit.Framework;
     using TechTalk.SpecFlow;
 

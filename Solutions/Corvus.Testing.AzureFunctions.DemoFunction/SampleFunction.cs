@@ -2,7 +2,7 @@
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
-namespace Corvus.SpecFlow.Extensions.DemoFunction
+namespace Corvus.Testing.SpecFlow.DemoFunction
 {
     using System.IO;
     using System.Threading.Tasks;

@@ -2,7 +2,7 @@
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
-namespace Corvus.SpecFlow.Extensions.Specs.Containers
+namespace Corvus.Testing.SpecFlow.Specs.Containers
 {
     using NUnit.Framework;
     using TechTalk.SpecFlow;

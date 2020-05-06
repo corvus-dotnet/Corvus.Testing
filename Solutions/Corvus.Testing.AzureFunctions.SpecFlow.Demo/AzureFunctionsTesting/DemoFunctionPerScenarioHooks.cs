@@ -2,7 +2,7 @@
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
-namespace Corvus.SpecFlow.Extensions.Demo.AzureFunctionsTesting
+namespace Corvus.Testing.SpecFlow.Demo.AzureFunctionsTesting
 {
     using System.Threading.Tasks;
     using Corvus.Testing.AzureFunctions;

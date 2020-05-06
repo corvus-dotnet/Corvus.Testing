@@ -2,9 +2,9 @@
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
-namespace Corvus.SpecFlow.Extensions
+namespace Corvus.Testing.SpecFlow
 {
-    using Corvus.SpecFlow.Extensions.Internal;
+    using Corvus.Testing.SpecFlow.Internal;
     using TechTalk.SpecFlow;
     using TechTalk.SpecFlow.Assist;
 

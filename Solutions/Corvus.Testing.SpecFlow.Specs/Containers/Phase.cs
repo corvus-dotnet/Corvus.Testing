@@ -2,7 +2,7 @@
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
-namespace Corvus.SpecFlow.Extensions.Specs.Containers
+namespace Corvus.Testing.SpecFlow.Specs.Containers
 {
     /// <summary>
     /// Represents the moment within test execution that we want to attempt or measure something.
