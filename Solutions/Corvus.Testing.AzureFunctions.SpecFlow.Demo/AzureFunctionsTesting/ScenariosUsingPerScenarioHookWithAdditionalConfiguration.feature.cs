@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Corvus.SpecFlow.Extensions.Demo.AzureFunctionsTesting
+namespace Corvus.Testing.AzureFunctions.SpecFlow.Demo.AzureFunctionsTesting
 {
     using TechTalk.SpecFlow;
     using System;
@@ -20,26 +20,26 @@ namespace Corvus.SpecFlow.Extensions.Demo.AzureFunctionsTesting
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.1.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("Feature using per-feature hook with additional configuration")]
-    [NUnit.Framework.CategoryAttribute("usingDemoFunctionPerFeatureWithAdditionalConfiguration")]
-    public partial class FeatureUsingPer_FeatureHookWithAdditionalConfigurationFeature
+    [NUnit.Framework.DescriptionAttribute("Feature using per-scenario hook with additional configuration")]
+    [NUnit.Framework.CategoryAttribute("usingDemoFunctionPerScenarioWithAdditionalConfiguration")]
+    public partial class FeatureUsingPer_ScenarioHookWithAdditionalConfigurationFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
         
         private string[] _featureTags = new string[] {
-                "usingDemoFunctionPerFeatureWithAdditionalConfiguration"};
+                "usingDemoFunctionPerScenarioWithAdditionalConfiguration"};
         
-#line 1 "ScenariosUsingPerFeatureHookWithAdditionalConfiguration.feature"
+#line 1 "ScenariosUsingPerScenarioHookWithAdditionalConfiguration.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Feature using per-feature hook with additional configuration", "\tIn order to test my Azure functions\r\n\tAs a developer\r\n\tI want to be able to star" +
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Feature using per-scenario hook with additional configuration", "\tIn order to test my Azure functions\r\n\tAs a developer\r\n\tI want to be able to star" +
                     "t an Azure function with specific configuration for each scenario using a hook", ProgrammingLanguage.CSharp, new string[] {
-                        "usingDemoFunctionPerFeatureWithAdditionalConfiguration"});
+                        "usingDemoFunctionPerScenarioWithAdditionalConfiguration"});
             testRunner.OnFeatureStart(featureInfo);
         }
         

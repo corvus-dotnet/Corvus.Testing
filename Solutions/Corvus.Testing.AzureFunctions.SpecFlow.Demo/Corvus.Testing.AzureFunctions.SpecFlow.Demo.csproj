@@ -41,6 +41,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Corvus.SpecFlow.Extensions\Corvus.SpecFlow.Extensions.csproj" />
+    <ProjectReference Include="..\Corvus.Testing.AzureFunctions.SpecFlow\Corvus.Testing.AzureFunctions.SpecFlow.csproj" />
   </ItemGroup>
 
   <ItemGroup>

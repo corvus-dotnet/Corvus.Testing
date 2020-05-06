@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Corvus.SpecFlow.Extensions.Demo.AzureFunctionsTesting
+namespace Corvus.Testing.AzureFunctions.SpecFlow.Demo.AzureFunctionsTesting
 {
     using TechTalk.SpecFlow;
     using System;
@@ -20,26 +20,26 @@ namespace Corvus.SpecFlow.Extensions.Demo.AzureFunctionsTesting
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.1.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("Feature using per-scenario hook")]
-    [NUnit.Framework.CategoryAttribute("usingDemoFunctionPerScenario")]
-    public partial class FeatureUsingPer_ScenarioHookFeature
+    [NUnit.Framework.DescriptionAttribute("Feature using per-feature hook")]
+    [NUnit.Framework.CategoryAttribute("usingDemoFunctionPerFeature")]
+    public partial class FeatureUsingPer_FeatureHookFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
         
         private string[] _featureTags = new string[] {
-                "usingDemoFunctionPerScenario"};
+                "usingDemoFunctionPerFeature"};
         
-#line 1 "ScenariosUsingPerScenarioHook.feature"
+#line 1 "ScenariosUsingPerFeatureHook.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Feature using per-scenario hook", "\tIn order to test my Azure functions\r\n\tAs a developer\r\n\tI want to be able to star" +
-                    "t an Azure function for each scenario using a hook", ProgrammingLanguage.CSharp, new string[] {
-                        "usingDemoFunctionPerScenario"});
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Feature using per-feature hook", "\tIn order to test my Azure functions\r\n\tAs a developer\r\n\tI want to be able to star" +
+                    "t an Azure function for each feature using a hook", ProgrammingLanguage.CSharp, new string[] {
+                        "usingDemoFunctionPerFeature"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -217,14 +217,14 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                             "PropertyName",
                             "Value"});
-                table3.AddRow(new string[] {
+                table1.AddRow(new string[] {
                             "name",
                             "Jon"});
 #line 23
- testRunner.When("I send a POST request to \'http://localhost:7075/\' with data in the request body", ((string)(null)), table3, "When ");
+ testRunner.When("I send a POST request to \'http://localhost:7075/\' with data in the request body", ((string)(null)), table1, "When ");
 #line hidden
 #line 26
  testRunner.Then("I receive a 200 response code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -264,15 +264,15 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                             "PropertyName",
                             "Value"});
-                table4.AddRow(new string[] {
+                table2.AddRow(new string[] {
                             "name",
                             "Jonathan"});
 #line 30
  testRunner.When("I send a POST request to \'http://localhost:7075/?name=Jon\' with data in the reque" +
-                        "st body", ((string)(null)), table4, "When ");
+                        "st body", ((string)(null)), table2, "When ");
 #line hidden
 #line 33
  testRunner.Then("I receive a 200 response code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
