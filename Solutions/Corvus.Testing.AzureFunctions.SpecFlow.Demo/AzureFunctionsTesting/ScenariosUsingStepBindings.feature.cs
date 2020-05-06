@@ -101,8 +101,8 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 7
- testRunner.Given("I start a functions instance for the local project \'Corvus.Testing.SpecFlow.DemoF" +
-                        "unction\' on port 7075 with runtime \'netcoreapp3.1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I start a functions instance for the local project \'Corvus.Testing.AzureFunctions" +
+                        ".DemoFunction\' on port 7075 with runtime \'netcoreapp3.1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 8
  testRunner.When("I send a GET request to \'http://localhost:7075/?name=Jon\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -144,8 +144,8 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 13
- testRunner.Given("I start a functions instance for the local project \'Corvus.Testing.SpecFlow.DemoF" +
-                        "unction\' on port 7075 with runtime \'netcoreapp3.1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I start a functions instance for the local project \'Corvus.Testing.AzureFunctions" +
+                        ".DemoFunction\' on port 7075 with runtime \'netcoreapp3.1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 14
  testRunner.When("I send a GET request to \'http://localhost:7075/\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -184,8 +184,8 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 18
- testRunner.Given("I start a functions instance for the local project \'Corvus.Testing.SpecFlow.DemoF" +
-                        "unction\' on port 7075 with runtime \'netcoreapp3.1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I start a functions instance for the local project \'Corvus.Testing.AzureFunctions" +
+                        ".DemoFunction\' on port 7075 with runtime \'netcoreapp3.1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 19
  testRunner.When("I send a POST request to \'http://localhost:7075/?name=Jon\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -227,8 +227,8 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 24
- testRunner.Given("I start a functions instance for the local project \'Corvus.Testing.SpecFlow.DemoF" +
-                        "unction\' on port 7075 with runtime \'netcoreapp3.1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I start a functions instance for the local project \'Corvus.Testing.AzureFunctions" +
+                        ".DemoFunction\' on port 7075 with runtime \'netcoreapp3.1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
                 TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
                             "PropertyName",
@@ -278,8 +278,8 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 32
- testRunner.Given("I start a functions instance for the local project \'Corvus.Testing.SpecFlow.DemoF" +
-                        "unction\' on port 7075 with runtime \'netcoreapp3.1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I start a functions instance for the local project \'Corvus.Testing.AzureFunctions" +
+                        ".DemoFunction\' on port 7075 with runtime \'netcoreapp3.1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
                 TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
                             "PropertyName",
@@ -328,8 +328,8 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 40
- testRunner.Given("I start a functions instance for the local project \'Corvus.Testing.SpecFlow.DemoF" +
-                        "unction\' on port 7075 with runtime \'netcoreapp3.1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I start a functions instance for the local project \'Corvus.Testing.AzureFunctions" +
+                        ".DemoFunction\' on port 7075 with runtime \'netcoreapp3.1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 41
  testRunner.When("I send a POST request to \'http://localhost:7075/\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -377,8 +377,8 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("I have set additional configuration for functions instances", ((string)(null)), table7, "Given ");
 #line hidden
 #line 48
- testRunner.And("I start a functions instance for the local project \'Corvus.Testing.SpecFlow.DemoF" +
-                        "unction\' on port 7075 with runtime \'netcoreapp3.1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I start a functions instance for the local project \'Corvus.Testing.AzureFunctions" +
+                        ".DemoFunction\' on port 7075 with runtime \'netcoreapp3.1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 49
  testRunner.When("I send a GET request to \'http://localhost:7075/?name=Jon\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
