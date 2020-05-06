@@ -1,4 +1,4 @@
-# Corvus.SpecFlow.Extensions
+# Corvus.Testing
 [![Build Status](https://dev.azure.com/endjin-labs/Corvus.Testing/_apis/build/status/corvus-dotnet.Corvus.Testing?branchName=master)](https://dev.azure.com/endjin-labs/Corvus.Testing/_build/latest?definitionId=4&branchName=master)
 [![GitHub license](https://img.shields.io/badge/License-Apache%202-blue.svg)](https://raw.githubusercontent.com/corvus-dotnet/Corvus.Testing/master/LICENSE)
 [![IMM](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/total?cache=false)](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/total?cache=false)
