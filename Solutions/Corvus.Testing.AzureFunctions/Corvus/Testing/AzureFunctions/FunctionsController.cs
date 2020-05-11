@@ -44,7 +44,6 @@ namespace Corvus.Testing.AzureFunctions
         /// <returns>A task that completes once the function instance has started.</returns>
         public async Task StartFunctionsInstance(string path, int port, string runtime, string provider = "csharp", FunctionConfiguration? configuration = null)
         {
-            string testDirectory = Environment.CurrentDirectory;
             Console.WriteLine($"Starting a function instance for project {path} on port {port}");
             Console.WriteLine("\tStarting process");
 
@@ -52,7 +51,7 @@ namespace Corvus.Testing.AzureFunctions
                 port,
                 provider,
                 await GetToolPath(),
-                GetWorkingDirectory(testDirectory, path, runtime),
+                GetWorkingDirectory(path, runtime),
                 configuration);
 
             lock (this.sync)
@@ -236,8 +235,9 @@ namespace Corvus.Testing.AzureFunctions
             return processHandler.StandardOutputText.Trim();
         }
 
-        private static string GetWorkingDirectory(string currentTestDirectory, string path, string runtime)
+        private static string GetWorkingDirectory(string path, string runtime)
         {
+            string currentTestDirectory = Environment.CurrentDirectory;
             string directoryExtension = $"\\bin\\release\\{runtime}";
 
             string lowerInvariantCurrentDirectory = currentTestDirectory.ToLowerInvariant();
