@@ -239,20 +239,31 @@ namespace Corvus.Testing.AzureFunctions
         {
             string currentDirectory = Environment.CurrentDirectory.ToLowerInvariant();
 
-            string directoryExtension = $"\\bin\\release\\{runtime}";
+            string directoryExtension = @$"bin\release\{runtime}";
             if (currentDirectory.Contains("debug"))
             {
-                directoryExtension = $"\\bin\\debug\\{runtime}";
+                directoryExtension = @$"bin\debug\{runtime}";
             }
 
             Console.WriteLine($"\tCurrent directory: {currentDirectory}");
 
-            string root = currentDirectory.Substring(
-                0,
-                currentDirectory.IndexOf(@"\solutions\") + 11);
+            var candidate = new DirectoryInfo(currentDirectory);
+            bool candidateIsSuccessful = false;
+
+            while (!candidateIsSuccessful && candidate.Parent != null)
+            {
+                // We can skip the current directory and go straight to its parent, as it will
+                // never be the directory we want.
+                candidate = candidate.Parent;
+
+                string pathToTest = Path.Combine(candidate.FullName, path, directoryExtension);
+                candidateIsSuccessful = Directory.Exists(pathToTest);
+            }
+
+            string root = candidate.FullName;
 
             Console.WriteLine($"\tRoot: {root}");
-            return root + path + directoryExtension;
+            return Path.Combine(root, path, directoryExtension);
         }
 
         private static FunctionOutputBufferHandler StartFunctionHostProcess(
