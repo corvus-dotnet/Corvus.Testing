@@ -18,7 +18,7 @@ namespace Corvus.Testing.AzureFunctions
     /// <remarks>
     /// <para>
     /// This class supports a limited degree of thread safety: you can have multiple calls to
-    /// <see cref="StartFunctionsInstance(string, string, int, string, string, FunctionConfiguration?)"/> in progress simultaneously for a single
+    /// <see cref="StartFunctionsInstance(string, int, string, string, FunctionConfiguration?)"/> in progress simultaneously for a single
     /// instance of this class, but <see cref="TeardownFunctions"/> must not be called concurrently
     /// with any other calls into this class. The intention is to enable tests to spin up multiple
     /// functions simultaneously. This is useful because function startup can be the dominant
@@ -35,8 +35,6 @@ namespace Corvus.Testing.AzureFunctions
         /// <summary>
         /// Start a functions instance.
         /// </summary>
-        /// <param name="testDirectory">The directory associated with the current test context,
-        /// usually available from your testing framework's context object(s).</param>
         /// <param name="path">The location of the functions project.</param>
         /// <param name="port">The port on which to start the functions instance.</param>
         /// <param name="runtime">The runtime version for use with the function host (e.g. netcoreapp3.1).</param>
@@ -44,14 +42,9 @@ namespace Corvus.Testing.AzureFunctions
         /// <param name="configuration">A <see cref="FunctionConfiguration"/> instance, for conveying
         /// configuration values via environment variables to the function host process.</param>
         /// <returns>A task that completes once the function instance has started.</returns>
-        public async Task StartFunctionsInstance(
-            string testDirectory,
-            string path,
-            int port,
-            string runtime,
-            string provider = "csharp",
-            FunctionConfiguration? configuration = null)
+        public async Task StartFunctionsInstance(string path, int port, string runtime, string provider = "csharp", FunctionConfiguration? configuration = null)
         {
+            string testDirectory = Environment.CurrentDirectory;
             Console.WriteLine($"Starting a function instance for project {path} on port {port}");
             Console.WriteLine("\tStarting process");
 

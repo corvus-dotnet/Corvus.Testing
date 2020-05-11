@@ -79,7 +79,6 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
         public async Task InitializeAsync()
         {
             await this.function.StartFunctionsInstance(
-                Environment.CurrentDirectory,
                 "Corvus.Testing.AzureFunctions.DemoFunction",
                 this.Port,
                 "netcoreapp3.1");
