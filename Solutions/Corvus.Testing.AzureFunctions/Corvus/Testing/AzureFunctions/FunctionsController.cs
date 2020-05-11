@@ -237,20 +237,19 @@ namespace Corvus.Testing.AzureFunctions
 
         private static string GetWorkingDirectory(string path, string runtime)
         {
-            string currentTestDirectory = Environment.CurrentDirectory;
-            string directoryExtension = $"\\bin\\release\\{runtime}";
+            string currentDirectory = Environment.CurrentDirectory.ToLowerInvariant();
 
-            string lowerInvariantCurrentDirectory = currentTestDirectory.ToLowerInvariant();
-            if (lowerInvariantCurrentDirectory.Contains("debug"))
+            string directoryExtension = $"\\bin\\release\\{runtime}";
+            if (currentDirectory.Contains("debug"))
             {
                 directoryExtension = $"\\bin\\debug\\{runtime}";
             }
 
-            Console.WriteLine($"\tCurrent directory: {lowerInvariantCurrentDirectory}");
+            Console.WriteLine($"\tCurrent directory: {currentDirectory}");
 
-            string root = currentTestDirectory.Substring(
+            string root = currentDirectory.Substring(
                 0,
-                currentTestDirectory.IndexOf(@"\Solutions\") + 11);
+                currentDirectory.IndexOf(@"\solutions\") + 11);
 
             Console.WriteLine($"\tRoot: {root}");
             return root + path + directoryExtension;
