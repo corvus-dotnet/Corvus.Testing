@@ -22,7 +22,6 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
             configuration.EnvironmentVariables.Add("ResponseMessage", this.Greet("{name}"));
 
             await this.function.StartFunctionsInstance(
-                Environment.CurrentDirectory,
                 "Corvus.Testing.AzureFunctions.DemoFunction",
                 this.Port,
                 "netcoreapp3.1",

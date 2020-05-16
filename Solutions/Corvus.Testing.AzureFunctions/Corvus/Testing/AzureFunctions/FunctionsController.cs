@@ -18,7 +18,7 @@ namespace Corvus.Testing.AzureFunctions
     /// <remarks>
     /// <para>
     /// This class supports a limited degree of thread safety: you can have multiple calls to
-    /// <see cref="StartFunctionsInstance(string, string, int, string, string, FunctionConfiguration?)"/> in progress simultaneously for a single
+    /// <see cref="StartFunctionsInstance(string, int, string, string, FunctionConfiguration?)"/> in progress simultaneously for a single
     /// instance of this class, but <see cref="TeardownFunctions"/> must not be called concurrently
     /// with any other calls into this class. The intention is to enable tests to spin up multiple
     /// functions simultaneously. This is useful because function startup can be the dominant
@@ -35,8 +35,6 @@ namespace Corvus.Testing.AzureFunctions
         /// <summary>
         /// Start a functions instance.
         /// </summary>
-        /// <param name="testDirectory">The directory associated with the current test context,
-        /// usually available from your testing framework's context object(s).</param>
         /// <param name="path">The location of the functions project.</param>
         /// <param name="port">The port on which to start the functions instance.</param>
         /// <param name="runtime">The runtime version for use with the function host (e.g. netcoreapp3.1).</param>
@@ -44,13 +42,7 @@ namespace Corvus.Testing.AzureFunctions
         /// <param name="configuration">A <see cref="FunctionConfiguration"/> instance, for conveying
         /// configuration values via environment variables to the function host process.</param>
         /// <returns>A task that completes once the function instance has started.</returns>
-        public async Task StartFunctionsInstance(
-            string testDirectory,
-            string path,
-            int port,
-            string runtime,
-            string provider = "csharp",
-            FunctionConfiguration? configuration = null)
+        public async Task StartFunctionsInstance(string path, int port, string runtime, string provider = "csharp", FunctionConfiguration? configuration = null)
         {
             Console.WriteLine($"Starting a function instance for project {path} on port {port}");
             Console.WriteLine("\tStarting process");
@@ -59,7 +51,7 @@ namespace Corvus.Testing.AzureFunctions
                 port,
                 provider,
                 await GetToolPath(),
-                GetWorkingDirectory(testDirectory, path, runtime),
+                GetWorkingDirectory(path, runtime),
                 configuration);
 
             lock (this.sync)
@@ -243,24 +235,35 @@ namespace Corvus.Testing.AzureFunctions
             return processHandler.StandardOutputText.Trim();
         }
 
-        private static string GetWorkingDirectory(string currentTestDirectory, string path, string runtime)
+        private static string GetWorkingDirectory(string path, string runtime)
         {
-            string directoryExtension = $"\\bin\\release\\{runtime}";
+            string currentDirectory = Environment.CurrentDirectory.ToLowerInvariant();
 
-            string lowerInvariantCurrentDirectory = currentTestDirectory.ToLowerInvariant();
-            if (lowerInvariantCurrentDirectory.Contains("debug"))
+            string directoryExtension = @$"bin\release\{runtime}";
+            if (currentDirectory.Contains("debug"))
             {
-                directoryExtension = $"\\bin\\debug\\{runtime}";
+                directoryExtension = @$"bin\debug\{runtime}";
             }
 
-            Console.WriteLine($"\tCurrent directory: {lowerInvariantCurrentDirectory}");
+            Console.WriteLine($"\tCurrent directory: {currentDirectory}");
 
-            string root = currentTestDirectory.Substring(
-                0,
-                currentTestDirectory.IndexOf(@"\Solutions\") + 11);
+            var candidate = new DirectoryInfo(currentDirectory);
+            bool candidateIsSuccessful = false;
+
+            while (!candidateIsSuccessful && candidate.Parent != null)
+            {
+                // We can skip the current directory and go straight to its parent, as it will
+                // never be the directory we want.
+                candidate = candidate.Parent;
+
+                string pathToTest = Path.Combine(candidate.FullName, path, directoryExtension);
+                candidateIsSuccessful = Directory.Exists(pathToTest);
+            }
+
+            string root = candidate.FullName;
 
             Console.WriteLine($"\tRoot: {root}");
-            return root + path + directoryExtension;
+            return Path.Combine(root, path, directoryExtension);
         }
 
         private static FunctionOutputBufferHandler StartFunctionHostProcess(

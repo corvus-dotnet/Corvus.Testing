@@ -4,10 +4,10 @@
 
 namespace Corvus.Testing.SpecFlow.Demo.AzureFunctionsTesting
 {
+    using System;
     using System.Threading.Tasks;
     using Corvus.Testing.AzureFunctions;
     using Corvus.Testing.AzureFunctions.SpecFlow;
-    using NUnit.Framework;
     using TechTalk.SpecFlow;
 
     [Binding]
@@ -20,7 +20,6 @@ namespace Corvus.Testing.SpecFlow.Demo.AzureFunctionsTesting
             FunctionConfiguration functionConfiguration = FunctionsBindings.GetFunctionConfiguration(featureContext);
 
             return functionsController.StartFunctionsInstance(
-                TestContext.CurrentContext.TestDirectory,
                 "Corvus.Testing.AzureFunctions.DemoFunction",
                 7075,
                 "netcoreapp3.1",

@@ -4,6 +4,7 @@
 
 namespace Corvus.Testing.AzureFunctions.SpecFlow
 {
+    using System;
     using System.Threading.Tasks;
     using Corvus.Testing.AzureFunctions;
     using Corvus.Testing.SpecFlow;
@@ -77,7 +78,7 @@ namespace Corvus.Testing.AzureFunctions.SpecFlow
         public Task StartAFunctionsInstance(string path, int port)
         {
             return GetFunctionsController(this.scenarioContext)
-                .StartFunctionsInstance(TestContext.CurrentContext.TestDirectory, path, port, "netcoreapp3.1");
+                .StartFunctionsInstance(path, port, "netcoreapp3.1");
         }
 
         /// <summary>
@@ -92,13 +93,7 @@ namespace Corvus.Testing.AzureFunctions.SpecFlow
         {
             FunctionConfiguration configuration = FunctionsBindings.GetFunctionConfiguration(this.scenarioContext);
             return GetFunctionsController(this.scenarioContext)
-                .StartFunctionsInstance(
-                    TestContext.CurrentContext.TestDirectory,
-                    path,
-                    port,
-                    runtime,
-                    "csharp",
-                    configuration);
+                .StartFunctionsInstance(path, port, runtime, "csharp", configuration);
         }
 
         /// <summary>
