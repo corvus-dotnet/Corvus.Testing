@@ -1,6 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(EndjinProjectPropsPath)" Condition="$(EndjinProjectPropsPath) != ''" />
 
   <PropertyGroup>
+
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Copyright>Copyright (c) Endjin Limited 2020. All rights reserved.</Copyright>
     <LangVersion>latest</LangVersion>
@@ -20,7 +22,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Endjin.RecommendedPractices" Version="0.1.0">
+    <PackageReference Include="Endjin.RecommendedPractices" Version="0.3.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

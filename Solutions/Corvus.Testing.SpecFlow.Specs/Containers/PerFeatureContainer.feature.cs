@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Corvus.Testing.SpecFlow.Specs.Containers
+namespace Containers
 {
     using TechTalk.SpecFlow;
     using System;

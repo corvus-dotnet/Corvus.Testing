@@ -42,6 +42,23 @@ namespace Corvus.Testing.Tenancy
         /// </summary>
         /// <param name="store">The store with which to create or get the tenant.</param>
         /// <param name="leaseProvider">The lease provider.</param>
+        /// <returns>An instance of a well known test tenant and the lease.</returns>
+        /// <exception cref="TimeoutException">The operation timed out while attempting to acquire a tenant lease.</exception>
+        /// <exception cref="OperationCanceledException">The operation was cancelled by the caller.</exception>
+        /// <remarks>
+        /// <para>You must call <see cref="ReleaseWellKnownTestTenant(ITenantStore,TenantLease)"/> when you have finished using the tenant in order to release the lease.</para>
+        /// <para>The lease auto-renews while your process is still running, and will be released after 3 seconds of your process terminating.</para>
+        /// </remarks>
+        public static Task<TenantLease> AcquireWellKnownTestTenant(this ITenantStore store, ILeaseProvider leaseProvider)
+        {
+            return AcquireWellKnownTestTenant(store, leaseProvider, TimeSpan.FromSeconds(10), CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Gets a tenant for testing, and acquires a lease on it for the duration of the test.
+        /// </summary>
+        /// <param name="store">The store with which to create or get the tenant.</param>
+        /// <param name="leaseProvider">The lease provider.</param>
         /// <param name="timeout">The maximum time to spend attempting to acquire a tenant lease before abandoning the operation.</param>
         /// <param name="cancellationToken">A cancellation token for the operation.</param>
         /// <returns>An instance of a well known test tenant and the lease.</returns>
@@ -52,6 +69,16 @@ namespace Corvus.Testing.Tenancy
         /// </remarks>
         public static async Task<TenantLease> AcquireWellKnownTestTenant(this ITenantStore store, ILeaseProvider leaseProvider, TimeSpan timeout, CancellationToken cancellationToken)
         {
+            if (store is null)
+            {
+                throw new ArgumentNullException(nameof(store));
+            }
+
+            if (leaseProvider is null)
+            {
+                throw new ArgumentNullException(nameof(leaseProvider));
+            }
+
             DateTimeOffset start = DateTimeOffset.UtcNow;
 
             int index = 0;
@@ -63,12 +90,12 @@ namespace Corvus.Testing.Tenancy
                     throw new TimeoutException();
                 }
 
-                Lease lease = null;
+                Lease? lease = null;
                 var cts = new CancellationTokenSource();
 
                 try
                 {
-                    lease = await leaseProvider.AcquireAutorenewingLeaseAsync(cts.Token, $"tenantlease-{WellKnownTestTenantGuids[index]}").ConfigureAwait(false);
+                    lease = await leaseProvider.AcquireAutorenewingLeaseAsync(cts.Token, $"tenantlease-{WellKnownTestTenantGuids[index]}", TimeSpan.FromSeconds(3)).ConfigureAwait(false);
                     ITenant tenant = await store.CreateWellKnownChildTenantAsync(store.Root.Id, WellKnownTestTenantGuids[index], "Test tenant").ConfigureAwait(false);
                     return new TenantLease(tenant, lease, cts);
                 }
@@ -83,7 +110,7 @@ namespace Corvus.Testing.Tenancy
                 catch
                 {
                     // If we have a failure in creating the tenant, then we clean up the lease
-                    if (lease != null && lease.HasLease)
+                    if (lease?.HasLease == true)
                     {
                         await ReleaseLeaseAsync(lease, cts).ConfigureAwait(false);
                     }
@@ -99,6 +126,16 @@ namespace Corvus.Testing.Tenancy
         /// <returns>A <see cref="Task"/> which completes when the lease is released.</returns>
         public static async Task ReleaseWellKnownTestTenant(this ITenantStore store, TenantLease tenantLease)
         {
+            if (store is null)
+            {
+                throw new ArgumentNullException(nameof(store));
+            }
+
+            if (tenantLease is null)
+            {
+                throw new ArgumentNullException(nameof(tenantLease));
+            }
+
             try
             {
                 await store.DeleteTenantAsync(tenantLease.Tenant.Id).ConfigureAwait(false);

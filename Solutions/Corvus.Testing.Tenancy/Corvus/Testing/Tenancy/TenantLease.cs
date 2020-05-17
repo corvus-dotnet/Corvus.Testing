@@ -14,8 +14,6 @@ namespace Corvus.Testing.Tenancy
     /// </summary>
     public class TenantLease
     {
-        private readonly ITenant tenant;
-
         /// <summary>
         /// A tenant and its associated lease.
         /// </summary>
@@ -25,7 +23,7 @@ namespace Corvus.Testing.Tenancy
         internal TenantLease(ITenant tenant, Lease lease, CancellationTokenSource cts)
         {
             this.Lease = lease ?? throw new ArgumentNullException(nameof(lease));
-            this.tenant = tenant ?? throw new ArgumentNullException(nameof(tenant));
+            this.Tenant = tenant ?? throw new ArgumentNullException(nameof(tenant));
             this.CancellationTokenSource = cts;
         }
 

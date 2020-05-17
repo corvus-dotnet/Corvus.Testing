@@ -4,7 +4,6 @@
 
 namespace Corvus.Testing.SpecFlow.Demo.AzureFunctionsTesting
 {
-    using System;
     using System.Threading.Tasks;
     using Corvus.Testing.AzureFunctions;
     using Corvus.Testing.AzureFunctions.SpecFlow;

@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Corvus.Testing.AzureFunctions.SpecFlow.Demo.AzureFunctionsTesting
+namespace AzureFunctionsTesting
 {
     using TechTalk.SpecFlow;
     using System;
