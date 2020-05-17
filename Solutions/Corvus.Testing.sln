@@ -33,6 +33,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.Testing.SpecFlow", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.Testing.SpecFlow.Specs", "Corvus.Testing.SpecFlow.Specs\Corvus.Testing.SpecFlow.Specs.csproj", "{18EB9E01-82BC-4B4F-BB22-ED91D36D368F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.Testing.Azure.Cosmos.Tenancy", "Corvus.Testing.Azure.Cosmos.Tenancy\Corvus.Testing.Azure.Cosmos.Tenancy.csproj", "{8601DF88-46DA-41C7-A864-46AF7104B9FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Corvus.Testing.Tenancy", "Corvus.Testing.Tenancy\Corvus.Testing.Tenancy.csproj", "{D5DE0487-85AB-440C-9CC6-7F8D04F003A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +71,14 @@ Global
 		{18EB9E01-82BC-4B4F-BB22-ED91D36D368F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18EB9E01-82BC-4B4F-BB22-ED91D36D368F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18EB9E01-82BC-4B4F-BB22-ED91D36D368F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8601DF88-46DA-41C7-A864-46AF7104B9FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8601DF88-46DA-41C7-A864-46AF7104B9FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8601DF88-46DA-41C7-A864-46AF7104B9FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8601DF88-46DA-41C7-A864-46AF7104B9FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5DE0487-85AB-440C-9CC6-7F8D04F003A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5DE0487-85AB-440C-9CC6-7F8D04F003A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5DE0487-85AB-440C-9CC6-7F8D04F003A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5DE0487-85AB-440C-9CC6-7F8D04F003A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
