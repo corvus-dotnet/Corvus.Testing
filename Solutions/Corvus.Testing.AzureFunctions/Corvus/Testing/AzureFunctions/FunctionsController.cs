@@ -8,7 +8,9 @@ namespace Corvus.Testing.AzureFunctions
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;
+    using System.Linq;
     using System.Management;
+    using System.Net.NetworkInformation;
     using System.Threading.Tasks;
     using Corvus.Testing.AzureFunctions.Internal;
 
@@ -44,6 +46,13 @@ namespace Corvus.Testing.AzureFunctions
         /// <returns>A task that completes once the function instance has started.</returns>
         public async Task StartFunctionsInstance(string path, int port, string runtime, string provider = "csharp", FunctionConfiguration? configuration = null)
         {
+            if (IsSomethingAlreadyListeningOn(port))
+            {
+                Console.WriteLine($"Found a process listening on {port}. Is this a debug instance?");
+                Console.WriteLine("This test run will reuse this process, and so may produce unexpected results.");
+                return;
+            }
+
             Console.WriteLine($"Starting a function instance for project {path} on port {port}");
             Console.WriteLine("\tStarting process");
 
@@ -264,6 +273,14 @@ namespace Corvus.Testing.AzureFunctions
 
             Console.WriteLine($"\tRoot: {root}");
             return Path.Combine(root, path, directoryExtension);
+        }
+
+        private static bool IsSomethingAlreadyListeningOn(int port)
+        {
+            return IPGlobalProperties
+                .GetIPGlobalProperties()
+                .GetActiveTcpListeners()
+                .Any(e => e.Port == port);
         }
 
         private static FunctionOutputBufferHandler StartFunctionHostProcess(
