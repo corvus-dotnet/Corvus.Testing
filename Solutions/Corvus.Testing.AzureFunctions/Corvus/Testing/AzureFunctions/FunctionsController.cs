@@ -60,7 +60,7 @@ namespace Corvus.Testing.AzureFunctions
                 port,
                 provider,
                 await GetToolPath(),
-                GetWorkingDirectory(path, runtime),
+                FunctionProject.ResolvePath(path, runtime),
                 configuration);
 
             lock (this.sync)
@@ -242,37 +242,6 @@ namespace Corvus.Testing.AzureFunctions
             // We get a newline character on the end of the standard output, so we need to
             // trim before returning.
             return processHandler.StandardOutputText.Trim();
-        }
-
-        private static string GetWorkingDirectory(string path, string runtime)
-        {
-            string currentDirectory = Environment.CurrentDirectory.ToLowerInvariant();
-
-            string directoryExtension = @$"bin\release\{runtime}";
-            if (currentDirectory.Contains("debug"))
-            {
-                directoryExtension = @$"bin\debug\{runtime}";
-            }
-
-            Console.WriteLine($"\tCurrent directory: {currentDirectory}");
-
-            var candidate = new DirectoryInfo(currentDirectory);
-            bool candidateIsSuccessful = false;
-
-            while (!candidateIsSuccessful && candidate.Parent != null)
-            {
-                // We can skip the current directory and go straight to its parent, as it will
-                // never be the directory we want.
-                candidate = candidate.Parent;
-
-                string pathToTest = Path.Combine(candidate.FullName, path, directoryExtension);
-                candidateIsSuccessful = Directory.Exists(pathToTest);
-            }
-
-            string root = candidate.FullName;
-
-            Console.WriteLine($"\tRoot: {root}");
-            return Path.Combine(root, path, directoryExtension);
         }
 
         private static bool IsSomethingAlreadyListeningOn(int port)
