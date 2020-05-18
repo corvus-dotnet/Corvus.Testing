@@ -56,10 +56,9 @@ namespace Corvus.Testing.AzureFunctions
             Console.WriteLine($"Starting a function instance for project {path} on port {port}");
             Console.WriteLine("\tStarting process");
 
-            FunctionOutputBufferHandler bufferHandler = StartFunctionHostProcess(
+            FunctionOutputBufferHandler bufferHandler = await StartFunctionHostProcess(
                 port,
                 provider,
-                await GetToolPath(),
                 FunctionProject.ResolvePath(path, runtime),
                 configuration);
 
@@ -252,14 +251,15 @@ namespace Corvus.Testing.AzureFunctions
                 .Any(e => e.Port == port);
         }
 
-        private static FunctionOutputBufferHandler StartFunctionHostProcess(
+        private static async Task<FunctionOutputBufferHandler> StartFunctionHostProcess(
             int port,
             string provider,
-            string toolPath,
             string workingDirectory,
             FunctionConfiguration? functionConfiguration)
         {
-            var startInfo = new ProcessStartInfo(toolPath, $"host start --port {port} --{provider}")
+            var startInfo = new ProcessStartInfo(
+                await GetToolPath(),
+                $"host start --port {port} --{provider}")
             {
                 WorkingDirectory = workingDirectory,
                 UseShellExecute = false,
