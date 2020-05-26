@@ -13,6 +13,8 @@ namespace Corvus.Testing.AzureFunctions
     using System.Net.NetworkInformation;
     using System.Threading.Tasks;
     using Corvus.Testing.AzureFunctions.Internal;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Logging.Abstractions;
 
     /// <summary>
     /// Starts, manages and terminates functions instances for testing purposes.
@@ -34,6 +36,19 @@ namespace Corvus.Testing.AzureFunctions
         private readonly List<FunctionOutputBufferHandler> output = new List<FunctionOutputBufferHandler>();
         private readonly object sync = new object();
 
+        private readonly ILogger logger;
+        private IDisposable? functionLogScope;
+
+        /// <summary>
+        /// Instantiates an object for starting and stopping instances of Azure Functions.
+        /// </summary>
+        /// <param name="logger">An optional <see cref="ILogger"/>. If none is specified, messages
+        /// are written to the <see cref="NullLogger" />.</param>
+        public FunctionsController(ILogger? logger = null)
+        {
+            this.logger = logger ?? NullLogger.Instance;
+        }
+
         /// <summary>
         /// Start a functions instance.
         /// </summary>
@@ -46,15 +61,16 @@ namespace Corvus.Testing.AzureFunctions
         /// <returns>A task that completes once the function instance has started.</returns>
         public async Task StartFunctionsInstance(string path, int port, string runtime, string provider = "csharp", FunctionConfiguration? configuration = null)
         {
+            this.functionLogScope = this.logger.BeginScope(this);
             if (IsSomethingAlreadyListeningOn(port))
             {
-                Console.WriteLine($"Found a process listening on {port}. Is this a debug instance?");
-                Console.WriteLine("This test run will reuse this process, and so may produce unexpected results.");
+                this.logger.LogWarning("Found a process listening on {Port}. Is this a debug instance?", port);
+                this.logger.LogWarning("This test run will reuse this process, and so may produce unexpected results.");
                 return;
             }
 
-            Console.WriteLine($"Starting a function instance for project {path} on port {port}");
-            Console.WriteLine("\tStarting process");
+            this.logger.LogInformation("Starting a function instance for project {Path} on port {Port}", path, port);
+            this.logger.LogDebug("Starting process");
 
             FunctionOutputBufferHandler bufferHandler = await StartFunctionHostProcess(
                 port,
@@ -67,7 +83,7 @@ namespace Corvus.Testing.AzureFunctions
                 this.output.Add(bufferHandler);
             }
 
-            Console.WriteLine("\tProcess started; waiting for initialisation to complete");
+            this.logger.LogDebug("Process started; waiting for initialisation to complete");
 
             await Task.WhenAny(
                 bufferHandler.JobHostStarted,
@@ -77,6 +93,7 @@ namespace Corvus.Testing.AzureFunctions
             if (bufferHandler.ExitCode.IsCompleted)
             {
                 int exitCode = await bufferHandler.ExitCode.ConfigureAwait(false);
+                this.logger.LogError(bufferHandler.StandardErrorText);
                 throw new FunctionStartupException(
                     $"Function host process terminated unexpectedly with exit code {exitCode}.",
                     stderr: bufferHandler.StandardErrorText);
@@ -87,8 +104,8 @@ namespace Corvus.Testing.AzureFunctions
                 throw new FunctionStartupException("Timed out while starting functions instance.");
             }
 
-            Console.WriteLine();
-            Console.WriteLine("\tStarted");
+            this.logger.LogDebug("Initialisation completed");
+            this.logger.LogInformation("Function {Path} now running on port {Port}", path, port);
         }
 
         /// <summary>
@@ -120,7 +137,8 @@ namespace Corvus.Testing.AzureFunctions
                 }
             }
 
-            this.output.WriteAllToConsoleAndClear();
+            this.logger.LogAllAndClear(this.output);
+            this.functionLogScope?.Dispose();
 
             if (aggregate.Count > 0)
             {

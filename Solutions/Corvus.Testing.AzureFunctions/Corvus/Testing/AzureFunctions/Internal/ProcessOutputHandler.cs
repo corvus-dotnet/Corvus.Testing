@@ -8,6 +8,8 @@ namespace Corvus.Testing.AzureFunctions.Internal
     using System.Diagnostics;
     using System.Text;
     using System.Threading.Tasks;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Logging.Abstractions;
 
     /// <summary>
     ///     Provides simplified access to a process's text output.
@@ -30,6 +32,8 @@ namespace Corvus.Testing.AzureFunctions.Internal
         /// </summary>
         private readonly StringBuilder standardError = new StringBuilder();
 
+        private readonly ILogger logger;
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="ProcessOutputHandler"/> class for the
         ///     specified process, starting the process with the specified start info.
@@ -37,9 +41,15 @@ namespace Corvus.Testing.AzureFunctions.Internal
         /// <param name="startInfo">
         ///     The start information with which to launch the process.
         /// </param>
-        public ProcessOutputHandler(ProcessStartInfo startInfo)
+        /// <param name="logger">
+        ///     Optionally, a <see cref="Microsoft.Extensions.Logging.ILogger"/> implementation for
+        ///     writing output.
+        /// </param>
+        public ProcessOutputHandler(ProcessStartInfo startInfo, ILogger? logger = null)
         {
             this.Process = new Process { StartInfo = startInfo };
+
+            this.logger = logger ?? NullLogger.Instance;
 
             this.Process.Exited += this.OnProcessExit;
             this.Process.OutputDataReceived += this.OnOutputDataReceived;
@@ -164,6 +174,7 @@ namespace Corvus.Testing.AzureFunctions.Internal
                 this.standardOutput.AppendLine(e.Data);
             }
 
+            this.logger.LogDebug(e.Data);
             this.OnStandardOutputLine(e.Data);
         }
 
@@ -176,6 +187,7 @@ namespace Corvus.Testing.AzureFunctions.Internal
                 this.standardError.AppendLine(line);
             }
 
+            this.logger.LogWarning(line);
             this.OnStandardErrorLine(line);
         }
 
