@@ -75,7 +75,7 @@ namespace Corvus.Testing.AzureFunctions
             FunctionOutputBufferHandler bufferHandler = await StartFunctionHostProcess(
                 port,
                 provider,
-                FunctionProject.ResolvePath(path, runtime),
+                FunctionProject.ResolvePath(path, runtime, this.logger),
                 configuration);
 
             lock (this.sync)
