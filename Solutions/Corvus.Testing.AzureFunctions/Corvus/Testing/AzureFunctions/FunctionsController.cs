@@ -93,9 +93,17 @@ namespace Corvus.Testing.AzureFunctions
             if (bufferHandler.ExitCode.IsCompleted)
             {
                 int exitCode = await bufferHandler.ExitCode.ConfigureAwait(false);
-                this.logger.LogError(bufferHandler.StandardErrorText);
+                this.logger.LogError(
+                    @"Failed to start function host, process terminated unexpectedly with exit code {ExitCode}.
+StdOut: {StdOut}
+StdErr: {StdErr}",
+                    exitCode,
+                    bufferHandler.StandardOutputText,
+                    bufferHandler.StandardErrorText);
+
                 throw new FunctionStartupException(
                     $"Function host process terminated unexpectedly with exit code {exitCode}.",
+                    stdout: bufferHandler.StandardOutputText,
                     stderr: bufferHandler.StandardErrorText);
             }
 
