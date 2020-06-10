@@ -21,6 +21,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Corvus.Azure.Cosmos.Tenancy" Version="0.25.0" />
+    <PackageReference Include="Corvus.Azure.Storage.Tenancy" Version="0.25.0" />
+    <PackageReference Include="Corvus.ContentHandling" Version="0.14.0" />
+    <PackageReference Include="Corvus.Leasing.InMemory" Version="0.4.0" />
     <PackageReference Include="Endjin.RecommendedPractices" Version="0.3.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -38,6 +42,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Corvus.Testing.SpecFlow\Corvus.Testing.SpecFlow.csproj" />
+    <ProjectReference Include="..\Corvus.Testing.Tenancy\Corvus.Testing.Tenancy.csproj" />
   </ItemGroup>
 
   <ItemGroup>

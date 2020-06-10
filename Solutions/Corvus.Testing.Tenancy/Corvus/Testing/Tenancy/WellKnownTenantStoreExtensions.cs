@@ -41,6 +41,8 @@ namespace Corvus.Testing.Tenancy
         /// Gets a tenant for testing, and acquires a lease on it for the duration of the test.
         /// </summary>
         /// <param name="store">The store with which to create or get the tenant.</param>
+        /// <param name="parentTenantId">The ID of the parent tenant for this well-known tenant.</param>
+        /// <param name="name">The name of the new tenant.</param>
         /// <param name="leaseProvider">The lease provider.</param>
         /// <returns>An instance of a well known test tenant and the lease.</returns>
         /// <exception cref="TimeoutException">The operation timed out while attempting to acquire a tenant lease.</exception>
@@ -49,15 +51,17 @@ namespace Corvus.Testing.Tenancy
         /// <para>You must call <see cref="ReleaseWellKnownTestTenant(ITenantStore,TenantLease)"/> when you have finished using the tenant in order to release the lease.</para>
         /// <para>The lease auto-renews while your process is still running, and will be released after 3 seconds of your process terminating.</para>
         /// </remarks>
-        public static Task<TenantLease> AcquireWellKnownTestTenant(this ITenantStore store, ILeaseProvider leaseProvider)
+        public static Task<TenantLease> AcquireWellKnownTestTenant(this ITenantStore store, string parentTenantId, string name, ILeaseProvider leaseProvider)
         {
-            return AcquireWellKnownTestTenant(store, leaseProvider, TimeSpan.FromSeconds(10), CancellationToken.None);
+            return AcquireWellKnownTestTenant(store, parentTenantId, name, leaseProvider, TimeSpan.FromSeconds(10), CancellationToken.None);
         }
 
         /// <summary>
         /// Gets a tenant for testing, and acquires a lease on it for the duration of the test.
         /// </summary>
         /// <param name="store">The store with which to create or get the tenant.</param>
+        /// <param name="parentTenantId">The ID of the parent tenant for this well-known tenant.</param>
+        /// <param name="name">The name of the new tenant.</param>
         /// <param name="leaseProvider">The lease provider.</param>
         /// <param name="timeout">The maximum time to spend attempting to acquire a tenant lease before abandoning the operation.</param>
         /// <param name="cancellationToken">A cancellation token for the operation.</param>
@@ -67,7 +71,7 @@ namespace Corvus.Testing.Tenancy
         /// <remarks>
         /// <para>You must call <see cref="ReleaseWellKnownTestTenant(ITenantStore,TenantLease)"/> when you have finished using the tenant in order to release the lease.</para>
         /// </remarks>
-        public static async Task<TenantLease> AcquireWellKnownTestTenant(this ITenantStore store, ILeaseProvider leaseProvider, TimeSpan timeout, CancellationToken cancellationToken)
+        public static async Task<TenantLease> AcquireWellKnownTestTenant(this ITenantStore store, string parentTenantId, string name, ILeaseProvider leaseProvider, TimeSpan timeout, CancellationToken cancellationToken)
         {
             if (store is null)
             {
@@ -95,8 +99,8 @@ namespace Corvus.Testing.Tenancy
 
                 try
                 {
-                    lease = await leaseProvider.AcquireAutorenewingLeaseAsync(cts.Token, $"tenantlease-{WellKnownTestTenantGuids[index]}", TimeSpan.FromSeconds(3)).ConfigureAwait(false);
-                    ITenant tenant = await store.CreateWellKnownChildTenantAsync(store.Root.Id, WellKnownTestTenantGuids[index], "Test tenant").ConfigureAwait(false);
+                    lease = await leaseProvider.AcquireAutorenewingLeaseAsync(cts.Token, $"tenantlease-{parentTenantId}-{WellKnownTestTenantGuids[index]}", TimeSpan.FromSeconds(3)).ConfigureAwait(false);
+                    ITenant tenant = await store.CreateWellKnownChildTenantAsync(parentTenantId, WellKnownTestTenantGuids[index], name).ConfigureAwait(false);
                     return new TenantLease(tenant, lease, cts);
                 }
                 catch (LeaseAcquisitionUnsuccessfulException)
