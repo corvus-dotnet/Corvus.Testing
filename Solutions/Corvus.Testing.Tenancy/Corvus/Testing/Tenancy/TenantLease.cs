@@ -12,6 +12,10 @@ namespace Corvus.Testing.Tenancy
     /// <summary>
     /// A tenant and the associated lease.
     /// </summary>
+    /// <remarks>
+    /// This is created when you call <see cref="WellKnownTenantStoreExtensions.AcquireWellKnownTestTenant(Corvus.Tenancy.ITenantStore, string, string, Leasing.ILeaseProvider)"/>. It will be
+    /// disposed when it is passed to <see cref="WellKnownTenantStoreExtensions.ReleaseWellKnownTestTenant(Corvus.Tenancy.ITenantStore, TenantLease)"/>.
+    /// </remarks>
     public class TenantLease
     {
         /// <summary>
