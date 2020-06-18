@@ -40,9 +40,15 @@ namespace Corvus.Testing.AzureFunctions.SpecFlow
         /// </remarks>
         public static FunctionsController GetFunctionsController(SpecFlowContext context)
         {
+            if (!context.TryGetValue(out ILogger logger))
+            {
+                logger = Log.CreateLogger<FunctionsController>();
+                context.Set(logger);
+            }
+
             if (!context.TryGetValue(out FunctionsController controller))
             {
-                controller = new FunctionsController(Log.CreateLogger<FunctionsController>());
+                controller = new FunctionsController(logger);
                 context.Set(controller);
             }
 
