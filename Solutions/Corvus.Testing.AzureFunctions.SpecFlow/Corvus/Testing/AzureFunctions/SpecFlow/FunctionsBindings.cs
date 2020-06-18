@@ -4,11 +4,10 @@
 
 namespace Corvus.Testing.AzureFunctions.SpecFlow
 {
-    using System;
     using System.Threading.Tasks;
     using Corvus.Testing.AzureFunctions;
     using Corvus.Testing.SpecFlow;
-    using NUnit.Framework;
+    using Microsoft.Extensions.Logging;
     using TechTalk.SpecFlow;
 
     /// <summary>
@@ -18,6 +17,8 @@ namespace Corvus.Testing.AzureFunctions.SpecFlow
     public class FunctionsBindings
     {
         private readonly ScenarioContext scenarioContext;
+
+        private static readonly ILoggerFactory Log = LoggerFactory.Create(builder => builder.AddConsole());
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FunctionsBindings"/> class.
@@ -41,7 +42,7 @@ namespace Corvus.Testing.AzureFunctions.SpecFlow
         {
             if (!context.TryGetValue(out FunctionsController controller))
             {
-                controller = new FunctionsController();
+                controller = new FunctionsController(Log.CreateLogger<FunctionsController>());
                 context.Set(controller);
             }
 

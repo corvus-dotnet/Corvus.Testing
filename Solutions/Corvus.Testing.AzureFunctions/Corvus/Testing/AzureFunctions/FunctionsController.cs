@@ -42,11 +42,18 @@ namespace Corvus.Testing.AzureFunctions
         /// <summary>
         /// Instantiates an object for starting and stopping instances of Azure Functions.
         /// </summary>
-        /// <param name="logger">An optional <see cref="ILogger"/>. If none is specified, messages
-        /// are written to the <see cref="NullLogger" />.</param>
-        public FunctionsController(ILogger? logger = null)
+        /// <remarks>
+        /// <para>
+        /// The <see cref="ILogger" /> argument can be provided using <c>Microsoft.Extensions.Logging.LoggerFactory.Create()</c>
+        /// and <see cref="ILoggerFactory.CreateLogger(string)"/>. This allows you to easily configure
+        /// logging as you would within an ASP.NET Core app, using an <c>Microsoft.Extensions.Logging.ILoggingBuilder</c> instance
+        /// and the usual extension methods like <c>AddDebug()</c> and <c>AddConsole()</c>.
+        /// </para>
+        /// </remarks>
+        /// <param name="logger">An <see cref="ILogger"/> destination for useful output messages.</param>
+        public FunctionsController(ILogger logger)
         {
-            this.logger = logger ?? NullLogger.Instance;
+            this.logger = logger;
         }
 
         /// <summary>
