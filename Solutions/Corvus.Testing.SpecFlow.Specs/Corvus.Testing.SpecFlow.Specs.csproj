@@ -27,22 +27,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Moq" Version="4.14.5" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.16.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="SpecFlow.NUnit" Version="3.3.30" />
-    <PackageReference Include="SpecFlow.Tools.MsBuild.Generation" Version="3.3.30" />
-    <PackageReference Include="nunit" Version="3.12.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
-    <PackageReference Include="coverlet.msbuild" Version="2.9.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Corvus.Testing.SpecFlow\Corvus.Testing.SpecFlow.csproj" />
+    <ProjectReference Include="..\Corvus.Testing.SpecFlow.NUnit\Corvus.Testing.SpecFlow.NUnit.csproj" />
   </ItemGroup>
  
   <ItemGroup>
