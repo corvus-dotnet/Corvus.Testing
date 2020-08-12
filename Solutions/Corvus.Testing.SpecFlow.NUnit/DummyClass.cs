@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Corvus.Testing.SpecFlow.NUnit
+namespace MetaPackage.SpecFlow.NUnit
 {
     public class DummyClass
     {

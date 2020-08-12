@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -10,7 +10,7 @@
     <PackageDescription>A metapackage that encapsulates the required dependencies when using Corvus.Testing.AzureFunctions.SpecFlow and Endjin's standard practises.  Also simplifies the dependency management process when using tools like Dependabot.</PackageDescription>
     <PackageTags>metapackage</PackageTags>
     <PackageReleaseNotes></PackageReleaseNotes>
-    <RootNamespace />
+    <RootNamespace>MetaPackage.SpecFlow.AzureFunctions.NUnit</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

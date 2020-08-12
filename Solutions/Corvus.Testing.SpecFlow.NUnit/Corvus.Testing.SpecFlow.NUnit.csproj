@@ -10,8 +10,7 @@
     <PackageDescription>A metapackage that encapsulates the required dependencies when using Corvus.Testing.SpecFlow and Endjin's standard practises.  Also simplifies the dependency management process when using tools like Dependabot.</PackageDescription>
     <PackageTags>metapackage</PackageTags>
     <PackageReleaseNotes></PackageReleaseNotes>
-    <RootNamespace />
-    <NuspecFile>Corvus.Testing.SpecFlow.NUnit.nuspec</NuspecFile>
+    <RootNamespace>MetaPackage.SpecFlow.NUnit</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
