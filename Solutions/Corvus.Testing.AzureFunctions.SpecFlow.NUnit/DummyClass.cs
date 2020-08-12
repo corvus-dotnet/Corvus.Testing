@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MetaPackage.SpecFlow.AzureFunctions.NUnit
+﻿namespace MetaPackage.SpecFlow.AzureFunctions.NUnit
 {
     public class DummyClass
     {
