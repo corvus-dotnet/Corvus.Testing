@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: check_for_norelease_label
     if: |
-      !needs.check_for_norelease_label.outputs.no_release
+      needs.check_for_norelease_label.outputs.no_release == 'false'
     outputs:
       no_open_prs: ${{ steps.watch_dependabot_prs.outputs.is_complete }}
     steps:
