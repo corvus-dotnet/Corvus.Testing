@@ -11,7 +11,11 @@
     <PackageTags>metapackage</PackageTags>
     <PackageReleaseNotes></PackageReleaseNotes>
     <RootNamespace>MetaPackage.SpecFlow.AzureFunctions.NUnit</RootNamespace>
+    <IsPackable>true</IsPackable>
     <IncludeBuildOutput>false</IncludeBuildOutput>
+    <IncludeContentInPack>false</IncludeContentInPack>
+    <!-- Suppress the NuGet warning we're always going to get - ref: https://github.com/NuGet/Home/issues/8583 -->
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,7 +29,10 @@
       <PrivateAssets>contentfiles; analyzers</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Moq" Version="4.14.5" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1">
+      <!-- ensure the 'build' assets are not private -->
+      <PrivateAssets>contentfiles; analyzers</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
