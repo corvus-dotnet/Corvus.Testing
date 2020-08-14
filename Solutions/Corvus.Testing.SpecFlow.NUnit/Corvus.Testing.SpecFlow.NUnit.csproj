@@ -16,11 +16,13 @@
 
   <ItemGroup>
     <PackageReference Include="SpecFlow.NUnit.Runners" Version="3.3.57">
-      <PrivateAssets>none</PrivateAssets>
+      <!-- ensure the 'build' assets are available to projects that reference this project, which they are by default -->
+      <!-- ref: https://docs.microsoft.com/en-us/nuget/consume-packages/package-references-in-project-files#controlling-dependency-assets -->
+      <PrivateAssets>contentfiles; analyzers</PrivateAssets>
     </PackageReference>
     <PackageReference Include="coverlet.msbuild" Version="2.9.0">
-      <PrivateAssets>none</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+      <!-- ensure the 'build' assets are not private -->
+      <PrivateAssets>contentfiles; analyzers</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Moq" Version="4.14.5" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
