@@ -218,3 +218,4 @@ The IMM is endjin's IP quality framework.
 [![Production Use](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/87ee2c3e-b17a-4939-b969-2c9c034d05d7?cache=false)](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/87ee2c3e-b17a-4939-b969-2c9c034d05d7?cache=false)
 
 [![Packaging](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/547fd9f5-9caf-449f-82d9-4fba9e7ce13a?cache=false)](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/547fd9f5-9caf-449f-82d9-4fba9e7ce13a?cache=false)
+
