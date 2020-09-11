@@ -42,6 +42,9 @@ namespace Corvus.Testing.SpecFlow.DemoFunction
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "{*path}")] HttpRequest req,
             ILogger log)
         {
+            // Note: the demo function has the log level set to "None" in host.json. This is intentional, to show that
+            // our code in Corvus.Testing.AzureFunctions is able to detect that the function has started correctly
+            // even when the majority of logging is turned off.
             log.LogInformation("C# HTTP trigger function processed a request.");
 
             string? name = req.Query["name"];
