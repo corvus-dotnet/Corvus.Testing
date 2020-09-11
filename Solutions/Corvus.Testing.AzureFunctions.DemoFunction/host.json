@@ -7,7 +7,7 @@
   },
   "logging": {
     "logLevel": {
-      "default": "Debug"
+      "default": "None"
     }
   }
 }
