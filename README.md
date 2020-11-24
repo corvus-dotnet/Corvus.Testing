@@ -144,6 +144,23 @@ This is the code in `Corvus.Testing.AzureFunctions.SpecFlow` that tears down any
 
 To work, `Corvus.Testing.SpecFlow` defines unconditional `AfterScenario` and `AfterFeature` bindings each with an `Order` of `int.MaxValue`. This means they will only truly be the last thing to run for the scenario or feature if nothing else tries the same thing. If you want to use this feature, you will need to ensure that you're not using anything else that also depends on being able to be the very last thing that happens.
 
+## Running the Tests
+
+Some of the tests require NodeJS and the Functions development tools to be installed.  If you don't have that the test will fail, reporting either that `npm` was not found or the `npm` command you need to run to fix it.
+
+```
+choco install nodejs
+npm install -g azure-functions-core-tools@3
+```
+
+>NOTE: You may need to reboot to get Visual Studio to 'see' the NodeJS installation.
+
+The tests can be run from the command-line using:
+```
+dotnet build .\Solutions\Corvus.Testing.sln -c Debug
+dotnet test .\Solutions\Corvus.Testing.sln -c Debug
+```
+
 ## Licenses
 
 [![GitHub license](https://img.shields.io/badge/License-Apache%202-blue.svg)](https://raw.githubusercontent.com/corvus-dotnet/Corvus.Testing/master/LICENSE)
@@ -201,3 +218,4 @@ The IMM is endjin's IP quality framework.
 [![Production Use](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/87ee2c3e-b17a-4939-b969-2c9c034d05d7?cache=false)](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/87ee2c3e-b17a-4939-b969-2c9c034d05d7?cache=false)
 
 [![Packaging](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/547fd9f5-9caf-449f-82d9-4fba9e7ce13a?cache=false)](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/547fd9f5-9caf-449f-82d9-4fba9e7ce13a?cache=false)
+

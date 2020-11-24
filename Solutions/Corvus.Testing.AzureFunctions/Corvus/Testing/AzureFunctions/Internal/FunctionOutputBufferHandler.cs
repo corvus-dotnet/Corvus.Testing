@@ -51,7 +51,7 @@ namespace Corvus.Testing.AzureFunctions.Internal
         protected override void OnStandardOutputLine(string line)
         {
             if (!this.jobHostStartedCompletionSource.Task.IsCompleted
-                && line?.Contains("Job host started") == true)
+                && line?.Contains("Application started.") == true)
             {
                 this.jobHostStartedCompletionSource.SetResult(true);
             }

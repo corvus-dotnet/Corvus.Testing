@@ -8,7 +8,9 @@ namespace Corvus.Testing.AzureFunctions
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;
+    using System.Linq;
     using System.Management;
+    using System.Net.NetworkInformation;
     using System.Threading.Tasks;
     using Corvus.Testing.AzureFunctions.Internal;
 
@@ -44,14 +46,20 @@ namespace Corvus.Testing.AzureFunctions
         /// <returns>A task that completes once the function instance has started.</returns>
         public async Task StartFunctionsInstance(string path, int port, string runtime, string provider = "csharp", FunctionConfiguration? configuration = null)
         {
+            if (IsSomethingAlreadyListeningOn(port))
+            {
+                Console.WriteLine($"Found a process listening on {port}. Is this a debug instance?");
+                Console.WriteLine("This test run will reuse this process, and so may produce unexpected results.");
+                return;
+            }
+
             Console.WriteLine($"Starting a function instance for project {path} on port {port}");
             Console.WriteLine("\tStarting process");
 
-            FunctionOutputBufferHandler bufferHandler = StartFunctionHostProcess(
+            FunctionOutputBufferHandler bufferHandler = await StartFunctionHostProcess(
                 port,
                 provider,
-                await GetToolPath(),
-                GetWorkingDirectory(path, runtime),
+                FunctionProject.ResolvePath(path, runtime),
                 configuration);
 
             lock (this.sync)
@@ -235,45 +243,23 @@ namespace Corvus.Testing.AzureFunctions
             return processHandler.StandardOutputText.Trim();
         }
 
-        private static string GetWorkingDirectory(string path, string runtime)
+        private static bool IsSomethingAlreadyListeningOn(int port)
         {
-            string currentDirectory = Environment.CurrentDirectory.ToLowerInvariant();
-
-            string directoryExtension = @$"bin\release\{runtime}";
-            if (currentDirectory.Contains("debug"))
-            {
-                directoryExtension = @$"bin\debug\{runtime}";
-            }
-
-            Console.WriteLine($"\tCurrent directory: {currentDirectory}");
-
-            var candidate = new DirectoryInfo(currentDirectory);
-            bool candidateIsSuccessful = false;
-
-            while (!candidateIsSuccessful && candidate.Parent != null)
-            {
-                // We can skip the current directory and go straight to its parent, as it will
-                // never be the directory we want.
-                candidate = candidate.Parent;
-
-                string pathToTest = Path.Combine(candidate.FullName, path, directoryExtension);
-                candidateIsSuccessful = Directory.Exists(pathToTest);
-            }
-
-            string root = candidate.FullName;
-
-            Console.WriteLine($"\tRoot: {root}");
-            return Path.Combine(root, path, directoryExtension);
+            return IPGlobalProperties
+                .GetIPGlobalProperties()
+                .GetActiveTcpListeners()
+                .Any(e => e.Port == port);
         }
 
-        private static FunctionOutputBufferHandler StartFunctionHostProcess(
+        private static async Task<FunctionOutputBufferHandler> StartFunctionHostProcess(
             int port,
             string provider,
-            string toolPath,
             string workingDirectory,
             FunctionConfiguration? functionConfiguration)
         {
-            var startInfo = new ProcessStartInfo(toolPath, $"host start --port {port} --{provider}")
+            var startInfo = new ProcessStartInfo(
+                await GetToolPath(),
+                $"host start --port {port} --{provider}")
             {
                 WorkingDirectory = workingDirectory,
                 UseShellExecute = false,
