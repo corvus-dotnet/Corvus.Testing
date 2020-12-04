@@ -60,7 +60,7 @@ namespace Corvus.Testing.AzureFunctions
                 port,
                 provider,
                 FunctionProject.ResolvePath(path, runtime),
-                configuration);
+                configuration).ConfigureAwait(false);
 
             lock (this.sync)
             {
@@ -258,7 +258,7 @@ namespace Corvus.Testing.AzureFunctions
             FunctionConfiguration? functionConfiguration)
         {
             var startInfo = new ProcessStartInfo(
-                await GetToolPath(),
+                await GetToolPath().ConfigureAwait(false),
                 $"host start --port {port} --{provider}")
             {
                 WorkingDirectory = workingDirectory,
@@ -277,6 +277,10 @@ namespace Corvus.Testing.AzureFunctions
                     startInfo.EnvironmentVariables[kvp.Key] = kvp.Value;
                 }
             }
+
+            // Force the logging level to debug to ensure we can pick up the message that tells us the function is
+            // ready to go.
+            startInfo.EnvironmentVariables["AzureFunctionsJobHost:logging:logLevel:default"] = "Debug";
 
             var processHandler = new FunctionOutputBufferHandler(startInfo);
             processHandler.Start();
