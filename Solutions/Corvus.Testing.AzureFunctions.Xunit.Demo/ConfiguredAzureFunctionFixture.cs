@@ -4,13 +4,30 @@
 
 namespace Corvus.Testing.AzureFunctions.Xunit.Demo
 {
-    using System;
     using System.Threading.Tasks;
     using global::Xunit;
+    using global::Xunit.Abstractions;
+    using Microsoft.Extensions.Logging;
+    using Serilog;
+    using ILogger = Microsoft.Extensions.Logging.ILogger;
 
     public class ConfiguredAzureFunctionFixture : IAsyncLifetime
     {
-        private readonly FunctionsController function = new FunctionsController();
+        private readonly FunctionsController function;
+
+        public ConfiguredAzureFunctionFixture(IMessageSink output)
+        {
+            ILogger logger = new LoggerFactory()
+                .AddSerilog(
+                    new LoggerConfiguration()
+                        .WriteTo.File(@$"C:\temp\{this.GetType().FullName}.log")
+                        .WriteTo.TestOutput(output)
+                        .MinimumLevel.Debug()
+                        .CreateLogger())
+                .CreateLogger("Xunit Demo tests");
+
+            this.function = new FunctionsController(logger);
+        }
 
         public int Port => 7077;
 

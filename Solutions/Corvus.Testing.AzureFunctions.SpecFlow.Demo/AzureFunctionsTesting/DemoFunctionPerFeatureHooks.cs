@@ -8,6 +8,7 @@ namespace Corvus.Testing.SpecFlow.Demo.AzureFunctionsTesting
     using System.Threading.Tasks;
     using Corvus.Testing.AzureFunctions;
     using Corvus.Testing.AzureFunctions.SpecFlow;
+    using Microsoft.Extensions.Logging;
     using TechTalk.SpecFlow;
 
     [Binding]
@@ -39,7 +40,7 @@ namespace Corvus.Testing.SpecFlow.Demo.AzureFunctionsTesting
         public static void WriteOutput(FeatureContext featureContext)
         {
             FunctionsController functionsController = FunctionsBindings.GetFunctionsController(featureContext);
-            functionsController.GetFunctionsOutput().WriteAllToConsoleAndClear();
+            featureContext.Get<ILogger>().LogAllAndClear(functionsController.GetFunctionsOutput());
         }
 
         [AfterFeature("usingDemoFunctionPerFeature", "usingDemoFunctionPerFeatureWithAdditionalConfiguration")]

@@ -4,9 +4,12 @@
 
 namespace Corvus.Testing.AzureFunctions.Xunit.Demo
 {
-    using System;
     using System.Threading.Tasks;
     using global::Xunit;
+    using global::Xunit.Abstractions;
+    using Microsoft.Extensions.Logging;
+    using Serilog;
+    using ILogger = Microsoft.Extensions.Logging.ILogger;
 
     /// <summary>
     /// Adapter class for Xunit.net to set up the Functions host process before all tests run, and tear it down only
@@ -16,9 +19,18 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
     {
         private readonly FunctionsController function;
 
-        public AzureFunctionFixture()
+        public AzureFunctionFixture(IMessageSink output)
         {
-            this.function = new FunctionsController();
+            ILogger logger = new LoggerFactory()
+                .AddSerilog(
+                    new LoggerConfiguration()
+                        .WriteTo.File(@$"C:\temp\{this.GetType().FullName}.log")
+                        .WriteTo.TestOutput(output)
+                        .MinimumLevel.Debug()
+                        .CreateLogger())
+                .CreateLogger("Xunit Demo tests");
+
+            this.function = new FunctionsController(logger);
         }
 
         public int Port => 7076;
