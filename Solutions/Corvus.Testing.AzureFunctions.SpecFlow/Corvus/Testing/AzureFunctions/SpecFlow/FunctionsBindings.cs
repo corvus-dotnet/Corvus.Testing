@@ -16,9 +16,9 @@ namespace Corvus.Testing.AzureFunctions.SpecFlow
     [Binding]
     public class FunctionsBindings
     {
-        private readonly ScenarioContext scenarioContext;
-
         private static readonly ILoggerFactory Log = LoggerFactory.Create(builder => builder.AddConsole());
+
+        private readonly ScenarioContext scenarioContext;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FunctionsBindings"/> class.
