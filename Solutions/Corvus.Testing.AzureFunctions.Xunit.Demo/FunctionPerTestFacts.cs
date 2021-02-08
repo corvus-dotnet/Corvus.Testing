@@ -7,16 +7,34 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
 {
     using System;
     using System.Net;
+    using System.Reflection;
     using System.Threading.Tasks;
     using global::Xunit;
+    using global::Xunit.Abstractions;
+    using Microsoft.Extensions.Logging;
+    using Serilog;
+    using ILogger = Microsoft.Extensions.Logging.ILogger;
 
     public class FunctionPerTestFacts : DemoFunctionFacts, IAsyncLifetime
     {
         private readonly FunctionsController function;
 
-        public FunctionPerTestFacts()
+        public FunctionPerTestFacts(ITestOutputHelper output)
         {
-            this.function = new FunctionsController();
+            var test = output.GetType()
+                .GetField("test", BindingFlags.Instance | BindingFlags.NonPublic)?
+                .GetValue(output) as ITest;
+
+            ILogger logger = new LoggerFactory()
+                .AddSerilog(
+                    new LoggerConfiguration()
+                        .WriteTo.File(@$"C:\temp\{test?.DisplayName}.log")
+                        .WriteTo.Logger(output.CreateTestLogger())
+                        .MinimumLevel.Debug()
+                        .CreateLogger())
+                .CreateLogger("Xunit Demo tests");
+
+            this.function = new FunctionsController(logger);
             this.Port = new Random().Next(50000, 60000);
         }
 
