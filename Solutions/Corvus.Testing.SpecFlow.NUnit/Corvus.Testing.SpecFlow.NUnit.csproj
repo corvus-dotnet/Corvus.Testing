@@ -24,12 +24,12 @@
       <!-- ref: https://docs.microsoft.com/en-us/nuget/consume-packages/package-references-in-project-files#controlling-dependency-assets -->
       <PrivateAssets>contentfiles; analyzers</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="coverlet.msbuild" Version="2.9.0">
+    <PackageReference Include="coverlet.msbuild" Version="3.0.2">
       <!-- ensure the 'build' assets are not private -->
       <PrivateAssets>contentfiles; analyzers</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Moq" Version="4.14.5" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1">
+    <PackageReference Include="Moq" Version="4.16.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3">
       <!-- ensure the 'build' assets are not private -->
       <PrivateAssets>contentfiles; analyzers</PrivateAssets>
     </PackageReference>
