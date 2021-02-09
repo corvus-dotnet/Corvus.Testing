@@ -7,6 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevOps", "DevOps", "{B52766
 	ProjectSection(SolutionItems) = preProject
 		..\azure-pipelines.release.yml = ..\azure-pipelines.release.yml
 		..\azure-pipelines.yml = ..\azure-pipelines.yml
+		..\GitVersion.yml = ..\GitVersion.yml
 		..\imm.yaml = ..\imm.yaml
 	EndProjectSection
 EndProject
