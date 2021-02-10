@@ -59,7 +59,7 @@
     Id: da4ed776-0365-4d8a-a297-c4e91a14d646
     Measures:
         -
-            Date: 2020-03-13
+            Date: 2021-02-10
             Description: None
 -
     Name: 'Framework Version'
@@ -72,7 +72,7 @@
     Id: 79b8ff50-7378-4f29-b07c-bcd80746bfd4
     Measures:
         -
-            Score: 1
+            Score: 2
             Description: 'Bugs & Features'
 -
     Name: 'Source Code Availability'
@@ -99,7 +99,7 @@
     Id: 87ee2c3e-b17a-4939-b969-2c9c034d05d7
     Measures:
         -
-            Score: 0
+            Score: 3
             Description: None
 -
     Name: Insights
