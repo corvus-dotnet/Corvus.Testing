@@ -4,6 +4,7 @@
 
 namespace Corvus.Testing.SpecFlow.DemoFunction
 {
+    using System;
     using System.IO;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
@@ -19,6 +20,8 @@ namespace Corvus.Testing.SpecFlow.DemoFunction
     /// </summary>
     public class SampleFunction
     {
+        private static string lastTimerTrigger = "never";
+
         private readonly string message;
 
         /// <summary>
@@ -53,11 +56,27 @@ namespace Corvus.Testing.SpecFlow.DemoFunction
             dynamic data = JsonConvert.DeserializeObject(requestBody);
             name ??= data?.name;
 
-            string result = this.message.Replace("{name}", name);
+            string result = this.message.Replace("{name}", name).Replace("{lastTimerTrigger}", lastTimerTrigger);
 
             return name != null
                 ? (ActionResult)new OkObjectResult(result)
                 : new BadRequestObjectResult("Please pass a name on the query string or in the request body");
+        }
+
+        /// <summary>
+        /// Sample timer-triggered function. Hosting timer and HTTP triggered functions in the same functions app
+        /// has caused problems in the past, so this exists to prove that it's no longer the case.
+        /// </summary>
+        /// <param name="info">Information about the timer trigger.</param>
+        /// <param name="log">The logger.</param>
+        [FunctionName("SampleFunctions-Timer")]
+        public void SampleTimerTrigger(
+            [TimerTrigger("*/5 * * * * *")] TimerInfo info,
+            ILogger log)
+        {
+            log.LogInformation($"C# Timer triggered function executing. Next executions:\r\n{info.FormatNextOccurrences(3)}");
+
+            lastTimerTrigger = DateTime.UtcNow.ToString("s");
         }
     }
 }

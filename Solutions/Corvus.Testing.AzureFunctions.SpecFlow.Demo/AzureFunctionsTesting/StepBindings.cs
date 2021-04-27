@@ -4,16 +4,18 @@
 
 namespace Corvus.Testing.SpecFlow.Demo.AzureFunctionsTesting
 {
+    using System;
     using System.Net;
     using System.Net.Http;
     using System.Text;
+    using System.Threading;
     using System.Threading.Tasks;
+    using Corvus.Testing.AzureFunctions;
+    using Corvus.Testing.AzureFunctions.SpecFlow;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using NUnit.Framework;
     using TechTalk.SpecFlow;
-    using Corvus.Testing.AzureFunctions;
-    using Corvus.Testing.AzureFunctions.SpecFlow;
 
     [Binding]
     public class StepBindings
@@ -66,6 +68,12 @@ namespace Corvus.Testing.SpecFlow.Demo.AzureFunctionsTesting
             this.lastHttpResponseMessage = await this.client.PostAsync(uri, content).ConfigureAwait(false);
         }
 
+        [When("I wait for (.*) seconds")]
+        public void WhenIWaitForSeconds(int seconds)
+        {
+            Thread.Sleep(TimeSpan.FromSeconds(seconds));
+        }
+
         [Then("I receive a (.*) response code")]
         public void ThenIReceiveAResponseCode(int expectedCode)
         {
@@ -80,6 +88,32 @@ namespace Corvus.Testing.SpecFlow.Demo.AzureFunctionsTesting
             string actualContent = await this.lastHttpResponseMessage!.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             Assert.AreEqual(expectedContent, actualContent);
+        }
+
+        [Then("the response body starts with the text '(.*)'")]
+        public async Task ThenTheResponseBodyStartsWithTheText(string expectedContent)
+        {
+            Assert.IsNotNull(this.lastHttpResponseMessage, "Could not verify last response status code as there is no last response");
+            string actualContent = await this.lastHttpResponseMessage!.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+            Assert.IsTrue(actualContent.StartsWith(expectedContent));
+        }
+
+        [When("I store the response body as '(.*)'")]
+        public async Task WhenIStoreTheResponseBodyAs(string name)
+        {
+            Assert.IsNotNull(this.lastHttpResponseMessage, "There is no last response");
+            string actualContent = await this.lastHttpResponseMessage!.Content.ReadAsStringAsync().ConfigureAwait(false);
+            this.scenarioContext.Set(actualContent, name);
+        }
+
+        [Then("the responses '(.*)' and '(.*)' are different")]
+        public void ThenTheResponsesAndAreDifferent(string response1Name, string response2Name)
+        {
+            string? response1 = this.scenarioContext.Get<string>(response1Name);
+            string? response2 = this.scenarioContext.Get<string>(response2Name);
+
+            Assert.AreNotEqual(response1, response2);
         }
     }
 }

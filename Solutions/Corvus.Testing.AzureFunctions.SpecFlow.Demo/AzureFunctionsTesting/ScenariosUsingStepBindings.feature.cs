@@ -112,7 +112,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Then("I receive a 200 response code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 10
- testRunner.And("the response body contains the text \'Hello, Jon\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the response body starts with the text \'Hello, Jon\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -197,7 +197,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Then("I receive a 200 response code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 21
- testRunner.And("the response body contains the text \'Hello, Jon\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the response body starts with the text \'Hello, Jon\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -247,7 +247,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Then("I receive a 200 response code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 29
- testRunner.And("the response body contains the text \'Hello, Jon\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the response body starts with the text \'Hello, Jon\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -291,7 +291,7 @@ this.ScenarioInitialize(scenarioInfo);
                             "Value"});
                 table6.AddRow(new string[] {
                             "name",
-                            "Jonathan"});
+                            "Andrew"});
 #line 33
  testRunner.When("I send a POST request to \'http://localhost:7075/?name=Jon\' with data in the reque" +
                         "st body", ((string)(null)), table6, "When ");
@@ -300,7 +300,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Then("I receive a 200 response code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 37
- testRunner.And("the response body contains the text \'Hello, Jon\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the response body starts with the text \'Hello, Jon\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -395,6 +395,59 @@ this.ScenarioInitialize(scenarioInfo);
 #line hidden
 #line 51
  testRunner.And("the response body contains the text \'Welcome, Jon\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Two Get requests 5 seconds apart get different responses")]
+        public virtual void TwoGetRequests5SecondsApartGetDifferentResponses()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Two Get requests 5 seconds apart get different responses", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 53
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 54
+ testRunner.Given("I start a functions instance for the local project \'Corvus.Testing.AzureFunctions" +
+                        ".DemoFunction\' on port 7075 with runtime \'netcoreapp3.1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 55
+ testRunner.When("I send a GET request to \'http://localhost:7075/?name=Jon\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 56
+ testRunner.And("I store the response body as \'response1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 57
+ testRunner.And("I wait for 6 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 58
+ testRunner.And("I send a GET request to \'http://localhost:7075/?name=Jon\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 59
+ testRunner.And("I store the response body as \'response2\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 60
+ testRunner.Then("the responses \'response1\' and \'response2\' are different", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
