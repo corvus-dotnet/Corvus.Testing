@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SpecFlow.NUnit.Runners" Version="3.8.14">
+    <PackageReference Include="SpecFlow.NUnit.Runners" Version="3.9.8">
       <!-- ensure the 'build' assets are available to projects that reference this project, which they are by default -->
       <!-- ref: https://docs.microsoft.com/en-us/nuget/consume-packages/package-references-in-project-files#controlling-dependency-assets -->
       <PrivateAssets>contentfiles; analyzers</PrivateAssets>
