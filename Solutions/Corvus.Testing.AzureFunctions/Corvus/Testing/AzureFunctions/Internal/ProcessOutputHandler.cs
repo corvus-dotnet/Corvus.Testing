@@ -191,7 +191,7 @@ namespace Corvus.Testing.AzureFunctions.Internal
             this.OnStandardErrorLine(line);
         }
 
-        private void OnProcessExit(object sender, EventArgs e)
+        private void OnProcessExit(object? sender, EventArgs e)
         {
             this.exitCodeCompletionSource.SetResult(this.Process.ExitCode);
             this.Process.OutputDataReceived -= this.OnOutputDataReceived;

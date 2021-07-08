@@ -9,12 +9,14 @@ namespace Corvus.Testing.AzureFunctions
     using System.Diagnostics;
     using System.IO;
     using System.Linq;
+#if NETSTANDARD2_0
     using System.Management;
+#endif
     using System.Net.NetworkInformation;
+    using System.Runtime.InteropServices;
     using System.Threading.Tasks;
     using Corvus.Testing.AzureFunctions.Internal;
     using Microsoft.Extensions.Logging;
-    using Microsoft.Extensions.Logging.Abstractions;
 
     /// <summary>
     /// Starts, manages and terminates functions instances for testing purposes.
@@ -195,6 +197,7 @@ StdErr: {StdErr}",
                 return;
             }
 
+#if NETSTANDARD2_0
             using (var searcher =
                 new ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" + pid))
             {
@@ -203,11 +206,15 @@ StdErr: {StdErr}",
                     KillProcessAndChildren(Convert.ToInt32(mo["ProcessID"]));
                 }
             }
-
+#endif
             try
             {
                 var proc = Process.GetProcessById(pid);
+#if NETSTANDARD2_0
                 proc.Kill();
+#else
+                proc.Kill(entireProcessTree: true);
+#endif
             }
             catch (ArgumentException)
             {
@@ -239,13 +246,38 @@ StdErr: {StdErr}",
         /// </remarks>
         private static async Task<string> GetNpmPrefix()
         {
-            // Running npm directly can run into weird PATH issues, so it's more reliable to run
-            // cmd.exe, and then ask it to run our command - that way we get the same PATH
-            // behaviour we'd get running the command manually.
+            // On Windows, the npm command is currently implemented as a .cmd file (the Windows
+            // Command Prompt equivalent of a batch file). The Windows APIs for launching new
+            // processes do not recognized command files, batch files, or anything similar: they
+            // expect to be given a Win32 executable to launch. The ability to run a text file full
+            // of script is, as far as Windows is concerned, the shell's business, not the OS's.
+            // The upshot is that although typing "npm" at a command prompt will run npm, passing
+            // just "npm" to the process start APIs doesn't work, because those APIs don't invoke
+            // the command prompt logic unless you tell them too.
+            // So on Windows, we have to launch cmd.exe and then tell it to execute the npm
+            // command for us - this is the only way to execute command line tools that are
+            // actually scripts from .NET on Windows. (And while it's possible that setting the
+            // UseShellExecute flag might fix this, you can't redirect standard input and output
+            // when you do that. The point of that mechanism is to get the same behaviour that a
+            // user would get when running something interactively.)
+            // Of course, Linux and MacOS don't have cmd.exe, so this approach is guaranteed to
+            // fail on those. However, those operating systems bake in the support for determining
+            // that the thing you've asked to run isn't an executable binary but some sort of
+            // script, and automatically working out which program you need to launch to process
+            // the text file you want to run. So on those operating systems if you ask the OS to
+            // run "npm", after it determines that the file you've asked it to run doesn't look
+            // like an executable program, it will then look for the conventional "#!" text on
+            // the first line, which tells it the program that it really needs to run, and the OS
+            // will run that instead.
+            // Since Windows and Unix-like operating systems have quite different approaches here
+            // we need OS-specific handling.
+            (string command, string arguments) = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+                ? ("cmd.exe", "/c npm prefix -g")
+                : ("npm", "prefix -g");
             var processHandler = new ProcessOutputHandler(
-                new ProcessStartInfo("cmd.exe", "/c npm prefix -g")
+                new ProcessStartInfo(command, arguments)
                 {
-                    UseShellExecute = false,
+                    UseShellExecute = false, // Standard IO capture only works if this is false.
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                 });
