@@ -168,7 +168,8 @@ StdErr: {StdErr}",
             string npmPrefix = await GetNpmPrefix().ConfigureAwait(false);
             string toolsFolder = Path.Combine(
                 npmPrefix,
-                @"node_modules\azure-functions-core-tools\bin");
+                "azure-functions-core-tools",
+                "bin");
 
             if (!Directory.Exists(toolsFolder))
             {
@@ -272,8 +273,8 @@ StdErr: {StdErr}",
             // Since Windows and Unix-like operating systems have quite different approaches here
             // we need OS-specific handling.
             (string command, string arguments) = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-                ? ("cmd.exe", "/c npm prefix -g")
-                : ("npm", "prefix -g");
+                ? ("cmd.exe", "/c npm root -g")
+                : ("npm", "root -g");
             var processHandler = new ProcessOutputHandler(
                 new ProcessStartInfo(command, arguments)
                 {
