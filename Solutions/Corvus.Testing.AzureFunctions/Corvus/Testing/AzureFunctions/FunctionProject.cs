@@ -41,13 +41,19 @@ namespace Corvus.Testing.AzureFunctions
         {
             logger = logger ?? NullLogger.Instance;
 
-            string currentDirectory = Environment.CurrentDirectory.ToLowerInvariant();
-
-            string directoryExtension = @$"bin\release\{runtime}";
-            if (currentDirectory.Contains("debug"))
+            string currentDirectory = Environment.CurrentDirectory;
+            // Even though the dotnet Directory.Exists docs say that the path parameter is not case-sensitive
+            // Linix OS file systems are case sensitive so the folder names here need to be case sensitive
+            string outputFolder = string.Empty;
+            if(currentDirectory.Contains("Debug")) 
             {
-                directoryExtension = @$"bin\debug\{runtime}";
+                outputFolder = "Debug";
             }
+            else if (currentDirectory.Contains("Release"))
+            {
+                outputFolder = "Release";
+            }
+            string directoryExtension = Path.Combine("bin", outputFolder, runtime);
 
             logger.LogDebug("Working directory is {WorkingDirectory}", currentDirectory);
 
