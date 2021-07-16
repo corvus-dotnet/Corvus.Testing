@@ -7,6 +7,11 @@ This provides a library of useful testing extensions, primarily focussed on Spec
 
 It is built for netstandard2.0.
 
+Starting with v1.5, the `Corvus.Testing.AzureFunctions` package and also supports netcoreapp3.1 or later. Note that the
+netstandard2.0 version of this package only works on Windows, because cross-platform support for
+killing process trees was not introduced until .NET Core 3.0 (and, oddly, was not added to
+netstandard2.1). And since .NET Core 3.0 is out of support, we support Linux on .NET Core 3.1 or later.
+
 The SpecFlow specific libraries contain additional bindings; to use these, you will need to add a `specflow.json` file to any project wishing to use them. Add entries to the `stepAssemblies` array for each of the Corvus libraries you need to use:
 
 ```json

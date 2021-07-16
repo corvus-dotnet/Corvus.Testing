@@ -51,8 +51,9 @@ namespace Corvus.Testing.AzureFunctions.Internal
         protected override void OnStandardOutputLine(string line)
         {
             if (!this.jobHostStartedCompletionSource.Task.IsCompleted
-                && (line?.Contains("Application started") == true
-                    || line?.Contains("Hosting started") == true))
+            // this the line before emitting the function endpoints
+            // it is a pretty safe bet that the functions are available here
+                && (line?.Contains("Functions:") == true))
             {
                 this.jobHostStartedCompletionSource.SetResult(true);
             }

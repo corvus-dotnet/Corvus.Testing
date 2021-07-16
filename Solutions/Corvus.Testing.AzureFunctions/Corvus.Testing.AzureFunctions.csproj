@@ -3,9 +3,9 @@
   <Import Project="$(EndjinProjectPropsPath)" Condition="$(EndjinProjectPropsPath) != ''" />
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netcoreapp3.1;netstandard2.0</TargetFrameworks>
     <Nullable>enable</Nullable>
-    <Copyright>Copyright (c) Endjin Limited 2020. All rights reserved.</Copyright>
+    <Copyright>Copyright (c) Endjin Limited 2020-2021. All rights reserved.</Copyright>
     <NoWarn>RCS1194</NoWarn>
   </PropertyGroup>
 
@@ -23,6 +23,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.16" />
-    <PackageReference Include="System.Management" Version="4.7.0" />
+
+    <PackageReference Include="System.Management" Version="4.7.0" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
   </ItemGroup>
 </Project>
