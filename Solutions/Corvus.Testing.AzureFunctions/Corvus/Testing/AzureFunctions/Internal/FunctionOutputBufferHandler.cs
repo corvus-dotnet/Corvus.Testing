@@ -50,10 +50,11 @@ namespace Corvus.Testing.AzureFunctions.Internal
         /// <inheritdoc />
         protected override void OnStandardOutputLine(string line)
         {
+            // The functions host emits this the line before listing the function endpoints.
+            // It is a pretty safe bet that the service is ready once this appears.
+            const string outputIndicatingHostIsReady = "Functions:";
             if (!this.jobHostStartedCompletionSource.Task.IsCompleted
-            // this the line before emitting the function endpoints
-            // it is a pretty safe bet that the functions are available here
-                && (line?.Contains("Functions:") == true))
+                && (line?.Contains(outputIndicatingHostIsReady) == true))
             {
                 this.jobHostStartedCompletionSource.SetResult(true);
             }

@@ -249,7 +249,7 @@ StdErr: {StdErr}",
         {
             // On Windows, the npm command is currently implemented as a .cmd file (the Windows
             // Command Prompt equivalent of a batch file). The Windows APIs for launching new
-            // processes do not recognized command files, batch files, or anything similar: they
+            // processes do not recognize command files, batch files, or anything similar: they
             // expect to be given a Win32 executable to launch. The ability to run a text file full
             // of script is, as far as Windows is concerned, the shell's business, not the OS's.
             // The upshot is that although typing "npm" at a command prompt will run npm, passing

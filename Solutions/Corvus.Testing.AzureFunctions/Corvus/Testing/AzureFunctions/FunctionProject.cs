@@ -39,23 +39,30 @@ namespace Corvus.Testing.AzureFunctions
         /// directory.</returns>
         public static string ResolvePath(string pathFragment, string runtime, ILogger? logger = null)
         {
-            logger = logger ?? NullLogger.Instance;
+            logger ??= NullLogger.Instance;
 
+            // Even though the dotnet Directory.Exists docs say that the path parameter is not
+            // case-sensitive Linux OS file systems are case sensitive, and Directory.Exists seems
+            // to reflect that. So to handle cases like "debug" and "Debug" correctly, we need to
+            // perform case-insensitive string comparisons to work out which configuration is in
+            // use, and then ensure that we preserve whatever casing happens to be present.
+            // (We used to just force the whole path to lowercase, which was a whole lot simpler,
+            // but that only works on Windows.)
             string currentDirectory = Environment.CurrentDirectory;
-            // Even though the dotnet Directory.Exists docs say that the path parameter is not case-sensitive
-            // Linux OS file systems are case sensitive so the folder names here need to be case sensitive
-            string outputFolder = string.Empty;
-            if(currentDirectory.Contains("Debug")) 
+            string buildConfigurationFolder = string.Empty;
+            int pos;
+            if ((pos = currentDirectory.IndexOf("Debug", StringComparison.InvariantCultureIgnoreCase)) >= 0)
             {
-                outputFolder = "Debug";
+                buildConfigurationFolder = currentDirectory.Substring(pos, "Debug".Length);
             }
-            else if (currentDirectory.Contains("Release"))
+            else if ((pos = currentDirectory.IndexOf("Release", StringComparison.InvariantCultureIgnoreCase)) >= 0)
             {
-                outputFolder = "Release";
+                buildConfigurationFolder = currentDirectory.Substring(pos, "Release".Length);
             }
-            string directoryExtension = Path.Combine("bin", outputFolder, runtime);
 
+            string directoryExtension = Path.Combine("bin", buildConfigurationFolder, runtime);
             logger.LogDebug("Working directory is {WorkingDirectory}", currentDirectory);
+            logger.LogDebug("Working directory is {directoryExtension}", currentDirectory);
 
             var candidate = new DirectoryInfo(currentDirectory);
             bool candidateIsSuccessful = false;
