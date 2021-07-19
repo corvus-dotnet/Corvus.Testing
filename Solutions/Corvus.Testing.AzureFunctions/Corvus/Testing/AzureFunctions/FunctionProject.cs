@@ -43,7 +43,7 @@ namespace Corvus.Testing.AzureFunctions
 
             string currentDirectory = Environment.CurrentDirectory;
             // Even though the dotnet Directory.Exists docs say that the path parameter is not case-sensitive
-            // Linix OS file systems are case sensitive so the folder names here need to be case sensitive
+            // Linux OS file systems are case sensitive so the folder names here need to be case sensitive
             string outputFolder = string.Empty;
             if(currentDirectory.Contains("Debug")) 
             {
