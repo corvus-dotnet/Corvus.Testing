@@ -5,7 +5,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <Copyright>Copyright (c) Endjin Limited 2020. All rights reserved.</Copyright>
+    <Copyright>Copyright (c) Endjin Limited 2021. All rights reserved.</Copyright>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -21,12 +21,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.17" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.17" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.17" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="[3.1.*,)" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="[3.1.*,)" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="[3.1.*,)" />
     <PackageReference Include="NUnit" Version="3.13.2" />
     <PackageReference Include="SpecFlow" Version="3.9.22" />
-    <PackageReference Include="System.Management" Version="4.7.0" />
+    <PackageReference Include="System.Management" Version="[4.7.*,)" />
   </ItemGroup>
 
   <ItemGroup>

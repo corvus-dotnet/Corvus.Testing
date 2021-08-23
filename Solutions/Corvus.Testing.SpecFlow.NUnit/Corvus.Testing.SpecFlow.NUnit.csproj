@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Copyright>Copyright (c) Endjin Limited 2020. All rights reserved.</Copyright>
+    <Copyright>Copyright (c) Endjin Limited 2021. All rights reserved.</Copyright>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -29,7 +29,7 @@
       <PrivateAssets>contentfiles; analyzers</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Moq" Version="4.16.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="[16.10.*,17)">
       <!-- ensure the 'build' assets are not private -->
       <PrivateAssets>contentfiles; analyzers</PrivateAssets>
     </PackageReference>
