@@ -4,7 +4,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Copyright>Copyright (c) Endjin Limited 2020. All rights reserved.</Copyright>
+    <Copyright>Copyright (c) Endjin Limited 2021. All rights reserved.</Copyright>
     <LangVersion>latest</LangVersion>
     <!-- Disabling SA1204 because it prioritizes static/non-static over public/non-public, which doesn't fit very well
          with bindings in SpecFlow.
