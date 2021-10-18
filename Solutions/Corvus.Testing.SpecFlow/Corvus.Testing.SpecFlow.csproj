@@ -29,8 +29,4 @@
     <PackageReference Include="System.Management" Version="[4.7.*,)" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Corvus.Testing.AzureFunctions\Corvus.Testing.AzureFunctions.csproj" />
-  </ItemGroup>
-
 </Project>
