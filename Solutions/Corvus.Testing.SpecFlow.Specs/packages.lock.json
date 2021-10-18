@@ -161,11 +161,6 @@
           "System.Linq": "4.1.0"
         }
       },
-      "Microsoft.Extensions.Logging.Abstractions": {
-        "type": "Transitive",
-        "resolved": "3.1.20",
-        "contentHash": "pejtJ+FM3tRm9Ssy9VO1PMkxlpkwbO+iQmK/Ot9DqgW3zjeLSQg3bEPI6klU70yoRSDwpiI8E71RdzU+vn/bTQ=="
-      },
       "Microsoft.Extensions.Primitives": {
         "type": "Transitive",
         "resolved": "3.1.20",
@@ -1557,17 +1552,9 @@
           "System.Xml.XmlDocument": "4.3.0"
         }
       },
-      "corvus.testing.azurefunctions": {
-        "type": "Project",
-        "dependencies": {
-          "Microsoft.Extensions.Logging.Abstractions": "3.1.0",
-          "System.Management": "4.7.0"
-        }
-      },
       "corvus.testing.specflow": {
         "type": "Project",
         "dependencies": {
-          "Corvus.Testing.AzureFunctions": "1.0.0",
           "Microsoft.Extensions.Configuration.Abstractions": "3.1.0",
           "Microsoft.Extensions.DependencyInjection": "3.1.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "3.1.0",
