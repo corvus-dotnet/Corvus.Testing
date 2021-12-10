@@ -29,7 +29,7 @@
       <PrivateAssets>contentfiles; analyzers</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Moq" Version="4.16.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0">
       <!-- ensure the 'build' assets are not private -->
       <PrivateAssets>contentfiles; analyzers</PrivateAssets>
     </PackageReference>
