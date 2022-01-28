@@ -33,8 +33,8 @@ namespace Corvus.Testing.AzureFunctions
     {
         private const long StartupTimeout = 60;
 
-        private readonly List<FunctionOutputBufferHandler> output = new List<FunctionOutputBufferHandler>();
-        private readonly object sync = new object();
+        private readonly List<FunctionOutputBufferHandler> output = new();
+        private readonly object sync = new();
 
         private readonly ILogger logger;
         private IDisposable? functionLogScope;

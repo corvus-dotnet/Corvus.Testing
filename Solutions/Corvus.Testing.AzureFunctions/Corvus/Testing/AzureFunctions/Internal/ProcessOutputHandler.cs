@@ -20,17 +20,17 @@ namespace Corvus.Testing.AzureFunctions.Internal
         ///     Provides the task for <see cref="ExitCode"/>, enabling users of this class to
         ///     discover when the process finishes.
         /// </summary>
-        private readonly TaskCompletionSource<int> exitCodeCompletionSource = new TaskCompletionSource<int>();
+        private readonly TaskCompletionSource<int> exitCodeCompletionSource = new();
 
         /// <summary>
         ///     The text the process has sent to standard output so far.
         /// </summary>
-        private readonly StringBuilder standardOutput = new StringBuilder();
+        private readonly StringBuilder standardOutput = new();
 
         /// <summary>
         ///     The text the process has sent to standard error so far.
         /// </summary>
-        private readonly StringBuilder standardError = new StringBuilder();
+        private readonly StringBuilder standardError = new();
 
         private readonly ILogger logger;
 
