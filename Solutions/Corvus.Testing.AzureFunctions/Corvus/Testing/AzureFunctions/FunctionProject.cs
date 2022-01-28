@@ -39,7 +39,7 @@ namespace Corvus.Testing.AzureFunctions
         /// directory.</returns>
         public static string ResolvePath(string pathFragment, string runtime, ILogger? logger = null)
         {
-            logger = logger ?? NullLogger.Instance;
+            logger ??= NullLogger.Instance;
 
             string currentDirectory = Environment.CurrentDirectory.ToLowerInvariant();
 

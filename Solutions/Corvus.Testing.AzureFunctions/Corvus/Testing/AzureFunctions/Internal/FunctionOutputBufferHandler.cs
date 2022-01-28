@@ -21,7 +21,7 @@ namespace Corvus.Testing.AzureFunctions.Internal
         /// <summary>
         /// Competion source for <see cref="JobHostStarted"/>.
         /// </summary>
-        private readonly TaskCompletionSource<object> jobHostStartedCompletionSource = new TaskCompletionSource<object>();
+        private readonly TaskCompletionSource<object> jobHostStartedCompletionSource = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FunctionOutputBufferHandler"/> class, launching
