@@ -579,8 +579,8 @@
       },
       "SpecFlow": {
         "type": "Transitive",
-        "resolved": "3.9.50",
-        "contentHash": "8iBOWWyLj5R0tEhbBLeg1VTCtuDrfvkqYBYn6RRsL+D0FGdtXvyimeW2IHZunKrCiCdPF1f31ZFRwsMoHSFt2Q==",
+        "resolved": "3.9.52",
+        "contentHash": "m/CtKdN+xRSfdGtWRsvNPoz5nhVEp0yqwVjILBvUf1kLAvZo/j2wxnHbVL5g3XzhOaNFdTx1jtk+WtfJJfbS4g==",
         "dependencies": {
           "BoDi": "1.5.0",
           "Gherkin": "19.0.3",
@@ -598,30 +598,30 @@
       },
       "SpecFlow.NUnit": {
         "type": "Transitive",
-        "resolved": "3.9.50",
-        "contentHash": "D0dBAhECMbj5KtAYPpNW/jhOeOs98cZpAYDBg81N82NUoEfpXhhfSyXxpql53VII6QDtPzrRnczM9EJASfTv1w==",
+        "resolved": "3.9.52",
+        "contentHash": "ba7ohjFwtywuUsk9eGcMouLUfAkq6UdT6Nd1kAsTDeiEx26KV2NFVmwgUqJ4tvPk842Fwg/5BkDJYX6FldRCmA==",
         "dependencies": {
           "NUnit": "3.13.1",
-          "SpecFlow": "[3.9.50]",
-          "SpecFlow.Tools.MsBuild.Generation": "[3.9.50]"
+          "SpecFlow": "[3.9.52]",
+          "SpecFlow.Tools.MsBuild.Generation": "[3.9.52]"
         }
       },
       "SpecFlow.NUnit.Runners": {
         "type": "Transitive",
-        "resolved": "3.9.50",
-        "contentHash": "HR3kO/rEXG8aqIBUfiUg2XGjRJ6PxMp9Uz2uhFUdsXMakIMTtK0fzMnh0gvfriGHetF6Ra5eA4gR/XKE9KyzbA==",
+        "resolved": "3.9.52",
+        "contentHash": "f5xfVIEFYbYaaW2hcQyKqt8CFxzDK+V8TjNANfZTcpOhcS3tZI7n+RWF6pUZqQcs2fdRILJ+v/b4U4FDbxDRAA==",
         "dependencies": {
           "NUnit.Console": "3.12.0",
           "NUnit3TestAdapter": "3.17.0",
-          "SpecFlow.NUnit": "[3.9.50]"
+          "SpecFlow.NUnit": "[3.9.52]"
         }
       },
       "SpecFlow.Tools.MsBuild.Generation": {
         "type": "Transitive",
-        "resolved": "3.9.50",
-        "contentHash": "oJ5LXdKBnx2faO3I3hNVt+Pyeb6pE9mYxPFCvNXydQ2je3C1O8rDznK9Cxh3Tn8ixpx4LWCYuch9VSL9jZjfXQ==",
+        "resolved": "3.9.52",
+        "contentHash": "GD345e/lNdxZ3xt84NoR/GJKqpMMbQapTog0+mZyHGJUvFgt8lFlAgFsVI58Ge1jXLDqF5c9W7eRpk0ovCGMag==",
         "dependencies": {
-          "SpecFlow": "[3.9.50]"
+          "SpecFlow": "[3.9.52]"
         }
       },
       "StyleCop.Analyzers.Unstable": {
@@ -1643,7 +1643,7 @@
           "Corvus.Testing.SpecFlow": "1.0.0",
           "Microsoft.Extensions.Logging.Console": "3.1.0",
           "NUnit": "3.13.2",
-          "SpecFlow": "3.9.50"
+          "SpecFlow": "3.9.52"
         }
       },
       "corvus.testing.azurefunctions.specflow.nunit": {
@@ -1652,7 +1652,7 @@
           "Corvus.Testing.AzureFunctions.SpecFlow": "1.0.0",
           "Microsoft.NET.Test.Sdk": "16.11.0",
           "Moq": "4.16.1",
-          "SpecFlow.NUnit.Runners": "3.9.50",
+          "SpecFlow.NUnit.Runners": "3.9.52",
           "coverlet.msbuild": "3.1.2"
         }
       },
@@ -1663,7 +1663,7 @@
           "Microsoft.Extensions.DependencyInjection": "3.1.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "3.1.0",
           "NUnit": "3.13.2",
-          "SpecFlow": "3.9.50",
+          "SpecFlow": "3.9.52",
           "System.Management": "4.7.0"
         }
       }
