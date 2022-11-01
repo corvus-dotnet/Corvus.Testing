@@ -16,7 +16,7 @@ resources:
       endpoint: corvus-dotnet-github
 
 jobs:
-- template: templates/build.and.release.yml@recommended_practices
+- template: templates/build.and.release.scripted.yml@recommended_practices
   parameters:
     vmImage: 'windows-latest'
     service_connection_nuget_org: $(Endjin_Service_Connection_NuGet_Org)
@@ -30,3 +30,4 @@ jobs:
           verbose: false
           customCommand: 'install -g azure-functions-core-tools@3 --unsafe-perm true'
     netSdkVersion: '3.x'
+    compileTasksServiceConnection: endjin-acr-reader
