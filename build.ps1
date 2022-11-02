@@ -164,7 +164,7 @@ task PreVersion {}
 task PostVersion {}
 task PreBuild {}
 task PostBuild {}
-task PreTest {}
+task PreTest InstallFunctionsV3Runtime
 task PostTest {}
 task PreTestReport {}
 task PostTestReport {}
@@ -176,3 +176,21 @@ task PrePublish {}
 task PostPublish {}
 task RunLast {}
 
+task InstallFunctionsV3Runtime {
+
+    if (!(Get-Command npm -ErrorAction Ignore)) {
+        throw "The tests for this repo require a NodeJS & NPM installation, due to a dependency on the Functions V3 Runtime - please install before running the build (https://nodejs.org/en/download/)."
+    }
+
+    # Lookup path to where global NPM packages are installed
+    $nodePrefix = exec { & npm prefix -g }
+    if (!$nodePrefix) {
+        throw "Unable to derive the NPM global pacakges installation path.  The command 'npm prefix -g' did not return a value."
+    }
+    $functionRuntimePath = Join-Path $nodePrefix "node_modules" "azure-functions-core-tools" "bin"
+
+    if (!(Get-Command (Join-Path $functionRuntimePath "func"))) {
+        Write-Build Green "Installing Functions V3 Runtime"
+        exec { & npm install -g azure-functions-core-tools@3 --unsafe-perm true }
+    }
+}
