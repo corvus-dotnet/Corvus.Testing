@@ -189,7 +189,7 @@ task InstallFunctionsV3Runtime {
     }
     $functionRuntimePath = Join-Path $nodePrefix "node_modules" "azure-functions-core-tools" "bin"
 
-    if (!(Get-Command (Join-Path $functionRuntimePath "func"))) {
+    if (!(Get-Command (Join-Path $functionRuntimePath "func") -ErrorAction Ignore)) {
         Write-Build Green "Installing Functions V3 Runtime"
         exec { & npm install -g azure-functions-core-tools@3 --unsafe-perm true }
     }
