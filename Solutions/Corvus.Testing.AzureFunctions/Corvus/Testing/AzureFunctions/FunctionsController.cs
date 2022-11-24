@@ -311,6 +311,12 @@ StdErr: {StdErr}",
                 }
             }
 
+            // This prevents the Azure Functions host from observing the filesystem and attempting to restart when
+            // it thinks something has changed. We never want this in these test scenarios, because nothing should
+            // be changing, and all that happens is the host exits and then fails to restart. We sometimes see
+            // spurious restarts, which is why we disable this.
+            startInfo.EnvironmentVariables["AzureFunctionsJobHost__FileWatchingEnabled"] = "false";
+
             // Force the logging level to debug to ensure we can pick up the message that tells us the function is
             // ready to go.
             startInfo.EnvironmentVariables["AzureFunctionsJobHost:logging:logLevel:default"] = "Debug";
