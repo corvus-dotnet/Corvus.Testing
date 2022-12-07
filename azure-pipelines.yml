@@ -24,9 +24,9 @@ jobs:
     solution_to_build: $(Endjin_Solution_To_Build)
     postCustomEnvironmentVariables:
       - task: Npm@1
-        displayName: 'Install Latest Azure Functions V3 Runtime'
+        displayName: 'Install Latest Azure Functions V4 Runtime'
         inputs:
           command: custom
           verbose: false
-          customCommand: 'install -g azure-functions-core-tools@3 --unsafe-perm true'
+          customCommand: 'install -g azure-functions-core-tools@ --unsafe-perm true'
     netSdkVersion: '6.x'
