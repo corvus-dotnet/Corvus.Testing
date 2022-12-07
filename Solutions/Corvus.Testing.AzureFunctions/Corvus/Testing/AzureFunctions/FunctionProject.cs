@@ -25,7 +25,7 @@ namespace Corvus.Testing.AzureFunctions
         /// {
         ///     string functionProjectPath = FunctionProject.ResolvePath(
         ///         "Solutions/Corvus.Testing.AzureFunctions.DemoFunction",
-        ///         "netcoreapp3.1");
+        ///         "net6.0");
         ///
         ///     string projectSettingsFile = Path.Combine(functionProjectPath, "local.settings.json");
         /// }

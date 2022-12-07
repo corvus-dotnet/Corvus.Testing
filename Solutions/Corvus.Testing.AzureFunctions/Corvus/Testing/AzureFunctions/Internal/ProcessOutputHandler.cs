@@ -174,24 +174,24 @@ namespace Corvus.Testing.AzureFunctions.Internal
                 this.standardOutput.AppendLine(e.Data);
             }
 
-            this.logger.LogDebug(e.Data);
-            this.OnStandardOutputLine(e.Data);
+            this.logger.LogDebug("Process output: {StdOut}", e.Data);
+            this.OnStandardOutputLine(e.Data ?? string.Empty);
         }
 
         private void OnErrorDataReceived(object sender, DataReceivedEventArgs e)
         {
-            string line = e.Data;
+            string line = e.Data ?? string.Empty;
 
             lock (this.standardError)
             {
                 this.standardError.AppendLine(line);
             }
 
-            this.logger.LogWarning(line);
+            this.logger.LogDebug("Process error output: {StdErr}", line);
             this.OnStandardErrorLine(line);
         }
 
-        private void OnProcessExit(object sender, EventArgs e)
+        private void OnProcessExit(object? sender, EventArgs e)
         {
             this.exitCodeCompletionSource.SetResult(this.Process.ExitCode);
             this.Process.OutputDataReceived -= this.OnOutputDataReceived;

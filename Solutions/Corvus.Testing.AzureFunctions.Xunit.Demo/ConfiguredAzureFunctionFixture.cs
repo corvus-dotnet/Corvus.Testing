@@ -29,19 +29,19 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
             this.function = new FunctionsController(logger);
         }
 
-        public int Port => 7077;
+        public static int Port => 7077;
 
-        public string Greet(string name) => $"Welcome, {name}";
+        public static string Greet(string name) => $"Welcome, {name}";
 
         public async Task InitializeAsync()
         {
             var configuration = new FunctionConfiguration();
-            configuration.EnvironmentVariables.Add("ResponseMessage", this.Greet("{name}"));
+            configuration.EnvironmentVariables.Add("ResponseMessage", Greet("{name}"));
 
             await this.function.StartFunctionsInstance(
                 "Corvus.Testing.AzureFunctions.DemoFunction",
-                this.Port,
-                "netcoreapp3.1",
+                Port,
+                "net6.0",
                 configuration: configuration);
         }
 

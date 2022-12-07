@@ -4,17 +4,18 @@
 
 namespace Corvus.Testing.SpecFlow.Demo.AzureFunctionsTesting
 {
-    using System;
     using System.Threading.Tasks;
+
     using Corvus.Testing.AzureFunctions;
     using Corvus.Testing.AzureFunctions.SpecFlow;
+
     using TechTalk.SpecFlow;
 
     [Binding]
-    public class DemoFunctionPerScenarioHooks
+    public static class DemoFunctionPerScenarioHooks
     {
         [BeforeScenario("usingDemoFunctionPerScenario")]
-        public Task StartFunctionsAsync(ScenarioContext scenarioContext)
+        public static Task StartFunctionsAsync(ScenarioContext scenarioContext)
         {
             FunctionsController functionsController = FunctionsBindings.GetFunctionsController(scenarioContext);
             FunctionConfiguration functionConfiguration = FunctionsBindings.GetFunctionConfiguration(scenarioContext);
@@ -22,21 +23,21 @@ namespace Corvus.Testing.SpecFlow.Demo.AzureFunctionsTesting
             return functionsController.StartFunctionsInstance(
                 "Corvus.Testing.AzureFunctions.DemoFunction",
                 7075,
-                "netcoreapp3.1",
+                "net6.0",
                 configuration: functionConfiguration);
         }
 
         [BeforeScenario("usingDemoFunctionPerScenarioWithAdditionalConfiguration")]
-        public Task StartFunctionWithAdditionalConfigurationAsync(ScenarioContext scenarioContext)
+        public static Task StartFunctionWithAdditionalConfigurationAsync(ScenarioContext scenarioContext)
         {
             FunctionConfiguration functionConfiguration = FunctionsBindings.GetFunctionConfiguration(scenarioContext);
             functionConfiguration.EnvironmentVariables.Add("ResponseMessage", "Welcome, {name}");
 
-            return this.StartFunctionsAsync(scenarioContext);
+            return StartFunctionsAsync(scenarioContext);
         }
 
         [AfterScenario("usingDemoFunctionPerScenario", "usingDemoFunctionPerScenarioWithAdditionalConfiguration")]
-        public void StopFunction(ScenarioContext scenarioContext)
+        public static void StopFunction(ScenarioContext scenarioContext)
         {
             FunctionsController functionsController = FunctionsBindings.GetFunctionsController(scenarioContext);
             functionsController.TeardownFunctions();

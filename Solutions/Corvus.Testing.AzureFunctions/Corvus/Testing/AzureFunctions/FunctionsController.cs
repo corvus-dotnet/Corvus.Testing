@@ -12,9 +12,10 @@ namespace Corvus.Testing.AzureFunctions
     using System.Management;
     using System.Net.NetworkInformation;
     using System.Threading.Tasks;
+
     using Corvus.Testing.AzureFunctions.Internal;
+
     using Microsoft.Extensions.Logging;
-    using Microsoft.Extensions.Logging.Abstractions;
 
     /// <summary>
     /// Starts, manages and terminates functions instances for testing purposes.
@@ -61,7 +62,7 @@ namespace Corvus.Testing.AzureFunctions
         /// </summary>
         /// <param name="path">The location of the functions project.</param>
         /// <param name="port">The port on which to start the functions instance.</param>
-        /// <param name="runtime">The runtime version for use with the function host (e.g. netcoreapp3.1).</param>
+        /// <param name="runtime">The runtime version for use with the function host (e.g. net6.0).</param>
         /// <param name="provider">The functions provider. Defaults to csharp.</param>
         /// <param name="configuration">A <see cref="FunctionConfiguration"/> instance, for conveying
         /// configuration values via environment variables to the function host process.</param>
@@ -198,7 +199,7 @@ StdErr: {StdErr}",
             using (var searcher =
                 new ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" + pid))
             {
-                foreach (ManagementObject mo in searcher.Get())
+                foreach (ManagementObject mo in searcher.Get().Cast<ManagementObject>())
                 {
                     KillProcessAndChildren(Convert.ToInt32(mo["ProcessID"]));
                 }

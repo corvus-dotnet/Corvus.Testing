@@ -4,9 +4,8 @@
 
 namespace Corvus.Testing.AzureFunctions
 {
-    using System;
     using System.Collections.Generic;
-    using System.IO;
+
     using Microsoft.Extensions.Logging;
 
     /// <summary>
