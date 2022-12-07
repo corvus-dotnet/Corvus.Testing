@@ -11,13 +11,27 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
 
     public class ConfiguredFunctionPerFixtureFacts : DemoFunctionFacts, IClassFixture<ConfiguredAzureFunctionFixture>
     {
-        private readonly ConfiguredAzureFunctionFixture fixture;
+        /// <summary>
+        /// Initialize the fixture.
+        /// </summary>
+        /// <param name="fixture">
+        /// We don't use this, but it has to be here because otherwise XUnit gets unhappy. It
+        /// wants this because we implement <see cref="IClassFixture{ConfiguredAzureFunctionFixture}"/>.
+        /// We need to do that so that the function gets started, but that side effect is all we care
+        /// about - we don't actually need to refer to that instance at any point in the test.
+        /// So we need to accept it as an ignored constructor argument, and then silence the
+        /// analyzer messages.
+        /// </param>
+#pragma warning disable IDE0060 // Remove unused parameter - see comment above
+#pragma warning disable RCS1163 // Unused parameter.
+        public ConfiguredFunctionPerFixtureFacts(ConfiguredAzureFunctionFixture fixture)
+#pragma warning restore RCS1163, IDE0060 // Unused parameter.
+        {
+        }
 
-        public ConfiguredFunctionPerFixtureFacts(ConfiguredAzureFunctionFixture fixture) => this.fixture = fixture;
+        private static int Port => ConfiguredAzureFunctionFixture.Port;
 
-        private int Port => fixture.Port;
-
-        private string Uri => $"http://localhost:{this.Port}/";
+        private static string Uri => $"http://localhost:{Port}/";
 
         [Fact]
         public async Task A_Get_request_including_a_name_in_the_querystring_is_successful()
@@ -25,13 +39,13 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
             await When_I_GET($"{Uri}?name=Jon");
 
             Then_I_receive(HttpStatusCode.OK);
-            await And_the_response_body_contains(this.fixture.Greet("Jon"));
+            await And_the_response_body_contains(ConfiguredAzureFunctionFixture.Greet("Jon"));
         }
 
         [Fact]
         public async Task A_Get_request_without_providing_a_name_in_the_querystring_fails()
         {
-            await this.When_I_GET($"http://localhost:{this.Port}/");
+            await this.When_I_GET($"http://localhost:{Port}/");
 
             Then_I_receive(HttpStatusCode.BadRequest);
         }
@@ -42,7 +56,7 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
             await this.When_I_POST($"{Uri}?name=Jon");
 
             Then_I_receive(HttpStatusCode.OK);
-            await And_the_response_body_contains(this.fixture.Greet("Jon"));
+            await And_the_response_body_contains(ConfiguredAzureFunctionFixture.Greet("Jon"));
         }
 
         [Fact]
@@ -51,7 +65,7 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
             await this.When_I_POST(Uri, new { name = "Jon" });
 
             Then_I_receive(HttpStatusCode.OK);
-            await And_the_response_body_contains(this.fixture.Greet("Jon"));
+            await And_the_response_body_contains(ConfiguredAzureFunctionFixture.Greet("Jon"));
         }
 
         [Fact]
@@ -60,7 +74,7 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
             await this.When_I_POST($"{Uri}?name=Jon", new { name = "Jonathan" });
 
             Then_I_receive(HttpStatusCode.OK);
-            await And_the_response_body_contains(this.fixture.Greet("Jon"));
+            await And_the_response_body_contains(ConfiguredAzureFunctionFixture.Greet("Jon"));
         }
 
         [Fact]

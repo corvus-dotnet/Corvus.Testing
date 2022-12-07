@@ -34,7 +34,7 @@ namespace Corvus.Testing.SpecFlow.Internal
         /// <inheritdoc/>
         public object Retrieve(KeyValuePair<string, string> keyValuePair, Type targetType, Type propertyType)
         {
-            return this.scenarioContext.Get<object>(keyValuePair.Value.Substring(1, keyValuePair.Value.Length - 2));
+            return this.scenarioContext.Get<object>(keyValuePair.Value[1..^1]);
         }
     }
 }

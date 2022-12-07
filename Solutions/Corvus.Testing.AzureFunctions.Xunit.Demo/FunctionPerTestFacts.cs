@@ -99,7 +99,7 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
             await this.function.StartFunctionsInstance(
                 "Corvus.Testing.AzureFunctions.DemoFunction",
                 this.Port,
-                "netcoreapp3.1");
+                "net6.0");
         }
 
         public Task DisposeAsync()

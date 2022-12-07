@@ -50,7 +50,7 @@ namespace Corvus.Testing.SpecFlow.DemoFunction
             string? name = req.Query["name"];
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync().ConfigureAwait(false);
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
+            dynamic data = JsonConvert.DeserializeObject(requestBody)!;
             name ??= data?.name;
 
             string result = this.message.Replace("{name}", name);

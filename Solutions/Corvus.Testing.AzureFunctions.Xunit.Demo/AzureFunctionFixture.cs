@@ -33,14 +33,14 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
             this.function = new FunctionsController(logger);
         }
 
-        public int Port => 7076;
+        public static int Port => 7076;
 
         public async Task InitializeAsync()
         {
             await this.function.StartFunctionsInstance(
                 "Corvus.Testing.AzureFunctions.DemoFunction",
-                this.Port,
-                "netcoreapp3.1");
+                Port,
+                "net6.0");
         }
 
         public Task DisposeAsync()

@@ -85,7 +85,7 @@ namespace Corvus.Testing.AzureFunctions.SpecFlow
         public Task StartAFunctionsInstance(string path, int port)
         {
             return GetFunctionsController(this.scenarioContext)
-                .StartFunctionsInstance(path, port, "netcoreapp3.1");
+                .StartFunctionsInstance(path, port, "net6.0");
         }
 
         /// <summary>
