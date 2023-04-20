@@ -178,7 +178,7 @@ StdErr: {StdErr}",
 
             string toolPath = Path.Combine(
                 toolsFolder,
-                "func");
+                Environment.OSVersion.Platform == PlatformID.Win32NT ? "func.exe" : "func");
 
             Console.WriteLine($"\tToolsPath: {toolPath}");
             return toolPath;
