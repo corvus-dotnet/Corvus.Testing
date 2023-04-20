@@ -28,5 +28,13 @@ jobs:
         inputs:
           command: custom
           verbose: false
-          customCommand: 'install -g azure-functions-core-tools@ --unsafe-perm true'
+          customCommand: 'install -g azure-functions-core-tools@ --unsafe-perm true --verbose'
+      - task: Npm@1
+        displayName: 'Install Latest Azure Functions V4 Runtime'
+        inputs:
+          command: custom
+          verbose: false
+          customCommand: 'install -g azure-functions-core-tools@ --unsafe-perm true --verbose'
+      - powershell: |
+          gci C:\npm\prefix\node_modules\azure-functions-core-tools
     netSdkVersion: '6.x'
