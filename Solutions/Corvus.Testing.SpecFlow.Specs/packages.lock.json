@@ -34,8 +34,8 @@
       },
       "Castle.Core": {
         "type": "Transitive",
-        "resolved": "5.1.0",
-        "contentHash": "31UJpTHOiWq95CDOHazE3Ub/hE/PydNWsJMwnEVTqFFP4WhAugwpaVGxzOxKgNeSUUeqS2W6lxV+q7u1pAOfXg==",
+        "resolved": "5.1.1",
+        "contentHash": "rpYtIczkzGpf+EkZgDr9CClTdemhsrwA/W5hMoPjLkRFnXzH44zDLoovXeKtmxb1ykXK9aJVODSpiJml8CTw2g==",
         "dependencies": {
           "System.Diagnostics.EventLog": "6.0.0"
         }
@@ -212,10 +212,10 @@
       },
       "Moq": {
         "type": "Transitive",
-        "resolved": "4.18.3",
-        "contentHash": "nmV2lludVOFmVi+Vtq9twX1/SDiEVyYDURzxW39gUBqjyoXmdyNwJSeOfSCJoJTXDXBVfFNfEljB5UWGj/cKnQ==",
+        "resolved": "4.18.4",
+        "contentHash": "IOo+W51+7Afnb0noltJrKxPBSfsgMzTKCw+Re5AMx8l/vBbAbMDOynLik4+lBYIWDJSO0uV7Zdqt7cNb6RZZ+A==",
         "dependencies": {
-          "Castle.Core": "5.1.0"
+          "Castle.Core": "5.1.1"
         }
       },
       "NETStandard.Library": {
@@ -1346,7 +1346,7 @@
         "dependencies": {
           "Corvus.Testing.SpecFlow": "[1.0.0, )",
           "Microsoft.NET.Test.Sdk": "[17.4.0, )",
-          "Moq": "[4.18.3, )",
+          "Moq": "[4.18.4, )",
           "SpecFlow.NUnit.Runners": "[3.9.74, )",
           "coverlet.msbuild": "[3.2.0, )"
         }
