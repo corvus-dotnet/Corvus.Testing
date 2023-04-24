@@ -6,6 +6,7 @@ namespace Corvus.Testing.AzureFunctions
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Diagnostics;
     using System.IO;
     using System.Linq;
@@ -33,6 +34,9 @@ namespace Corvus.Testing.AzureFunctions
     public sealed class FunctionsController
     {
         private const long StartupTimeout = 60;
+#pragma warning disable SA1310 // Field names should not contain underscore - this is the proper name for this symbol
+        private const int E_ACCESSDENIED = unchecked((int)0x80070005);
+#pragma warning restore SA1310
 
         private readonly List<FunctionOutputBufferHandler> output = new();
         private readonly object sync = new();
@@ -136,6 +140,12 @@ StdErr: {StdErr}",
         /// <summary>
         /// Tear down the running functions instances, forcibly killing the process where required.
         /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This is a best-effort approach, because in some environments (e.g., on some build
+        /// agents) we get Access Denied errors when trying to kill the host forcibly.
+        /// </para>
+        /// </remarks>
         public void TeardownFunctions()
         {
             var aggregate = new List<Exception>();
@@ -145,7 +155,10 @@ StdErr: {StdErr}",
                 {
                     KillProcessAndChildren(outputHandler.Process.Id);
 
-                    outputHandler.Process.WaitForExit();
+                    if (!outputHandler.Process.WaitForExit(10000))
+                    {
+                        Console.Error.WriteLine("Unable to shut down functions host");
+                    }
                 }
                 catch (Exception e)
                 {
@@ -208,7 +221,15 @@ StdErr: {StdErr}",
             try
             {
                 var proc = Process.GetProcessById(pid);
-                proc.Kill();
+                try
+                {
+                    proc.Kill();
+                }
+                catch (Win32Exception x)
+                when (x.ErrorCode == E_ACCESSDENIED)
+                {
+                    Console.WriteLine($"Access denied when trying to kill process id {pid}, '{proc.ProcessName}'");
+                }
             }
             catch (ArgumentException)
             {
