@@ -12,6 +12,7 @@ namespace Corvus.Testing.AzureFunctions
     using System.Linq;
     using System.Management;
     using System.Net.NetworkInformation;
+    using System.Threading;
     using System.Threading.Tasks;
 
     using Corvus.Testing.AzureFunctions.Internal;
@@ -143,7 +144,13 @@ StdErr: {StdErr}",
         /// <remarks>
         /// <para>
         /// This is a best-effort approach, because in some environments (e.g., on some build
-        /// agents) we get Access Denied errors when trying to kill the host forcibly.
+        /// agents) we get Access Denied errors when trying to kill the host forcibly. We will
+        /// retry up to three times when that happens because sometimes race conditions can cause
+        /// spurious access denied failures. But we will eventually give up. We don't throw an
+        /// exception in this case because there may be situations in which tests can proceed,
+        /// but in most cases this is likely to result in the next test failing, because it will
+        /// try to run the functions host again with the same port number settings, and that will
+        /// fail because the port is already in use by the process we were unable to terminate.
         /// </para>
         /// </remarks>
         public void TeardownFunctions()
@@ -220,16 +227,32 @@ StdErr: {StdErr}",
 
             try
             {
-                var proc = Process.GetProcessById(pid);
-                try
+                bool failedDueToAccessDenied;
+                int accessDenyRetryCount = 0;
+                const int MaxAccessDeniedRetries = 3;
+
+                do
                 {
-                    proc.Kill();
+                    failedDueToAccessDenied = false;
+
+                    var proc = Process.GetProcessById(pid);
+                    try
+                    {
+                        proc.Kill();
+                    }
+                    catch (Win32Exception x)
+                    when (x.ErrorCode == E_ACCESSDENIED)
+                    {
+                        Console.Error.WriteLine($"Access denied when trying to kill process id {pid}, '{proc.ProcessName}'");
+                        failedDueToAccessDenied = true;
+                    }
+
+                    if (failedDueToAccessDenied && accessDenyRetryCount < MaxAccessDeniedRetries)
+                    {
+                        Thread.Sleep(100);
+                    }
                 }
-                catch (Win32Exception x)
-                when (x.ErrorCode == E_ACCESSDENIED)
-                {
-                    Console.Error.WriteLine($"Access denied when trying to kill process id {pid}, '{proc.ProcessName}'");
-                }
+                while (failedDueToAccessDenied && accessDenyRetryCount++ < MaxAccessDeniedRetries);
             }
             catch (ArgumentException)
             {
