@@ -225,39 +225,42 @@ StdErr: {StdErr}",
                 }
             }
 
-            try
-            {
-                bool failedDueToAccessDenied;
-                int accessDenyRetryCount = 0;
-                const int MaxAccessDeniedRetries = 3;
+            bool failedDueToAccessDenied;
+            int accessDenyRetryCount = 0;
+            const int MaxAccessDeniedRetries = 3;
 
-                do
+            do
+            {
+                failedDueToAccessDenied = false;
+
+                Process proc;
+                try
                 {
-                    failedDueToAccessDenied = false;
-
-                    var proc = Process.GetProcessById(pid);
-                    try
-                    {
-                        proc.Kill();
-                    }
-                    catch (Win32Exception x)
-                    when (x.ErrorCode == E_ACCESSDENIED)
-                    {
-                        Console.Error.WriteLine($"Access denied when trying to kill process id {pid}, '{proc.ProcessName}'");
-                        failedDueToAccessDenied = true;
-                    }
-
-                    if (failedDueToAccessDenied && accessDenyRetryCount < MaxAccessDeniedRetries)
-                    {
-                        Thread.Sleep(100);
-                    }
+                    proc = Process.GetProcessById(pid);
                 }
-                while (failedDueToAccessDenied && accessDenyRetryCount++ < MaxAccessDeniedRetries);
+                catch (ArgumentException)
+                {
+                    // Process already exited.
+                    return;
+                }
+
+                try
+                {
+                    proc.Kill();
+                }
+                catch (Win32Exception x)
+                when (x.ErrorCode == E_ACCESSDENIED)
+                {
+                    Console.Error.WriteLine($"Access denied when trying to kill process id {pid}, '{proc.ProcessName}'");
+                    failedDueToAccessDenied = true;
+                }
+
+                if (failedDueToAccessDenied && accessDenyRetryCount < MaxAccessDeniedRetries)
+                {
+                    Thread.Sleep(100);
+                }
             }
-            catch (ArgumentException)
-            {
-                // Process already exited.
-            }
+            while (failedDueToAccessDenied && accessDenyRetryCount++ < MaxAccessDeniedRetries);
         }
 
         /// <summary>
