@@ -33,6 +33,30 @@
       <!-- ensure the 'build' assets are not private -->
       <PrivateAssets>contentfiles; analyzers</PrivateAssets>
     </PackageReference>
+    
+    <!--
+    We have an indirect dependency on System.Text.RegularExpressions, and by default applications
+    will end up with the 4.3.0 version, for which a security advisory exists. The issue is around
+    a potential denial of service attack, and since this only affects test projects (not production
+    code) this doesn't appear to be a realistic security flaw. However, some code analyzers will
+    flag this, so we are upgrading the reference to prevent warnings.
+    
+    The dependency comes from NUnit:
+    
+    Corvus.Testing.AzureFunctions.SpecFlow.NUnit
+      SpecFlow.NUnit.Runners 3.9.74
+        NUnit3TestAdapter 3.17.0
+          System.Xml.XmlDocument
+            System.Xml.ReaderWriter
+              System.Text.RegularExpressions
+              
+    It's possible that this problem will go away with NUnit3TestAdapter 4, because that doesn't
+    appear to have this dependency. Currently, SpecFlow.NUnit.Runners depends on the older
+    version (and as of 2023/04/20, previews for SpecFlow.NUnit.Runners v4 continue to do that)
+    but if at some point we are able to move to NUnit3TestAdapter 4, we should look at
+    removing this dependency, because we shouldn't need it any more.
+    -->
+    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
   </ItemGroup>
 
   <ItemGroup>
