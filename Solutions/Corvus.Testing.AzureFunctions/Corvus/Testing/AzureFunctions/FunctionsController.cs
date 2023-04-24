@@ -296,7 +296,7 @@ StdErr: {StdErr}",
                 $"host start --port {port} --{provider}")
             {
                 WorkingDirectory = workingDirectory,
-                UseShellExecute = Environment.OSVersion.Platform == PlatformID.Win32NT,
+                UseShellExecute = false,
                 CreateNoWindow = false,
                 RedirectStandardError = true,
                 RedirectStandardOutput = true,

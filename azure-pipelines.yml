@@ -23,6 +23,10 @@ jobs:
     service_connection_github: $(Endjin_Service_Connection_GitHub)
     solution_to_build: $(Endjin_Solution_To_Build)
     postCustomEnvironmentVariables:
+      - task: NodeTool@0
+        displayName: 'Temporary downgrade of NPM to work around bug' # https://github.com/actions/runner-images/issues/7467#issuecomment-1518007292 - we can remove this once https://github.com/Azure/azure-functions-core-tools/pull/3338 drops, whenever azure-functions-core-tools >v4.0.5095 drops
+        inputs:
+          versionSpec: '18.15'
       - task: Npm@1
         displayName: 'Install Latest Azure Functions V4 Runtime'
         inputs:
