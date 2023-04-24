@@ -228,7 +228,7 @@ StdErr: {StdErr}",
                 catch (Win32Exception x)
                 when (x.ErrorCode == E_ACCESSDENIED)
                 {
-                    Console.WriteLine($"Access denied when trying to kill process id {pid}, '{proc.ProcessName}'");
+                    Console.Error.WriteLine($"Access denied when trying to kill process id {pid}, '{proc.ProcessName}'");
                 }
             }
             catch (ArgumentException)
