@@ -1,7 +1,7 @@
 # Corvus.Testing
 [![Build Status](https://dev.azure.com/endjin-labs/Corvus.Testing/_apis/build/status/corvus-dotnet.Corvus.Testing?branchName=main)](https://dev.azure.com/endjin-labs/Corvus.Testing/_build/latest?definitionId=4&branchName=main)
 [![GitHub license](https://img.shields.io/badge/License-Apache%202-blue.svg)](https://raw.githubusercontent.com/corvus-dotnet/Corvus.Testing/main/LICENSE)
-[![IMM](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/total?cache=false)](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/total?cache=false)
+[![IMM](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/total?cache=false)](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/total?cache=false)
 
 This provides a library of useful testing extensions, primarily focussed on SpecFlow operations.
 
@@ -189,36 +189,37 @@ This project has adopted a code of conduct adapted from the [Contributor Covenan
 
 The IMM is endjin's IP quality framework.
 
-[![Shared Engineering Standards](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/74e29f9b-6dca-4161-8fdd-b468a1eb185d?nocache=true)](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/74e29f9b-6dca-4161-8fdd-b468a1eb185d?cache=false)
+[![Shared Engineering Standards](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/74e29f9b-6dca-4161-8fdd-b468a1eb185d?nocache=true)](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/74e29f9b-6dca-4161-8fdd-b468a1eb185d?cache=false)
 
-[![Coding Standards](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/f6f6490f-9493-4dc3-a674-15584fa951d8?cache=false)](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/f6f6490f-9493-4dc3-a674-15584fa951d8?cache=false)
+[![Coding Standards](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/f6f6490f-9493-4dc3-a674-15584fa951d8?cache=false)](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/f6f6490f-9493-4dc3-a674-15584fa951d8?cache=false)
 
-[![Executable Specifications](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/bb49fb94-6ab5-40c3-a6da-dfd2e9bc4b00?cache=false)](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/bb49fb94-6ab5-40c3-a6da-dfd2e9bc4b00?cache=false)
+[![Executable Specifications](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/bb49fb94-6ab5-40c3-a6da-dfd2e9bc4b00?cache=false)](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/bb49fb94-6ab5-40c3-a6da-dfd2e9bc4b00?cache=false)
 
-[![Code Coverage](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/0449cadc-0078-4094-b019-520d75cc6cbb?cache=false)](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/0449cadc-0078-4094-b019-520d75cc6cbb?cache=false)
+[![Code Coverage](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/0449cadc-0078-4094-b019-520d75cc6cbb?cache=false)](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/0449cadc-0078-4094-b019-520d75cc6cbb?cache=false)
 
-[![Benchmarks](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/64ed80dc-d354-45a9-9a56-c32437306afa?cache=false)](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/64ed80dc-d354-45a9-9a56-c32437306afa?cache=false)
+[![Benchmarks](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/64ed80dc-d354-45a9-9a56-c32437306afa?cache=false)](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/64ed80dc-d354-45a9-9a56-c32437306afa?cache=false)
 
-[![Reference Documentation](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/2a7fc206-d578-41b0-85f6-a28b6b0fec5f?cache=false)](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/2a7fc206-d578-41b0-85f6-a28b6b0fec5f?cache=false)
+[![Reference Documentation](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/2a7fc206-d578-41b0-85f6-a28b6b0fec5f?cache=false)](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/2a7fc206-d578-41b0-85f6-a28b6b0fec5f?cache=false)
 
-[![Design & Implementation Documentation](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/f026d5a2-ce1a-4e04-af15-5a35792b164b?cache=false)](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/f026d5a2-ce1a-4e04-af15-5a35792b164b?cache=false)
+[![Design & Implementation Documentation](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/f026d5a2-ce1a-4e04-af15-5a35792b164b?cache=false)](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/f026d5a2-ce1a-4e04-af15-5a35792b164b?cache=false)
 
-[![How-to Documentation](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/145f2e3d-bb05-4ced-989b-7fb218fc6705?cache=false)](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/145f2e3d-bb05-4ced-989b-7fb218fc6705?cache=false)
+[![How-to Documentation](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/145f2e3d-bb05-4ced-989b-7fb218fc6705?cache=false)](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/145f2e3d-bb05-4ced-989b-7fb218fc6705?cache=false)
 
-[![Date of Last IP Review](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/da4ed776-0365-4d8a-a297-c4e91a14d646?cache=false)](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/da4ed776-0365-4d8a-a297-c4e91a14d646?cache=false)
+[![Date of Last IP Review](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/da4ed776-0365-4d8a-a297-c4e91a14d646?cache=false)](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/da4ed776-0365-4d8a-a297-c4e91a14d646?cache=false)
 
-[![Framework Version](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/6c0402b3-f0e3-4bd7-83fe-04bb6dca7924?cache=false)](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/6c0402b3-f0e3-4bd7-83fe-04bb6dca7924?cache=false)
+[![Framework Version](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/6c0402b3-f0e3-4bd7-83fe-04bb6dca7924?cache=false)](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/6c0402b3-f0e3-4bd7-83fe-04bb6dca7924?cache=false)
 
-[![Associated Work Items](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/79b8ff50-7378-4f29-b07c-bcd80746bfd4?cache=false)](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/79b8ff50-7378-4f29-b07c-bcd80746bfd4?cache=false)
+[![Associated Work Items](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/79b8ff50-7378-4f29-b07c-bcd80746bfd4?cache=false)](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/79b8ff50-7378-4f29-b07c-bcd80746bfd4?cache=false)
 
-[![Source Code Availability](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/30e1b40b-b27d-4631-b38d-3172426593ca?cache=false)](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/30e1b40b-b27d-4631-b38d-3172426593ca?cache=false)
+[![Source Code Availability](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/30e1b40b-b27d-4631-b38d-3172426593ca?cache=false)](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/30e1b40b-b27d-4631-b38d-3172426593ca?cache=false)
 
-[![License](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/d96b5bdc-62c7-47b6-bcc4-de31127c08b7?cache=false)](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/d96b5bdc-62c7-47b6-bcc4-de31127c08b7?cache=false)
+[![License](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/d96b5bdc-62c7-47b6-bcc4-de31127c08b7?cache=false)](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/d96b5bdc-62c7-47b6-bcc4-de31127c08b7?cache=false)
 
-[![Production Use](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/87ee2c3e-b17a-4939-b969-2c9c034d05d7?cache=false)](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/87ee2c3e-b17a-4939-b969-2c9c034d05d7?cache=false)
+[![Production Use](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/87ee2c3e-b17a-4939-b969-2c9c034d05d7?cache=false)](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/87ee2c3e-b17a-4939-b969-2c9c034d05d7?cache=false)
 
-[![Packaging](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/547fd9f5-9caf-449f-82d9-4fba9e7ce13a?cache=false)](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/547fd9f5-9caf-449f-82d9-4fba9e7ce13a?cache=false)
+[![Packaging](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/547fd9f5-9caf-449f-82d9-4fba9e7ce13a?cache=false)](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/547fd9f5-9caf-449f-82d9-4fba9e7ce13a?cache=false)
 
 
-[![OpenChain](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/66efac1a-662c-40cf-b4ec-8b34c29e9fd7?cache=false)](https://endimmfuncdev.azurewebsites.net/api/imm/github/corvus-dotnet/Corvus.Testing/rule/66efac1a-662c-40cf-b4ec-8b34c29e9fd7?cache=false)
+[![OpenChain](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/66efac1a-662c-40cf-b4ec-8b34c29e9fd7?cache=false)](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/rule/66efac1a-662c-40cf-b4ec-8b34c29e9fd7?cache=false)
+
 
