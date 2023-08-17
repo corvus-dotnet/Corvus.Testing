@@ -184,22 +184,21 @@ StdErr: {StdErr}",
 
         private static async Task<string> GetToolPath()
         {
-            string npmPrefix = await GetNpmPrefix().ConfigureAwait(false);
-            string toolsFolder = Path.Combine(
-                npmPrefix,
-                @"node_modules\azure-functions-core-tools\bin");
+            string toolLocatorName = Environment.OSVersion.Platform == PlatformID.Win32NT ? "where.exe" : "which";
+            string toolName = Environment.OSVersion.Platform == PlatformID.Win32NT ? "func.exe" : "func";
+            var toolLocator = new ProcessOutputHandler(
+                new ProcessStartInfo(toolLocatorName, toolName)
+                {
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                });
 
-            if (!Directory.Exists(toolsFolder))
-            {
-                throw new FunctionStartupException(
-                    $"Azure Functions runtime not found at {toolsFolder}. Have you run: " +
-                    "'npm install -g azure-functions-core-tools@3 --unsafe-perm true'?");
-            }
+            toolLocator.Start();
+            await toolLocator.ExitCode;
+            toolLocator.EnsureComplete();
 
-            string toolPath = Path.Combine(
-                toolsFolder,
-                Environment.OSVersion.Platform == PlatformID.Win32NT ? "func.exe" : "func");
-
+            string toolPath = toolLocator.StandardOutputText.Trim();
             Console.WriteLine($"\tToolsPath: {toolPath}");
             return toolPath;
         }
