@@ -38,6 +38,9 @@ namespace Corvus.Testing.AzureFunctions
         private const long StartupTimeout = 60;
 #pragma warning disable SA1310 // Field names should not contain underscore - this is the proper name for this symbol
         private const int E_ACCESSDENIED = unchecked((int)0x80070005);
+
+        // Ref. https://learn.microsoft.com/en-us/windows/win32/debug/system-error-codes--0-499-#ERROR_BAD_EXE_FORMAT
+        private const int INVALID_EXECUTABLE = 193;
 #pragma warning restore SA1310
 
         private readonly List<FunctionOutputBufferHandler> output = new();
@@ -203,7 +206,7 @@ StdErr: {StdErr}",
             {
                 throw new FunctionStartupException(
                     "Azure Functions runtime not found. Have you run: " +
-                    "'npm install -g azure-functions-core-tools@3 --unsafe-perm true'?");
+                    "'npm install -g azure-functions-core-tools@ --unsafe-perm true'?");
             }
 
             string[] toolPaths = toolLocator.StandardOutputText.Split("\n").Select(s => s.Trim()).ToArray();
@@ -220,13 +223,16 @@ StdErr: {StdErr}",
                         return toolPath;
                     }
                 }
-                catch (Win32Exception)
+                catch (Win32Exception ex) when (ex.NativeErrorCode == INVALID_EXECUTABLE)
                 {
+                    // If the file is not a valid executable a Win32Exception will be thrown.
+                    // Deliberately ignore those exceptions as they indicate we've another platform's
+                    // intermediate format (e.g. the Node binary).
                     continue;
                 }
             }
 
-            throw new FunctionStartupException("None of the resolved Functions executable paths could be invoked.")
+            throw new PlatformNotSupportedException("None of the resolved Functions executable paths could be invoked. Have you run 'npm install -g azure-functions-core-tools@ --unsafe-perm true'?")
             {
                 Data =
                 {
