@@ -12,6 +12,7 @@ namespace Corvus.Testing.AzureFunctions
     using System.Linq;
     using System.Management;
     using System.Net.NetworkInformation;
+    using System.Runtime.InteropServices;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -184,8 +185,8 @@ StdErr: {StdErr}",
 
         private static async Task<string> GetToolPath()
         {
-            string toolLocatorName = Environment.OSVersion.Platform == PlatformID.Win32NT ? "where.exe" : "which";
-            string toolName = Environment.OSVersion.Platform == PlatformID.Win32NT ? "func.exe" : "func";
+            string toolLocatorName = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "where.exe" : "which";
+            const string toolName = "func";
             var toolLocator = new ProcessOutputHandler(
                 new ProcessStartInfo(toolLocatorName, toolName)
                 {
@@ -195,12 +196,43 @@ StdErr: {StdErr}",
                 });
 
             toolLocator.Start();
-            await toolLocator.ExitCode;
+            bool found = await toolLocator.ExitCode == 0;
             toolLocator.EnsureComplete();
 
-            string toolPath = toolLocator.StandardOutputText.Trim();
-            Console.WriteLine($"\tToolsPath: {toolPath}");
-            return toolPath;
+            if (!found)
+            {
+                throw new FunctionStartupException(
+                    "Azure Functions runtime not found. Have you run: " +
+                    "'npm install -g azure-functions-core-tools@3 --unsafe-perm true'?");
+            }
+
+            string[] toolPaths = toolLocator.StandardOutputText.Split("\n").Select(s => s.Trim()).ToArray();
+
+            foreach (string toolPath in toolPaths)
+            {
+                Console.WriteLine($"\tToolsPath: {toolPath}");
+                var process = new ProcessOutputHandler(new ProcessStartInfo(toolPath));
+                try
+                {
+                    process.Start();
+                    if (await process.ExitCode == 0)
+                    {
+                        return toolPath;
+                    }
+                }
+                catch (Win32Exception)
+                {
+                    continue;
+                }
+            }
+
+            throw new FunctionStartupException("None of the resolved Functions executable paths could be invoked.")
+            {
+                Data =
+                {
+                    ["ResolvedPaths"] = toolPaths,
+                },
+            };
         }
 
         /// <summary>
