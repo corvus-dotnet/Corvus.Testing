@@ -301,67 +301,6 @@ StdErr: {StdErr}",
             while (failedDueToAccessDenied && accessDenyRetryCount++ < MaxAccessDeniedRetries);
         }
 
-        /// <summary>
-        /// Discover npm's global prefix (the parent of its global module cache location).
-        /// </summary>
-        /// <returns>
-        /// The global prefix reported by npm.
-        /// </returns>
-        /// <remarks>
-        /// <para>
-        /// To run Azure Functions locally in tests, we need to run the <c>func</c> command
-        /// from the <c>azure-functions-core-tools</c> npm package.
-        /// </para>
-        /// <para>
-        /// Unfortunately, npm ends up putting this in different places on different machines.
-        /// Debugging locally, and also on private build agents, the global module cache is
-        /// typically in <c>%APPDATA%\npm\npm_modules</c>. However, on hosted build agents it
-        /// currently resides in <c>c:\npm\prefix</c>.
-        /// </para>
-        /// <para>
-        /// The most dependable way to find where npm puts these things is to ask npm, by
-        /// running the command <c>npm prefix -g</c>, which is what this function does.
-        /// </para>
-        /// </remarks>
-        private static async Task<string> GetNpmPrefix()
-        {
-            // Running npm directly can run into weird PATH issues, so it's more reliable to run
-            // cmd.exe, and then ask it to run our command - that way we get the same PATH
-            // behaviour we'd get running the command manually.
-            var processHandler = new ProcessOutputHandler(
-                new ProcessStartInfo("cmd.exe", "/c npm prefix -g")
-                {
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                });
-
-            processHandler.Start();
-
-            await Task.WhenAny(
-                processHandler.ExitCode,
-                Task.Delay(TimeSpan.FromSeconds(10))).ConfigureAwait(false);
-
-            if (!processHandler.ExitCode.IsCompleted)
-            {
-                throw new FunctionStartupException(
-                    "npm task did not exit before timeout.",
-                    stdout: processHandler.StandardOutputText,
-                    stderr: processHandler.StandardErrorText);
-            }
-
-            processHandler.EnsureComplete();
-
-            if (processHandler.Process.ExitCode != 0)
-            {
-                throw new FunctionStartupException("Unable to run npm.", stderr: processHandler.StandardErrorText);
-            }
-
-            // We get a newline character on the end of the standard output, so we need to
-            // trim before returning.
-            return processHandler.StandardOutputText.Trim();
-        }
-
         private static bool IsSomethingAlreadyListeningOn(int port)
         {
             return IPGlobalProperties
