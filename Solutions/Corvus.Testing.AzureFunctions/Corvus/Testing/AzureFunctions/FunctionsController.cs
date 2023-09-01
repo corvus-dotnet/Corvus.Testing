@@ -186,6 +186,73 @@ StdErr: {StdErr}",
             }
         }
 
+        /// <summary>
+        /// Kill a process, and all of its children, grandchildren, etc.
+        /// </summary>
+        /// <param name="pid">Process ID.</param>
+        private static void KillProcessAndChildren(int pid)
+        {
+            // Cannot close 'system idle process'.
+            if (pid == 0)
+            {
+                return;
+            }
+
+            using (var searcher =
+                   new ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" + pid))
+            {
+                foreach (ManagementObject mo in searcher.Get().Cast<ManagementObject>())
+                {
+                    KillProcessAndChildren(Convert.ToInt32(mo["ProcessID"]));
+                }
+            }
+
+            bool failedDueToAccessDenied;
+            int accessDenyRetryCount = 0;
+            const int MaxAccessDeniedRetries = 3;
+
+            do
+            {
+                failedDueToAccessDenied = false;
+
+                Process proc;
+                try
+                {
+                    proc = Process.GetProcessById(pid);
+                }
+                catch (ArgumentException)
+                {
+                    // Process already exited.
+                    return;
+                }
+
+                try
+                {
+                    proc.Kill();
+                }
+                catch (Win32Exception x)
+                    when (x.ErrorCode == E_ACCESSDENIED)
+                {
+                    Console.Error.WriteLine($"Access denied when trying to kill process id {pid}, '{proc.ProcessName}'");
+                    failedDueToAccessDenied = true;
+                }
+
+                if (failedDueToAccessDenied && accessDenyRetryCount < MaxAccessDeniedRetries)
+                {
+                    Thread.Sleep(100);
+                }
+            }
+            while (failedDueToAccessDenied && accessDenyRetryCount++ < MaxAccessDeniedRetries);
+        }
+
+        private static bool IsSomethingAlreadyListeningOn(int port)
+        {
+            return IPGlobalProperties
+                .GetIPGlobalProperties()
+                .GetActiveTcpListeners()
+                .Any(e => e.Port == port);
+        }
+
         private async Task<string> GetToolPath()
         {
             string toolLocatorName = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "where.exe" : "which";
@@ -240,73 +307,6 @@ StdErr: {StdErr}",
                     ["ResolvedPaths"] = toolPaths,
                 },
             };
-        }
-
-        /// <summary>
-        /// Kill a process, and all of its children, grandchildren, etc.
-        /// </summary>
-        /// <param name="pid">Process ID.</param>
-        private static void KillProcessAndChildren(int pid)
-        {
-            // Cannot close 'system idle process'.
-            if (pid == 0)
-            {
-                return;
-            }
-
-            using (var searcher =
-                new ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" + pid))
-            {
-                foreach (ManagementObject mo in searcher.Get().Cast<ManagementObject>())
-                {
-                    KillProcessAndChildren(Convert.ToInt32(mo["ProcessID"]));
-                }
-            }
-
-            bool failedDueToAccessDenied;
-            int accessDenyRetryCount = 0;
-            const int MaxAccessDeniedRetries = 3;
-
-            do
-            {
-                failedDueToAccessDenied = false;
-
-                Process proc;
-                try
-                {
-                    proc = Process.GetProcessById(pid);
-                }
-                catch (ArgumentException)
-                {
-                    // Process already exited.
-                    return;
-                }
-
-                try
-                {
-                    proc.Kill();
-                }
-                catch (Win32Exception x)
-                when (x.ErrorCode == E_ACCESSDENIED)
-                {
-                    Console.Error.WriteLine($"Access denied when trying to kill process id {pid}, '{proc.ProcessName}'");
-                    failedDueToAccessDenied = true;
-                }
-
-                if (failedDueToAccessDenied && accessDenyRetryCount < MaxAccessDeniedRetries)
-                {
-                    Thread.Sleep(100);
-                }
-            }
-            while (failedDueToAccessDenied && accessDenyRetryCount++ < MaxAccessDeniedRetries);
-        }
-
-        private static bool IsSomethingAlreadyListeningOn(int port)
-        {
-            return IPGlobalProperties
-                .GetIPGlobalProperties()
-                .GetActiveTcpListeners()
-                .Any(e => e.Port == port);
         }
 
         private async Task<FunctionOutputBufferHandler> StartFunctionHostProcess(
