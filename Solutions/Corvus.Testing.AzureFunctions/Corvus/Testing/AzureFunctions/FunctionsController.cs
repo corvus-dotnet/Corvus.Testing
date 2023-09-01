@@ -89,7 +89,7 @@ namespace Corvus.Testing.AzureFunctions
             this.logger.LogInformation("Starting a function instance for project {Path} on port {Port}", path, port);
             this.logger.LogDebug("Starting process");
 
-            FunctionOutputBufferHandler bufferHandler = await StartFunctionHostProcess(
+            FunctionOutputBufferHandler bufferHandler = await this.StartFunctionHostProcess(
                 port,
                 provider,
                 FunctionProject.ResolvePath(path, runtime, this.logger),
@@ -186,7 +186,7 @@ StdErr: {StdErr}",
             }
         }
 
-        private static async Task<string> GetToolPath()
+        private async Task<string> GetToolPath()
         {
             string toolLocatorName = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "where.exe" : "which";
             const string toolName = "func";
@@ -213,13 +213,14 @@ StdErr: {StdErr}",
 
             foreach (string toolPath in toolPaths)
             {
-                Console.WriteLine($"\tToolsPath: {toolPath}");
+                this.logger.LogDebug("Testing tool path '{ToolPath}' can be used for running Functions projects.", toolPath);
                 var process = new ProcessOutputHandler(new ProcessStartInfo(toolPath));
                 try
                 {
                     process.Start();
                     if (await process.ExitCode == 0)
                     {
+                        this.logger.LogInformation("Resolved tool path '{ToolPath}' for running Functions projects.", toolPath);
                         return toolPath;
                     }
                 }
@@ -369,14 +370,14 @@ StdErr: {StdErr}",
                 .Any(e => e.Port == port);
         }
 
-        private static async Task<FunctionOutputBufferHandler> StartFunctionHostProcess(
+        private async Task<FunctionOutputBufferHandler> StartFunctionHostProcess(
             int port,
             string provider,
             string workingDirectory,
             FunctionConfiguration? functionConfiguration)
         {
             var startInfo = new ProcessStartInfo(
-                await GetToolPath().ConfigureAwait(false),
+                await this.GetToolPath().ConfigureAwait(false),
                 $"host start --port {port} --{provider}")
             {
                 WorkingDirectory = workingDirectory,
