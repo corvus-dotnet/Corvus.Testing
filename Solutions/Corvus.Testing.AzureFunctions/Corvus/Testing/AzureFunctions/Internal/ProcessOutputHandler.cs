@@ -47,6 +47,9 @@ namespace Corvus.Testing.AzureFunctions.Internal
         /// </param>
         public ProcessOutputHandler(ProcessStartInfo startInfo, ILogger? logger = null)
         {
+            // Start() assumes that stdout and stderr have been redirected, so force it here.
+            startInfo.RedirectStandardOutput = true;
+            startInfo.RedirectStandardError = true;
             this.Process = new Process { StartInfo = startInfo };
 
             this.logger = logger ?? NullLogger.Instance;
