@@ -8,9 +8,11 @@ namespace Corvus.Testing.AzureFunctions
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Diagnostics;
+    using System.IO;
     using System.Linq;
     using System.Management;
     using System.Net.NetworkInformation;
+    using System.Runtime.InteropServices;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -253,7 +255,7 @@ StdErr: {StdErr}",
 
         private async Task<string> GetToolPath()
         {
-            string toolLocatorName = OperatingSystem.IsWindows() ? "where.exe" : "which";
+            string toolLocatorName = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "where.exe" : "which";
             const string toolName = "func";
             var toolLocator = new ProcessOutputHandler(
                 new ProcessStartInfo(toolLocatorName, toolName)
