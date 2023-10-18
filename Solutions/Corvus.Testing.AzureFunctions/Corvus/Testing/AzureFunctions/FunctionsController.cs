@@ -276,11 +276,14 @@ StdErr: {StdErr}",
                     "'npm install -g azure-functions-core-tools@ --unsafe-perm true'?");
             }
 
-            string[] toolPaths = toolLocator.StandardOutputText.Split("\n").Select(s => s.Trim()).Where(s => s.Length > 0).ToArray();
+            ////string[] toolPaths = toolLocator.StandardOutputText.Split("\n").Select(s => s.Trim()).Where(s => s.Length > 0).ToArray();
+            string[] toolPaths = toolLocator.StandardOutputText.Split("\n").Select(s => s.Trim()).ToArray();
+            Console.WriteLine(string.Join(", ", toolPaths.Select(p => $"'{p}'")));
 
             foreach (string toolPath in toolPaths)
             {
                 this.logger.LogDebug("Testing tool path '{ToolPath}' can be used for running Functions projects.", toolPath);
+                Console.WriteLine($"Testing tool path '{toolPath}' can be used for running Functions projects.");
                 var process = new ProcessOutputHandler(new ProcessStartInfo(toolPath));
                 try
                 {
