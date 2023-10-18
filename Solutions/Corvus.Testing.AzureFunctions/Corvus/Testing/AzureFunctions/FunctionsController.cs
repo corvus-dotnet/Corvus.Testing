@@ -279,13 +279,13 @@ StdErr: {StdErr}",
             ////string[] toolPaths = toolLocator.StandardOutputText.Split("\n").Select(s => s.Trim()).Where(s => s.Length > 0).ToArray();
             string[] toolPaths = toolLocator.StandardOutputText.Split("\n").Select(s => s.Trim()).ToArray();
             var p = Process.GetCurrentProcess();
-            Console.WriteLine($"{p.Id} ({p.ProcessName}, {Environment.CommandLine})" + string.Join(", ", toolPaths.Select(p => $"'{p}'")));
-            Console.WriteLine($"{p.Id} PATH: {Environment.GetEnvironmentVariable("PATH")}");
+            Console.WriteLine($"{p.Id}:{Environment.CurrentManagedThreadId} ({p.ProcessName}, {Environment.CommandLine}) " + string.Join(", ", toolPaths.Select(p => $"'{p}'")));
+            Console.WriteLine($"{p.Id}:{Environment.CurrentManagedThreadId} PATH: {Environment.GetEnvironmentVariable("PATH")}");
 
             foreach (string toolPath in toolPaths)
             {
                 this.logger.LogDebug("Testing tool path '{ToolPath}' can be used for running Functions projects.", toolPath);
-                Console.WriteLine($"{p.Id} Testing tool path '{toolPath}' can be used for running Functions projects.");
+                Console.WriteLine($"{p.Id}:{Environment.CurrentManagedThreadId} Testing tool path '{toolPath}' can be used for running Functions projects.");
                 var process = new ProcessOutputHandler(new ProcessStartInfo(toolPath));
                 try
                 {
@@ -293,7 +293,7 @@ StdErr: {StdErr}",
                     if (await process.ExitCode == 0)
                     {
                         this.logger.LogInformation("Resolved tool path '{ToolPath}' for running Functions projects.", toolPath);
-                        Console.WriteLine($"{p.Id} Using '{toolPath}'");
+                        Console.WriteLine($"{p.Id}:{Environment.CurrentManagedThreadId} Using '{toolPath}'");
                         return toolPath;
                     }
                 }
@@ -302,7 +302,7 @@ StdErr: {StdErr}",
                     // If the file is not a valid executable a Win32Exception will be thrown.
                     // Deliberately ignore those exceptions as they indicate we've another platform's
                     // intermediate format (e.g. the Node binary).
-                    Console.WriteLine($"{p.Id} '{toolPath}' INVALID_EXECUTABLE");
+                    Console.WriteLine($"{p.Id}:{Environment.CurrentManagedThreadId} '{toolPath}' INVALID_EXECUTABLE");
                     continue;
                 }
             }
