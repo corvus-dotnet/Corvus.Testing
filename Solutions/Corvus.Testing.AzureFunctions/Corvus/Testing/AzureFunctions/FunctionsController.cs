@@ -8,7 +8,6 @@ namespace Corvus.Testing.AzureFunctions
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Diagnostics;
-    using System.IO;
     using System.Linq;
     using System.Management;
     using System.Net.NetworkInformation;
@@ -37,6 +36,9 @@ namespace Corvus.Testing.AzureFunctions
         private const long StartupTimeout = 60;
 #pragma warning disable SA1310 // Field names should not contain underscore - this is the proper name for this symbol
         private const int E_ACCESSDENIED = unchecked((int)0x80070005);
+
+        // Ref. https://learn.microsoft.com/en-us/windows/win32/debug/system-error-codes--0-499-#ERROR_BAD_EXE_FORMAT
+        private const int INVALID_EXECUTABLE = 193;
 #pragma warning restore SA1310
 
         private readonly List<FunctionOutputBufferHandler> output = new();
@@ -85,7 +87,7 @@ namespace Corvus.Testing.AzureFunctions
             this.logger.LogInformation("Starting a function instance for project {Path} on port {Port}", path, port);
             this.logger.LogDebug("Starting process");
 
-            FunctionOutputBufferHandler bufferHandler = await StartFunctionHostProcess(
+            FunctionOutputBufferHandler bufferHandler = await this.StartFunctionHostProcess(
                 port,
                 provider,
                 FunctionProject.ResolvePath(path, runtime, this.logger),
@@ -182,28 +184,6 @@ StdErr: {StdErr}",
             }
         }
 
-        private static async Task<string> GetToolPath()
-        {
-            string npmPrefix = await GetNpmPrefix().ConfigureAwait(false);
-            string toolsFolder = Path.Combine(
-                npmPrefix,
-                @"node_modules\azure-functions-core-tools\bin");
-
-            if (!Directory.Exists(toolsFolder))
-            {
-                throw new FunctionStartupException(
-                    $"Azure Functions runtime not found at {toolsFolder}. Have you run: " +
-                    "'npm install -g azure-functions-core-tools@4 --unsafe-perm true'?");
-            }
-
-            string toolPath = Path.Combine(
-                toolsFolder,
-                Environment.OSVersion.Platform == PlatformID.Win32NT ? "func.exe" : "func");
-
-            Console.WriteLine($"\tToolsPath: {toolPath}");
-            return toolPath;
-        }
-
         /// <summary>
         /// Kill a process, and all of its children, grandchildren, etc.
         /// </summary>
@@ -217,7 +197,7 @@ StdErr: {StdErr}",
             }
 
             using (var searcher =
-                new ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" + pid))
+                   new ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" + pid))
             {
                 foreach (ManagementObject mo in searcher.Get().Cast<ManagementObject>())
                 {
@@ -249,7 +229,7 @@ StdErr: {StdErr}",
                     proc.Kill();
                 }
                 catch (Win32Exception x)
-                when (x.ErrorCode == E_ACCESSDENIED)
+                    when (x.ErrorCode == E_ACCESSDENIED)
                 {
                     Console.Error.WriteLine($"Access denied when trying to kill process id {pid}, '{proc.ProcessName}'");
                     failedDueToAccessDenied = true;
@@ -263,67 +243,6 @@ StdErr: {StdErr}",
             while (failedDueToAccessDenied && accessDenyRetryCount++ < MaxAccessDeniedRetries);
         }
 
-        /// <summary>
-        /// Discover npm's global prefix (the parent of its global module cache location).
-        /// </summary>
-        /// <returns>
-        /// The global prefix reported by npm.
-        /// </returns>
-        /// <remarks>
-        /// <para>
-        /// To run Azure Functions locally in tests, we need to run the <c>func</c> command
-        /// from the <c>azure-functions-core-tools</c> npm package.
-        /// </para>
-        /// <para>
-        /// Unfortunately, npm ends up putting this in different places on different machines.
-        /// Debugging locally, and also on private build agents, the global module cache is
-        /// typically in <c>%APPDATA%\npm\npm_modules</c>. However, on hosted build agents it
-        /// currently resides in <c>c:\npm\prefix</c>.
-        /// </para>
-        /// <para>
-        /// The most dependable way to find where npm puts these things is to ask npm, by
-        /// running the command <c>npm prefix -g</c>, which is what this function does.
-        /// </para>
-        /// </remarks>
-        private static async Task<string> GetNpmPrefix()
-        {
-            // Running npm directly can run into weird PATH issues, so it's more reliable to run
-            // cmd.exe, and then ask it to run our command - that way we get the same PATH
-            // behaviour we'd get running the command manually.
-            var processHandler = new ProcessOutputHandler(
-                new ProcessStartInfo("cmd.exe", "/c npm prefix -g")
-                {
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                });
-
-            processHandler.Start();
-
-            await Task.WhenAny(
-                processHandler.ExitCode,
-                Task.Delay(TimeSpan.FromSeconds(10))).ConfigureAwait(false);
-
-            if (!processHandler.ExitCode.IsCompleted)
-            {
-                throw new FunctionStartupException(
-                    "npm task did not exit before timeout.",
-                    stdout: processHandler.StandardOutputText,
-                    stderr: processHandler.StandardErrorText);
-            }
-
-            processHandler.EnsureComplete();
-
-            if (processHandler.Process.ExitCode != 0)
-            {
-                throw new FunctionStartupException("Unable to run npm.", stderr: processHandler.StandardErrorText);
-            }
-
-            // We get a newline character on the end of the standard output, so we need to
-            // trim before returning.
-            return processHandler.StandardOutputText.Trim();
-        }
-
         private static bool IsSomethingAlreadyListeningOn(int port)
         {
             return IPGlobalProperties
@@ -332,14 +251,70 @@ StdErr: {StdErr}",
                 .Any(e => e.Port == port);
         }
 
-        private static async Task<FunctionOutputBufferHandler> StartFunctionHostProcess(
+        private async Task<string> GetToolPath()
+        {
+            string toolLocatorName = OperatingSystem.IsWindows() ? "where.exe" : "which";
+            const string toolName = "func";
+            var toolLocator = new ProcessOutputHandler(
+                new ProcessStartInfo(toolLocatorName, toolName)
+                {
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                });
+
+            toolLocator.Start();
+            bool found = await toolLocator.ExitCode == 0;
+            toolLocator.EnsureComplete();
+
+            if (!found)
+            {
+                throw new FunctionStartupException(
+                    "Azure Functions runtime not found. Have you run: " +
+                    "'npm install -g azure-functions-core-tools@ --unsafe-perm true'?");
+            }
+
+            string[] toolPaths = toolLocator.StandardOutputText.Split("\n").Select(s => s.Trim()).ToArray();
+
+            foreach (string toolPath in toolPaths)
+            {
+                this.logger.LogDebug("Testing tool path '{ToolPath}' can be used for running Functions projects.", toolPath);
+                var process = new ProcessOutputHandler(new ProcessStartInfo(toolPath));
+                try
+                {
+                    process.Start();
+                    if (await process.ExitCode == 0)
+                    {
+                        this.logger.LogInformation("Resolved tool path '{ToolPath}' for running Functions projects.", toolPath);
+                        return toolPath;
+                    }
+                }
+                catch (Win32Exception ex) when (ex.NativeErrorCode == INVALID_EXECUTABLE)
+                {
+                    // If the file is not a valid executable a Win32Exception will be thrown.
+                    // Deliberately ignore those exceptions as they indicate we've another platform's
+                    // intermediate format (e.g. the Node binary).
+                    continue;
+                }
+            }
+
+            throw new PlatformNotSupportedException("None of the resolved Functions executable paths could be invoked. Have you run 'npm install -g azure-functions-core-tools@ --unsafe-perm true'?")
+            {
+                Data =
+                {
+                    ["ResolvedPaths"] = toolPaths,
+                },
+            };
+        }
+
+        private async Task<FunctionOutputBufferHandler> StartFunctionHostProcess(
             int port,
             string provider,
             string workingDirectory,
             FunctionConfiguration? functionConfiguration)
         {
             var startInfo = new ProcessStartInfo(
-                await GetToolPath().ConfigureAwait(false),
+                await this.GetToolPath().ConfigureAwait(false),
                 $"host start --port {port} --{provider}")
             {
                 WorkingDirectory = workingDirectory,
