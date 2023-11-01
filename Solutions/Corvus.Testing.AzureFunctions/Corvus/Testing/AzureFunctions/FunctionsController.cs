@@ -193,7 +193,7 @@ StdErr: {StdErr}",
             {
                 throw new FunctionStartupException(
                     $"Azure Functions runtime not found at {toolsFolder}. Have you run: " +
-                    "'npm install -g azure-functions-core-tools@3 --unsafe-perm true'?");
+                    "'npm install -g azure-functions-core-tools@4 --unsafe-perm true'?");
             }
 
             string toolPath = Path.Combine(
