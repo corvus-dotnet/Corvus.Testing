@@ -150,7 +150,7 @@ Some of the tests require NodeJS and the Functions development tools to be insta
 
 ```
 choco install nodejs
-npm install -g azure-functions-core-tools@3
+npm install -g azure-functions-core-tools@
 ```
 
 >NOTE: You may need to reboot to get Visual Studio to 'see' the NodeJS installation.
