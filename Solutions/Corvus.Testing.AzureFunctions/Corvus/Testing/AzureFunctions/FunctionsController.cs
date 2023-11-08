@@ -274,7 +274,7 @@ StdErr: {StdErr}",
                     "'npm install -g azure-functions-core-tools@ --unsafe-perm true'?");
             }
 
-            string[] toolPaths = toolLocator.StandardOutputText.Split("\n").Select(s => s.Trim()).ToArray();
+            string[] toolPaths = toolLocator.StandardOutputText.Split("\n").Select(s => s.Trim()).Where(s => s.Length > 0).ToArray();
 
             foreach (string toolPath in toolPaths)
             {
