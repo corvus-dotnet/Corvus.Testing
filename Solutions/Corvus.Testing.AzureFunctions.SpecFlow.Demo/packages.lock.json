@@ -27,8 +27,8 @@
       },
       "coverlet.msbuild": {
         "type": "Transitive",
-        "resolved": "3.2.0",
-        "contentHash": "lu/eJJpqJb4qy3BGPtDD/LI5RSOwXYYyRErTyaG0OTP69llzVK3FEe74hBQx0JtLUTLEVBfERV4uGYcE1Br2sg=="
+        "resolved": "6.0.0",
+        "contentHash": "cUKI50VSVBqDQDFIdBnjN0Jk5JYhjtD0geP2BZZv71/ZrKORJXcLRswFsojI+cHdV+rFUL2XDJEpuhK3x1YqLA=="
       },
       "Endjin.RecommendedPractices": {
         "type": "Transitive",
@@ -306,8 +306,8 @@
       },
       "NUnit": {
         "type": "Transitive",
-        "resolved": "3.13.3",
-        "contentHash": "KNPDpls6EfHwC3+nnA67fh5wpxeLb3VLFAfLxrug6JMYDLHH6InaQIWR7Sc3y75d/9IKzMksH/gi08W7XWbmnQ==",
+        "resolved": "3.14.0",
+        "contentHash": "R7iPwD7kbOaP3o2zldWJbWeMQAvDKD0uld27QvA3PAALl1unl7x0v2J7eGiJOYjimV/BuGT4VJmr45RjS7z4LA==",
         "dependencies": {
           "NETStandard.Library": "2.0.0"
         }
@@ -1419,7 +1419,7 @@
           "Corvus.Testing.AzureFunctions": "[1.0.0, )",
           "Corvus.Testing.SpecFlow": "[1.0.0, )",
           "Microsoft.Extensions.Logging.Console": "[6.0.0, )",
-          "NUnit": "[3.13.3, )",
+          "NUnit": "[3.14.0, )",
           "SpecFlow": "[3.9.74, )"
         }
       },
@@ -1431,7 +1431,7 @@
           "Moq": "[4.18.4, )",
           "SpecFlow.NUnit.Runners": "[3.9.74, )",
           "System.Text.RegularExpressions": "[4.3.1, )",
-          "coverlet.msbuild": "[3.2.0, )"
+          "coverlet.msbuild": "[6.0.0, )"
         }
       },
       "corvus.testing.specflow": {
@@ -1440,7 +1440,7 @@
           "Microsoft.Extensions.Configuration.Abstractions": "[6.0.0, )",
           "Microsoft.Extensions.DependencyInjection": "[6.0.1, )",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[6.0.0, )",
-          "NUnit": "[3.13.3, )",
+          "NUnit": "[3.14.0, )",
           "SpecFlow": "[3.9.74, )",
           "System.Management": "[4.7.*, )"
         }
