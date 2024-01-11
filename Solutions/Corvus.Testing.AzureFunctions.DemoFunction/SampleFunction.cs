@@ -17,17 +17,14 @@ namespace Corvus.Testing.SpecFlow.DemoFunction
     public class SampleFunction
     {
         private readonly ILogger logger;
-        private readonly string message;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SampleFunction"/> class.
         /// </summary>
-        /// <param name="configuration">The current config.</param>
-        /// <param name="logger">The logger.</param>
-        public SampleFunction(IConfiguration configuration, ILogger logger)
+        /// <param name="loggerFactory">The logger.</param>
+        public SampleFunction(ILoggerFactory loggerFactory)
         {
-            this.logger = logger;
-            this.message = configuration["ResponseMessage"];
+            this.logger = loggerFactory.CreateLogger<SampleFunction>();
         }
 
         /// <summary>
@@ -36,8 +33,8 @@ namespace Corvus.Testing.SpecFlow.DemoFunction
         /// </summary>
         /// <param name="req">The incoming request.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        [Function("SampleFunction-Get")]
-        public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "{*path}")] HttpRequestData req)
+        [Function("SampleFunction")]
+        public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Function, "get", "post")] HttpRequestData req)
         {
             // Note: the demo function has the log level set to "None" in host.json. This is intentional, to show that
             // our code in Corvus.Testing.AzureFunctions is able to detect that the function has started correctly
