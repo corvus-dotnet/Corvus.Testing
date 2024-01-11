@@ -152,6 +152,9 @@ $NuSpecFilesToPackage = @(
 #
 $ExcludeFilesFromCodeCoverage = ""
 
+# Bump to latest version of Covenant ahead of the build module being updated, to get .NET 8 support
+$covenantVersion = "0.16.0"
+
 # Synopsis: Build, Test and Package
 task . FullBuild
 
