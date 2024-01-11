@@ -70,7 +70,7 @@ namespace Corvus.Testing.AzureFunctions
         /// <param name="path">The location of the functions project.</param>
         /// <param name="port">The port on which to start the functions instance.</param>
         /// <param name="runtime">The runtime version for use with the function host (e.g. net6.0).</param>
-        /// <param name="provider">The functions provider. Defaults to csharp.</param>
+        /// <param name="provider">The Functions provider. Defaults to csharp.</param>
         /// <param name="configuration">A <see cref="FunctionConfiguration"/> instance, for conveying
         /// configuration values via environment variables to the function host process.</param>
         /// <returns>A task that completes once the function instance has started.</returns>
@@ -196,14 +196,21 @@ StdErr: {StdErr}",
                 return;
             }
 
-            using (var searcher =
+/*
+Error CA1416
+This call site is reachable on all platforms. 'ManagementObjectSearcher' is only supported on: 'windows'.
+(https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416)
+Corvus.Testing.AzureFunctions
+ */
+
+            /*using (var searcher =
                    new ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" + pid))
             {
                 foreach (ManagementObject mo in searcher.Get().Cast<ManagementObject>())
                 {
                     KillProcessAndChildren(Convert.ToInt32(mo["ProcessID"]));
                 }
-            }
+            }*/
 
             bool failedDueToAccessDenied;
             int accessDenyRetryCount = 0;
