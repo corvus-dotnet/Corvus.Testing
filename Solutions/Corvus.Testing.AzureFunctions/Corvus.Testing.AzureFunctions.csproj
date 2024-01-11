@@ -3,9 +3,9 @@
   <Import Project="$(EndjinProjectPropsPath)" Condition="$(EndjinProjectPropsPath) != ''" />
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <Copyright>Copyright (c) Endjin Limited 2022. All rights reserved.</Copyright>
+    <Copyright>Copyright (c) Endjin Limited 2024. All rights reserved.</Copyright>
     <NoWarn>RCS1194</NoWarn>
   </PropertyGroup>
 

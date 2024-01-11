@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <Copyright>Copyright (c) Endjin Limited 2022. All rights reserved.</Copyright>
+    <TargetFramework>net8.0</TargetFramework>
+    <Copyright>Copyright (c) Endjin Limited 2024. All rights reserved.</Copyright>
   </PropertyGroup>
 
   <PropertyGroup>

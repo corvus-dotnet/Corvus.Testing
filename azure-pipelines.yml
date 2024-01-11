@@ -29,4 +29,4 @@ jobs:
           command: custom
           verbose: false
           customCommand: 'install -g azure-functions-core-tools@ --unsafe-perm true --verbose'
-    netSdkVersion: '6.x'
+    netSdkVersion: '8.x'
