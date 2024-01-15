@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29209.62
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34408.163
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevOps", "DevOps", "{B5276693-CCCC-4EB4-AA78-909D9C5F656E}"
 	ProjectSection(SolutionItems) = preProject
@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.Testing.AzureFunctio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.Testing.AzureFunctions.SpecFlow", "Corvus.Testing.AzureFunctions.SpecFlow\Corvus.Testing.AzureFunctions.SpecFlow.csproj", "{A3C7BB3D-5C1B-4A59-9D1F-CC13BAEFCF45}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.Testing.AzureFunctions.DemoFunction", "Corvus.Testing.AzureFunctions.DemoFunction\Corvus.Testing.AzureFunctions.DemoFunction.csproj", "{A82AEA52-81AA-4AAA-BEFE-8E28013E2A7A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.Testing.AzureFunctions.DemoFunctions.InProcess", "Corvus.Testing.AzureFunctions.DemoFunction.InProcess\Corvus.Testing.AzureFunctions.DemoFunctions.InProcess.csproj", "{A82AEA52-81AA-4AAA-BEFE-8E28013E2A7A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.Testing.SpecFlow", "Corvus.Testing.SpecFlow\Corvus.Testing.SpecFlow.csproj", "{687664B5-226D-4CE7-B3AC-491F49990AA7}"
 EndProject
@@ -38,6 +38,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.Testing.SpecFlow.NUnit", "Corvus.Testing.SpecFlow.NUnit\Corvus.Testing.SpecFlow.NUnit.csproj", "{34AE7429-5F5E-4E47-9D21-841757243F78}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.Testing.AzureFunctions.SpecFlow.NUnit", "Corvus.Testing.AzureFunctions.SpecFlow.NUnit\Corvus.Testing.AzureFunctions.SpecFlow.NUnit.csproj", "{DC1B7B5A-8417-4696-B061-9C03EE933C02}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.Testing.AzureFunctions.DemoFunctions.Isolated", "Corvus.Testing.AzureFunctions.DemoFunctions.Isolated\Corvus.Testing.AzureFunctions.DemoFunctions.Isolated.csproj", "{492124E6-F290-4C0E-AF91-C7E26BF83B2B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +83,10 @@ Global
 		{DC1B7B5A-8417-4696-B061-9C03EE933C02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC1B7B5A-8417-4696-B061-9C03EE933C02}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC1B7B5A-8417-4696-B061-9C03EE933C02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{492124E6-F290-4C0E-AF91-C7E26BF83B2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{492124E6-F290-4C0E-AF91-C7E26BF83B2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{492124E6-F290-4C0E-AF91-C7E26BF83B2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{492124E6-F290-4C0E-AF91-C7E26BF83B2B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -89,6 +95,7 @@ Global
 		{BA7AE471-5DFA-4204-BB59-B4EFAC624086} = {C07A8D88-69A4-4ABC-A057-B09D55C6B61F}
 		{4F726825-01C5-4BCF-B82B-E26C14565EEF} = {C07A8D88-69A4-4ABC-A057-B09D55C6B61F}
 		{A82AEA52-81AA-4AAA-BEFE-8E28013E2A7A} = {C07A8D88-69A4-4ABC-A057-B09D55C6B61F}
+		{492124E6-F290-4C0E-AF91-C7E26BF83B2B} = {C07A8D88-69A4-4ABC-A057-B09D55C6B61F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {00493C9B-EC8E-4A4A-B07B-26D6580B6CF6}

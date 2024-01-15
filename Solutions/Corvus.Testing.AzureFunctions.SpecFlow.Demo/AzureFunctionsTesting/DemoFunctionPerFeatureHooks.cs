@@ -23,7 +23,7 @@ namespace Corvus.Testing.SpecFlow.Demo.AzureFunctionsTesting
             FunctionConfiguration functionConfiguration = FunctionsBindings.GetFunctionConfiguration(featureContext);
 
             return functionsController.StartFunctionsInstance(
-                "Corvus.Testing.AzureFunctions.DemoFunction",
+                "Corvus.Testing.AzureFunctions.DemoFunction.InProcess",
                 7075,
                 "net6.0",
                 configuration: functionConfiguration);
