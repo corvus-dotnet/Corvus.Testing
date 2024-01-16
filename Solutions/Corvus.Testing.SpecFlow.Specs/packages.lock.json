@@ -32,14 +32,6 @@
         "resolved": "1.5.0",
         "contentHash": "CzIPzdIAFSd2zuLxI+0K9s48Qv3HQDbWiApn9h96j284rHs2bSPrn/PMca3mi4q3xLSEqOp+GUJ6+mXDD9prKg=="
       },
-      "Castle.Core": {
-        "type": "Transitive",
-        "resolved": "5.1.1",
-        "contentHash": "rpYtIczkzGpf+EkZgDr9CClTdemhsrwA/W5hMoPjLkRFnXzH44zDLoovXeKtmxb1ykXK9aJVODSpiJml8CTw2g==",
-        "dependencies": {
-          "System.Diagnostics.EventLog": "6.0.0"
-        }
-      },
       "coverlet.msbuild": {
         "type": "Transitive",
         "resolved": "6.0.0",
@@ -208,14 +200,6 @@
         "dependencies": {
           "System.Security.AccessControl": "4.7.0",
           "System.Security.Principal.Windows": "4.7.0"
-        }
-      },
-      "Moq": {
-        "type": "Transitive",
-        "resolved": "4.18.4",
-        "contentHash": "IOo+W51+7Afnb0noltJrKxPBSfsgMzTKCw+Re5AMx8l/vBbAbMDOynLik4+lBYIWDJSO0uV7Zdqt7cNb6RZZ+A==",
-        "dependencies": {
-          "Castle.Core": "5.1.1"
         }
       },
       "NETStandard.Library": {
@@ -601,11 +585,6 @@
           "System.Runtime": "4.3.0",
           "System.Threading": "4.3.0"
         }
-      },
-      "System.Diagnostics.EventLog": {
-        "type": "Transitive",
-        "resolved": "6.0.0",
-        "contentHash": "lcyUiXTsETK2ALsZrX+nWuHSIQeazhqPphLfaRxzdGaG93+0kELqpgEHtwWOlQe7+jSFnKwaCAgL4kjeZCQJnw=="
       },
       "System.Diagnostics.Process": {
         "type": "Transitive",
@@ -1346,7 +1325,6 @@
         "dependencies": {
           "Corvus.Testing.SpecFlow": "[1.0.0, )",
           "Microsoft.NET.Test.Sdk": "[17.8.0, )",
-          "Moq": "[4.18.4, )",
           "SpecFlow.NUnit.Runners": "[3.9.74, )",
           "coverlet.msbuild": "[6.0.0, )"
         }

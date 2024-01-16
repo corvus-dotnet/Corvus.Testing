@@ -7,8 +7,9 @@ The main changes are:
 * tests target .NET 8.0 (except for the sample in-process function because as of 2024/01/16, the support for in-process on .NET 8.0 has not yet been made available)
 * we now test both in-process and isolated functions
 
-There is also a break change in behaviour:
+There are also breaking changes:
 
+* `Corvus.Testing.SpecFlow.NUnit` no longer references Moq; projects that were relying on this package to supply that dependency will now need to add their own reference if they want to continue using Moq
 * if a process is already listening on the port you want the hosted function to use, we now throw an exception instead of ploughing on
 
 The reason for the change in behaviour when the port is in use is that the old behaviour often caused baffling test results. It was very easy to hit this case accidentally if you were debugging test, and then stopped debugging—terminating the debug session typically meant that the code that would have torn down the hosted test function never got a chance to run.

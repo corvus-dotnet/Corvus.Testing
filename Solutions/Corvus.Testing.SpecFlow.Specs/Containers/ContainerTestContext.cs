@@ -8,7 +8,6 @@ namespace Corvus.Testing.SpecFlow.Specs.Containers
     using System.Collections.Generic;
     using System.Globalization;
     using Microsoft.Extensions.DependencyInjection;
-    using Moq;
     using NUnit.Framework;
     using TechTalk.SpecFlow;
 
@@ -29,7 +28,7 @@ namespace Corvus.Testing.SpecFlow.Specs.Containers
         // shows that it depends on.
         public CultureInfo CultureOriginallySuppliedToContainer { get; } = new CultureInfo("fr-CA"); // Bonjour, eh?
 
-        public IComparer<string> ComparerOriginallySuppliedToContainer { get; } = new Mock<IComparer<string>>().Object;
+        public IComparer<string> ComparerOriginallySuppliedToContainer { get; } = new FakeComparer();
 
         private protected abstract IServiceProvider ServiceProvider { get; }
 
@@ -113,6 +112,11 @@ namespace Corvus.Testing.SpecFlow.Specs.Containers
             {
                 ContainerBindings.ConfigureServices(this.scenarioContext, configureServices);
             }
+        }
+
+        private class FakeComparer : IComparer<string>
+        {
+            public int Compare(string? x, string? y) => Comparer<string>.Default.Compare(x, y);
         }
     }
 }
