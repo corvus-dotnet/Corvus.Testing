@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Copyright>Copyright (c) Endjin Limited 2022. All rights reserved.</Copyright>
+    <Copyright>Copyright (c) Endjin Limited 2024. All rights reserved.</Copyright>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -29,7 +29,7 @@
       <PrivateAssets>contentfiles; analyzers</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Moq" Version="4.18.4" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0">
       <!-- ensure the 'build' assets are not private -->
       <PrivateAssets>contentfiles; analyzers</PrivateAssets>
     </PackageReference>

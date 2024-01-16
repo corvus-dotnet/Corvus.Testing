@@ -10,7 +10,9 @@ namespace Corvus.Testing.AzureFunctions
     using System.Diagnostics;
     using System.Linq;
     using System.Management;
+    using System.Net.Http;
     using System.Net.NetworkInformation;
+    using System.Net.Sockets;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -77,12 +79,8 @@ namespace Corvus.Testing.AzureFunctions
         public async Task StartFunctionsInstance(string path, int port, string runtime, string provider = "csharp", FunctionConfiguration? configuration = null)
         {
             this.functionLogScope = this.logger.BeginScope(this);
-            if (IsSomethingAlreadyListeningOn(port))
-            {
-                this.logger.LogWarning("Found a process listening on {Port}. Is this a debug instance?", port);
-                this.logger.LogWarning("This test run will reuse this process, and so may produce unexpected results.");
-                return;
-            }
+
+            await this.VerifyPortNotInUseAsync(port).ConfigureAwait(false);
 
             this.logger.LogInformation("Starting a function instance for project {Path} on port {Port}", path, port);
             this.logger.LogDebug("Starting process");
@@ -109,9 +107,11 @@ namespace Corvus.Testing.AzureFunctions
             {
                 int exitCode = await bufferHandler.ExitCode.ConfigureAwait(false);
                 this.logger.LogError(
-                    @"Failed to start function host, process terminated unexpectedly with exit code {ExitCode}.
-StdOut: {StdOut}
-StdErr: {StdErr}",
+                    """
+                    Failed to start function host, process terminated unexpectedly with exit code {ExitCode}.
+                    StdOut: {StdOut}
+                    StdErr: {StdErr}
+                    """,
                     exitCode,
                     bufferHandler.StandardOutputText,
                     bufferHandler.StandardErrorText);
@@ -121,6 +121,8 @@ StdErr: {StdErr}",
                     stdout: bufferHandler.StandardOutputText,
                     stderr: bufferHandler.StandardErrorText);
             }
+
+            await WaitUntilConnectionsAcceptedAsync(port).ConfigureAwait(false);
 
             if (!bufferHandler.JobHostStarted.IsCompleted)
             {
@@ -249,6 +251,116 @@ StdErr: {StdErr}",
                 .GetIPGlobalProperties()
                 .GetActiveTcpListeners()
                 .Any(e => e.Port == port);
+        }
+
+        /// <summary>
+        /// Waits until this computer is accepting TCP requests on the specified port.
+        /// </summary>
+        /// <param name="port">The port to check.</param>
+        /// <returns>A task that completes once the check is complete.</returns>
+        /// <exception cref="FunctionStartupException">
+        /// Thrown if requests are not accepted on the specified port within 10 seconds.
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// Normally we expect this test to succeed immediately, because we observe the standard
+        /// output of the host process and wait until it produces text that it only produces when
+        /// it is ready. So this is only to handle either odd cases, or the possibility that the
+        /// function host's behaviour changes.
+        /// </para>
+        /// <para>
+        /// We've seen occasional surprising failures where tests' attempts to connect to the
+        /// function get an HttpRequestException with an inner SocketException reporting that
+        /// nothing is listening on the specified port. It's possible that this was caused by
+        /// the old behaviour in which we would continue without starting the function if the
+        /// port was already in use. (This supported one way of debugging, but it appears that
+        /// it creates a race condition in which we fail to launch a new process host because
+        /// one from a previous test hadn't quite finished shutting down.) We've removed that
+        /// behaviour in V3, so hopefully it won't happen again.
+        /// However, the fact remains that there isn't any supported way to get a reliable
+        /// indication that the function host ready. To improve robustness, we attempt to open a
+        /// connection so that we have positive proof that it is now listening for incoming
+        /// requests.
+        /// </para>
+        /// </remarks>
+        private static async Task WaitUntilConnectionsAcceptedAsync(int port)
+        {
+            // We don't actually know what URL to hit, but as long as we get a 404 instead of a
+            // connection failure, it means the host is now listening.
+            string testUrl = $"http://localhost:{port}/";
+            bool listeningOnPort = false;
+            for (int i = 0; i < 20; ++i)
+            {
+                using HttpClient web = new();
+                try
+                {
+                    HttpResponseMessage r = await web.GetAsync(testUrl).ConfigureAwait(false);
+                    listeningOnPort = true;
+                }
+                catch (HttpRequestException x)
+                when (x.InnerException is SocketException)
+                {
+                    // The host isn't yet accepting incoming connections. It's OK to swallow
+                    // the exception because either we're about to wait and try again, or we're
+                    // about to give up waiting. (But any other exception at this point is
+                    // unexpected, so we let them continue.)
+                }
+
+                if (listeningOnPort)
+                {
+                    break;
+                }
+
+                await Task.Delay(500).ConfigureAwait(false);
+            }
+
+            if (!listeningOnPort)
+            {
+                throw new FunctionStartupException($"Functions instance did not start listening on port {port}.");
+            }
+        }
+
+        /// <summary>
+        /// Checks that a TCP port is not already in use by some other process.
+        /// </summary>
+        /// <param name="port">The port to check.</param>
+        /// <returns>A task that completes once the check has been performed.</returns>
+        /// <exception cref="FunctionStartupException">
+        /// Thrown if the port is in use, and was not relinquished within 3 seconds.
+        /// </exception>
+        /// <remarks>
+        /// It appears that sometimes the port looks like it's in use due to an earlier test not
+        /// quite having shut down yet. Our test teardown logic waits until we have observed a
+        /// process exit, but even then, it appears that just occasionally, the port still
+        /// appears to be in use by the time the next test runs. It's a pretty narrow window, and
+        /// seems to be impossible to observe with a debugger attached, but it does happen in
+        /// normal execution. So if the port appears to be in use, we wait briefly and try again a
+        /// few times in case it's one of these spurious transient cases where the OS hasn't quite
+        /// registered that the previous process has gone.
+        /// </remarks>
+        private async Task VerifyPortNotInUseAsync(int port)
+        {
+            for (int tries = 0; IsSomethingAlreadyListeningOn(port); ++tries)
+            {
+                await Task.Delay(100).ConfigureAwait(false);
+                if (tries > 30)
+                {
+                    // We can now be confident that whatever's using this port wasn't just about to
+                    // exit, so we definitely have a problem.
+                    // We used to tolerate this and plough on regardless, but this is a bad idea
+                    // because you can get some very baffling test results. It's possible some people
+                    // used to rely on this to be able to debug (e.g., start debugging the target
+                    // function, then run tests). If that's what you want to do, it's better to
+                    // stick a breakpoint somewhere in your tests at a point where the function
+                    // will already be running, and before your test does anything interesting.
+                    // You can then use Visual Studio's Debug -> Attach to Process command to
+                    // attach the debugger to the function host. (That way you'll be able to step
+                    // through both test code and the hosted function, even though they are in
+                    // different processes.
+                    this.logger.LogWarning("Found a process listening on {Port}. Is this a debug instance?", port);
+                    throw new FunctionStartupException($"Found a process listening on {port}. Is this a debug instance?");
+                }
+            }
         }
 
         private async Task<string> GetToolPath()
