@@ -81,7 +81,7 @@ namespace Corvus.Testing.AzureFunctions.SpecFlow
         /// <param name="path">The location of the functions project.</param>
         /// <param name="port">The port on which to start the functions instance.</param>
         /// <returns>A task that completes once the function instance has started.</returns>
-        [Given("I start a functions instance for the local project '(.*)' on port (.*)")]
+        [Given(@"I start a functions instance for the local project '([^']*)' on port (\d*)")]
         public Task StartAFunctionsInstance(string path, int port)
         {
             return GetFunctionsController(this.scenarioContext)
@@ -95,7 +95,7 @@ namespace Corvus.Testing.AzureFunctions.SpecFlow
         /// <param name="port">The port on which to start the functions instance.</param>
         /// <param name="runtime">The id of the runtime to use.</param>
         /// <returns>A task that completes once the function instance has started.</returns>
-        [Given("I start a functions instance for the local project '(.*)' on port (.*) with runtime '(.*)'")]
+        [Given(@"I start a functions instance for the local project '([^']*)' on port (\d*) with runtime '([^']*)'")]
         public Task StartAFunctionsInstance(string path, int port, string runtime)
         {
             FunctionConfiguration configuration = FunctionsBindings.GetFunctionConfiguration(this.scenarioContext);

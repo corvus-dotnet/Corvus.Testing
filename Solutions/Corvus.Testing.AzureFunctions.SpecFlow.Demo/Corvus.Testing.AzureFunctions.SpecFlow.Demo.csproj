@@ -46,6 +46,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <SpecFlowObsoleteCodeBehindFiles Remove="AzureFunctionsTesting\ScenariosUsingPerFeatureHook - Copy.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="AzureFunctionsTesting\ScenariosUsingPerFeatureHookWithAdditionalConfiguration - Copy.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="AzureFunctionsTesting\ScenariosUsingPerScenarioHook - Copy.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="AzureFunctionsTesting\ScenariosUsingPerScenarioHookWithAdditionalConfiguration - Copy.feature.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Endjin.RecommendedPractices.GitHub" Version="2.1.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -60,6 +67,25 @@
     <None Update="specflow.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <SpecFlowFeatureFiles Update="AzureFunctionsTesting\ScenariosUsingPerFeatureHookInProcess.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="AzureFunctionsTesting\ScenariosUsingPerFeatureHookWithAdditionalConfigurationInProcess.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="AzureFunctionsTesting\ScenariosUsingPerScenarioHookInProcess.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="AzureFunctionsTesting\ScenariosUsingPerScenarioHookWithAdditionalConfigurationInProcess.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
   </ItemGroup>
 
 </Project>

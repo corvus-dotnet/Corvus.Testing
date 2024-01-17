@@ -16,8 +16,8 @@ namespace Corvus.Testing.SpecFlow.Demo.AzureFunctionsTesting
     [Binding]
     public static class DemoFunctionPerFeatureHooks
     {
-        [BeforeFeature("usingDemoFunctionPerFeature")]
-        public static Task StartFunctionsAsync(FeatureContext featureContext)
+        [BeforeFeature("usingInProcessDemoFunctionPerFeature")]
+        public static Task StartInProcessFunctionsAsync(FeatureContext featureContext)
         {
             FunctionsController functionsController = FunctionsBindings.GetFunctionsController(featureContext);
             FunctionConfiguration functionConfiguration = FunctionsBindings.GetFunctionConfiguration(featureContext);
@@ -29,23 +29,49 @@ namespace Corvus.Testing.SpecFlow.Demo.AzureFunctionsTesting
                 configuration: functionConfiguration);
         }
 
-        [BeforeFeature("usingDemoFunctionPerFeatureWithAdditionalConfiguration")]
-        public static Task StartFunctionWithAdditionalConfigurationAsync(FeatureContext featureContext)
+        [BeforeFeature("usingIsolatedDemoFunctionPerFeature")]
+        public static Task StartIsolatedFunctionsAsync(FeatureContext featureContext)
+        {
+            FunctionsController functionsController = FunctionsBindings.GetFunctionsController(featureContext);
+            FunctionConfiguration functionConfiguration = FunctionsBindings.GetFunctionConfiguration(featureContext);
+
+            return functionsController.StartFunctionsInstance(
+                "Corvus.Testing.AzureFunctions.DemoFunctions.Isolated",
+                7075,
+                "net8.0",
+                configuration: functionConfiguration);
+        }
+
+        [BeforeFeature("usingInProcessDemoFunctionPerFeatureWithAdditionalConfiguration")]
+        public static Task StartInProcessFunctionWithAdditionalConfigurationAsync(FeatureContext featureContext)
         {
             FunctionConfiguration functionConfiguration = FunctionsBindings.GetFunctionConfiguration(featureContext);
             functionConfiguration.EnvironmentVariables.Add("ResponseMessage", "Welcome, {name}");
 
-            return StartFunctionsAsync(featureContext);
+            return StartInProcessFunctionsAsync(featureContext);
         }
 
-        [AfterScenario("usingDemoFunctionPerFeature", "usingDemoFunctionPerFeatureWithAdditionalConfiguration")]
+        [BeforeFeature("usingIsolatedDemoFunctionPerFeatureWithAdditionalConfiguration")]
+        public static Task StartIsolatedFunctionWithAdditionalConfigurationAsync(FeatureContext featureContext)
+        {
+            FunctionConfiguration functionConfiguration = FunctionsBindings.GetFunctionConfiguration(featureContext);
+            functionConfiguration.EnvironmentVariables.Add("ResponseMessage", "Welcome, {name}");
+
+            return StartIsolatedFunctionsAsync(featureContext);
+        }
+
+        [AfterScenario("usingInProcessDemoFunctionPerFeature", "usingIsolatedDemoFunctionPerFeature", "usingDemoFunctionPerFeatureWithAdditionalConfiguration")]
         public static void WriteOutput(FeatureContext featureContext)
         {
             FunctionsController functionsController = FunctionsBindings.GetFunctionsController(featureContext);
             featureContext.Get<ILogger>().LogAllAndClear(functionsController.GetFunctionsOutput());
         }
 
-        [AfterFeature("usingDemoFunctionPerFeature", "usingDemoFunctionPerFeatureWithAdditionalConfiguration")]
+        [AfterFeature(
+            "usingInProcessDemoFunctionPerFeature",
+            "usingIsolatedDemoFunctionPerFeature",
+            "usingInProcessDemoFunctionPerFeatureWithAdditionalConfiguration",
+            "usingIsolatedDemoFunctionPerFeatureWithAdditionalConfiguration")]
         public static void StopFunction(FeatureContext featureContext)
         {
             FunctionsController functionsController = FunctionsBindings.GetFunctionsController(featureContext);

@@ -23,7 +23,7 @@ namespace Corvus.Testing.AzureFunctions.DemoFunctions.Isolated
 
         [Function("SampleFunction-Get")]
         public async Task<HttpResponseData> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "{*path}")] HttpRequestData req)
         {
             // Note: the demo function has the log level set to "None" in host.json. This is intentional, to show that
             // our code in Corvus.Testing.AzureFunctions is able to detect that the function has started correctly
@@ -44,8 +44,6 @@ namespace Corvus.Testing.AzureFunctions.DemoFunctions.Isolated
             catch (JsonException)
             {
             }
-
-            string result = this.message.Replace("{name}", name);
 
             HttpResponseData response;
             if (name is null)

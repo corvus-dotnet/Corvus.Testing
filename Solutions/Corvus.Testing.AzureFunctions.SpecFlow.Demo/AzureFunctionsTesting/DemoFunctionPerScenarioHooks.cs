@@ -14,8 +14,8 @@ namespace Corvus.Testing.SpecFlow.Demo.AzureFunctionsTesting
     [Binding]
     public static class DemoFunctionPerScenarioHooks
     {
-        [BeforeScenario("usingDemoFunctionPerScenario")]
-        public static Task StartFunctionsAsync(ScenarioContext scenarioContext)
+        [BeforeScenario("usingInProcessDemoFunctionPerScenario")]
+        public static Task StartInProcessFunctionsAsync(ScenarioContext scenarioContext)
         {
             FunctionsController functionsController = FunctionsBindings.GetFunctionsController(scenarioContext);
             FunctionConfiguration functionConfiguration = FunctionsBindings.GetFunctionConfiguration(scenarioContext);
@@ -27,16 +27,42 @@ namespace Corvus.Testing.SpecFlow.Demo.AzureFunctionsTesting
                 configuration: functionConfiguration);
         }
 
-        [BeforeScenario("usingDemoFunctionPerScenarioWithAdditionalConfiguration")]
-        public static Task StartFunctionWithAdditionalConfigurationAsync(ScenarioContext scenarioContext)
+        [BeforeScenario("usingIsolatedDemoFunctionPerScenario")]
+        public static Task StartIsolatedFunctionsAsync(ScenarioContext scenarioContext)
+        {
+            FunctionsController functionsController = FunctionsBindings.GetFunctionsController(scenarioContext);
+            FunctionConfiguration functionConfiguration = FunctionsBindings.GetFunctionConfiguration(scenarioContext);
+
+            return functionsController.StartFunctionsInstance(
+                "Corvus.Testing.AzureFunctions.DemoFunctions.Isolated",
+                7075,
+                "net8.0",
+                configuration: functionConfiguration);
+        }
+
+        [BeforeScenario("usingInProcessDemoFunctionPerScenarioWithAdditionalConfiguration")]
+        public static Task StartInProcessFunctionWithAdditionalConfigurationAsync(ScenarioContext scenarioContext)
         {
             FunctionConfiguration functionConfiguration = FunctionsBindings.GetFunctionConfiguration(scenarioContext);
             functionConfiguration.EnvironmentVariables.Add("ResponseMessage", "Welcome, {name}");
 
-            return StartFunctionsAsync(scenarioContext);
+            return StartIsolatedFunctionsAsync(scenarioContext);
         }
 
-        [AfterScenario("usingDemoFunctionPerScenario", "usingDemoFunctionPerScenarioWithAdditionalConfiguration")]
+        [BeforeScenario("usingIsolatedDemoFunctionPerScenarioWithAdditionalConfiguration")]
+        public static Task StartIsolatedFunctionWithAdditionalConfigurationAsync(ScenarioContext scenarioContext)
+        {
+            FunctionConfiguration functionConfiguration = FunctionsBindings.GetFunctionConfiguration(scenarioContext);
+            functionConfiguration.EnvironmentVariables.Add("ResponseMessage", "Welcome, {name}");
+
+            return StartIsolatedFunctionsAsync(scenarioContext);
+        }
+
+        [AfterScenario(
+            "usingInProcessDemoFunctionPerScenario",
+            "usingIsolatedDemoFunctionPerScenario",
+            "usingInProcessDemoFunctionPerScenarioWithAdditionalConfiguration",
+            "usingIsolatedDemoFunctionPerScenarioWithAdditionalConfiguration")]
         public static void StopFunction(ScenarioContext scenarioContext)
         {
             FunctionsController functionsController = FunctionsBindings.GetFunctionsController(scenarioContext);
