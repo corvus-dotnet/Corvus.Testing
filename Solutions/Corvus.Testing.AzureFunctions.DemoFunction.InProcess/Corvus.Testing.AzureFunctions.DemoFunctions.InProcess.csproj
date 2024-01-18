@@ -10,6 +10,10 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <IsTestProject>false</IsTestProject>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <!--
     This project tests runnable artifacts. To ensure repeatability, we need floating versions in
     PackageReferences (either in this project, or anywhere in its dependency tree) get resolved to

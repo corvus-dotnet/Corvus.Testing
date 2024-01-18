@@ -10,6 +10,10 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <IsTestProject>false</IsTestProject>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageDescription></PackageDescription>
     <PackageTags></PackageTags>

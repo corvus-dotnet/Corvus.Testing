@@ -7,6 +7,11 @@
     <Nullable>enable</Nullable>
     <Copyright>Copyright (c) Endjin Limited 2024. All rights reserved.</Copyright>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <IsTestProject>false</IsTestProject>
+  </PropertyGroup>
+
   <PropertyGroup>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageDescription></PackageDescription>

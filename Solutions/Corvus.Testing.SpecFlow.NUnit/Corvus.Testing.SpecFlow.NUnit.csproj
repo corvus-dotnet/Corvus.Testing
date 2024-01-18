@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <IsTestProject>false</IsTestProject>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageDescription>A metapackage that encapsulates the required dependencies when using Corvus.Testing.SpecFlow and Endjin's standard practises.  Also simplifies the dependency management process when using tools like Dependabot.</PackageDescription>
     <PackageTags>metapackage</PackageTags>
