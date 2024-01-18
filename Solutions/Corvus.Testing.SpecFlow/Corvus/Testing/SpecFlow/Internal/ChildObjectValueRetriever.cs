@@ -12,18 +12,10 @@ namespace Corvus.Testing.SpecFlow.Internal
     /// <summary>
     /// A value retriever that looks in the scenario context for a named instance.
     /// </summary>
-    internal class ChildObjectValueRetriever : IValueRetriever
+    /// <param name="scenarioContext">The ambient scenario context.</param>
+    internal class ChildObjectValueRetriever(ScenarioContext scenarioContext) : IValueRetriever
     {
-        private readonly ScenarioContext scenarioContext;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ChildObjectValueRetriever"/> class.
-        /// </summary>
-        /// <param name="scenarioContext">The ambient scenario context.</param>
-        public ChildObjectValueRetriever(ScenarioContext scenarioContext)
-        {
-            this.scenarioContext = scenarioContext;
-        }
+        private readonly ScenarioContext scenarioContext = scenarioContext;
 
         /// <inheritdoc/>
         public bool CanRetrieve(KeyValuePair<string, string> keyValuePair, Type targetType, Type propertyType)
