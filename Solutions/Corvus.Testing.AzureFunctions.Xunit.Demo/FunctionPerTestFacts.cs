@@ -35,7 +35,7 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
                 .CreateLogger("Xunit Demo tests");
 
             this.function = new FunctionsController(logger);
-            this.Port = new Random().Next(50000, 60000);
+            this.Port = this.function.FindAvailableTcpPort(50000, 60000);
         }
 
         public int Port { get; }
