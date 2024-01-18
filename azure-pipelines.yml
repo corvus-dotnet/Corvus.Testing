@@ -29,4 +29,6 @@ jobs:
           command: custom
           verbose: false
           customCommand: 'install -g azure-functions-core-tools@ --unsafe-perm true --verbose'
+    # Although we build on the .NET 8.0 SDK, the dotnet-covenant tool requires 6.0 to be installed
+    netSdkVersion: '6.x'
     netSdkVersion: '8.x'

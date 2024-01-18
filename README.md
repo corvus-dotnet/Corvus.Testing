@@ -5,7 +5,7 @@
 
 This provides a library of useful testing extensions, primarily focussed on SpecFlow operations.
 
-It is built for .NET 6.0. (If you require .NET Standard 2.0, use `Corvus.Testing` v1.)
+It is built for .NET 6.0, and we support use on both .NET 6.0 and .NET 8.0. (If you require .NET Standard 2.0, use `Corvus.Testing` v1.)
 
 The SpecFlow specific libraries contain additional bindings; to use these, you will need to add a `specflow.json` file to any project wishing to use them. Add entries to the `stepAssemblies` array for each of the Corvus libraries you need to use:
 
