@@ -3,8 +3,8 @@
   <Import Project="$(EndjinProjectPropsPath)" Condition="$(EndjinProjectPropsPath) != ''" />
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <Copyright>Copyright (c) Endjin Limited 2022. All rights reserved.</Copyright>
+    <TargetFramework>net8.0</TargetFramework>
+    <Copyright>Copyright (c) Endjin Limited 2024. All rights reserved.</Copyright>
     <LangVersion>latest</LangVersion>
     <!-- Disabling SA1204 because it prioritizes static/non-static over public/non-public, which doesn't fit very well
          with bindings in SpecFlow.
@@ -46,7 +46,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Endjin.RecommendedPractices.GitHub" Version="2.1.7">
+    <PackageReference Include="Endjin.RecommendedPractices.GitHub" Version="2.1.9">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

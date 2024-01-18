@@ -39,7 +39,7 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
             configuration.EnvironmentVariables.Add("ResponseMessage", Greet("{name}"));
 
             await this.function.StartFunctionsInstance(
-                "Corvus.Testing.AzureFunctions.DemoFunction",
+                "Corvus.Testing.AzureFunctions.DemoFunction.InProcess",
                 Port,
                 "net6.0",
                 configuration: configuration);

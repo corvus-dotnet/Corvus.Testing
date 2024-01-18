@@ -5,8 +5,12 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <Copyright>Copyright (c) Endjin Limited 2022. All rights reserved.</Copyright>
+    <Copyright>Copyright (c) Endjin Limited 2024. All rights reserved.</Copyright>
     <NoWarn>RCS1194</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IsTestProject>false</IsTestProject>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -18,7 +22,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Endjin.RecommendedPractices.GitHub" Version="2.1.7">
+    <PackageReference Include="Endjin.RecommendedPractices.GitHub" Version="2.1.9">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

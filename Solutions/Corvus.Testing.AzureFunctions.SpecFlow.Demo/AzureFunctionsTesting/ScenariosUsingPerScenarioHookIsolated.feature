@@ -1,9 +1,9 @@
-﻿@usingDemoFunctionPerFeature
+﻿@usingIsolatedDemoFunctionPerScenario
 
-Feature: Feature using per-feature hook
+Feature: Feature using per-scenario hook isolated
 	In order to test my Azure functions
 	As a developer
-	I want to be able to start an Azure function for each feature using a hook
+	I want to be able to start an Azure function for each scenario using a hook
 
 Scenario: A Get request including a name in the querystring is successful
 	When I send a GET request to 'http://localhost:7075/?name=Jon'

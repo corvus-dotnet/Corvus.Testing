@@ -100,3 +100,9 @@ dotnet_diagnostic.RCS1194.severity = None
 
 # Localize string constants - apps that want localization can turn this back on
 dotnet_diagnostic.CA1303.severity = None
+
+# Collection initialization can be simplified - this wants dictionary construction to be replaced with [], which seems incongruous when you can't use that for anything other than an empty dictionary.
+dotnet_diagnostic.IDE0028.severity = Silent
+
+# Use primary constructor - this does not always seem to be an improvement
+dotnet_diagnostic.IDE0290.severity = Silent

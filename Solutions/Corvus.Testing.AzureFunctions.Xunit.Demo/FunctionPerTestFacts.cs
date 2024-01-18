@@ -97,7 +97,7 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
         public async Task InitializeAsync()
         {
             await this.function.StartFunctionsInstance(
-                "Corvus.Testing.AzureFunctions.DemoFunction",
+                "Corvus.Testing.AzureFunctions.DemoFunction.InProcess",
                 this.Port,
                 "net6.0");
         }

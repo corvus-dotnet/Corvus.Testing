@@ -1,6 +1,6 @@
-﻿@usingDemoFunctionPerScenarioWithAdditionalConfiguration
+﻿@usingInProcessDemoFunctionPerScenarioWithAdditionalConfiguration
 
-Feature: Feature using per-scenario hook with additional configuration
+Feature: Feature using per-scenario hook with additional configuration in-process
 	In order to test my Azure functions
 	As a developer
 	I want to be able to start an Azure function with specific configuration for each scenario using a hook

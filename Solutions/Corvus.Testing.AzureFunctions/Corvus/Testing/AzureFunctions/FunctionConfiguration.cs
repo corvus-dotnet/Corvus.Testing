@@ -16,7 +16,7 @@ namespace Corvus.Testing.AzureFunctions
         /// </summary>
         public FunctionConfiguration()
         {
-            this.EnvironmentVariables = new Dictionary<string, string>();
+            this.EnvironmentVariables = new();
         }
 
         /// <summary>
