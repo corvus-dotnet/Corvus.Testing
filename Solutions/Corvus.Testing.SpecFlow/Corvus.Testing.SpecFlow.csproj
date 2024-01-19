@@ -10,7 +10,12 @@
 
   <PropertyGroup>
     <IsTestProject>false</IsTestProject>
+    <TestProject>false</TestProject>
   </PropertyGroup>
+  <ItemGroup>
+    <!-- This project takes depedency on nUnit that adds the TestContainer capability importing NUnit.props, but this is not a test project -->
+    <ProjectCapability Remove="TestContainer" />
+  </ItemGroup>
 
   <PropertyGroup>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>

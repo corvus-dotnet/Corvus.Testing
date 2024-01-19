@@ -11,6 +11,7 @@
 
   <PropertyGroup>
     <IsTestProject>false</IsTestProject>
+    <TestProject>false</TestProject>
   </PropertyGroup>
 
   <PropertyGroup>
