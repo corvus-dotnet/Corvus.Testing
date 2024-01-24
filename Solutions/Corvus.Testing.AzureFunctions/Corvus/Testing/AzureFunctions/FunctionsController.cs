@@ -134,34 +134,6 @@ namespace Corvus.Testing.AzureFunctions
         }
 
         /// <summary>
-        /// Randomly selects a port that appears to be available for use.
-        /// </summary>
-        /// <param name="lowerBoundInclusive">
-        /// The lowest port number acceptable. Defaults to 50000.
-        /// </param>
-        /// <param name="upperBoundExclusive">
-        /// The port number above which no port will be selected. Defaults to 60000.
-        /// </param>
-        /// <returns>A port number that seems to be available.</returns>
-        public int FindAvailableTcpPort(int? lowerBoundInclusive, int? upperBoundExclusive)
-        {
-            int lb = lowerBoundInclusive ?? 50000;
-            int ub = upperBoundExclusive ?? 60000;
-
-            var portsInRangeInUse = IPGlobalProperties
-                .GetIPGlobalProperties()
-                .GetActiveTcpListeners()
-                .Select(e => e.Port)
-                .Where(p => p >= lb && p < ub)
-                .ToHashSet();
-
-            int availablePorts = ub - lb - portsInRangeInUse.Count;
-            int availablePortOffset = Random.Shared.Next(availablePorts);
-            int port = Enumerable.Range(lb, ub - lb).Where(p => !portsInRangeInUse.Contains(p)).ElementAt(availablePortOffset);
-            return port;
-        }
-
-        /// <summary>
         /// Provides access to the output.
         /// </summary>
         /// <returns>All output from the function host process.</returns>
@@ -273,14 +245,6 @@ namespace Corvus.Testing.AzureFunctions
             while (failedDueToAccessDenied && accessDenyRetryCount++ < MaxAccessDeniedRetries);
         }
 
-        private static bool IsSomethingAlreadyListeningOn(int port)
-        {
-            return IPGlobalProperties
-                .GetIPGlobalProperties()
-                .GetActiveTcpListeners()
-                .Any(e => e.Port == port);
-        }
-
         /// <summary>
         /// Waits until this computer is accepting TCP requests on the specified port.
         /// </summary>
@@ -368,7 +332,7 @@ namespace Corvus.Testing.AzureFunctions
         /// </remarks>
         private async Task VerifyPortNotInUseAsync(int port)
         {
-            for (int tries = 0; IsSomethingAlreadyListeningOn(port); ++tries)
+            for (int tries = 0; PortFinder.IsSomethingAlreadyListeningOn(port); ++tries)
             {
                 await Task.Delay(100).ConfigureAwait(false);
                 if (tries > 30)
