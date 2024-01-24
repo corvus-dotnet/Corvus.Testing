@@ -5,14 +5,17 @@
 // ReSharper disable ArrangeThisQualifier
 namespace Corvus.Testing.AzureFunctions.Xunit.Demo
 {
-    using System;
     using System.Net;
     using System.Reflection;
     using System.Threading.Tasks;
+
     using global::Xunit;
     using global::Xunit.Abstractions;
+
     using Microsoft.Extensions.Logging;
+
     using Serilog;
+
     using ILogger = Microsoft.Extensions.Logging.ILogger;
 
     public class FunctionPerTestFacts : DemoFunctionFacts, IAsyncLifetime
@@ -35,7 +38,7 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
                 .CreateLogger("Xunit Demo tests");
 
             this.function = new FunctionsController(logger);
-            this.Port = this.function.FindAvailableTcpPort(50000, 60000);
+            this.Port = PortFinder.FindAvailableTcpPort(50000, 60000);
         }
 
         public int Port { get; }

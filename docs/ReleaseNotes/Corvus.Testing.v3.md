@@ -11,6 +11,7 @@ There are also breaking changes:
 
 * `Corvus.Testing.SpecFlow.NUnit` no longer references Moq; projects that were relying on this package to supply that dependency will now need to add their own reference if they want to continue using Moq
 * if a process is already listening on the port you want the hosted function to use, we now throw an exception instead of ploughing on
+* The `CopyToEnvironmentVariables` extension method for `FunctionConfiguration` now takes an enumerable of `KeyValuePair<string, string?>` - the value type is now a nullable string for reasons described in https://github.com/corvus-dotnet/Corvus.Testing/issues/368
 
 The reason for the change in behaviour when the port is in use is that the old behaviour often caused baffling test results. It was very easy to hit this case accidentally if you were debugging test, and then stopped debugging—terminating the debug session typically meant that the code that would have torn down the hosted test function never got a chance to run.
 

@@ -45,18 +45,14 @@ namespace Corvus.Testing.SpecFlow.Demo.AzureFunctionsTesting
         [BeforeFeature("usingInProcessDemoFunctionPerFeatureWithAdditionalConfiguration")]
         public static Task StartInProcessFunctionWithAdditionalConfigurationAsync(FeatureContext featureContext)
         {
-            FunctionConfiguration functionConfiguration = FunctionsBindings.GetFunctionConfiguration(featureContext);
-            functionConfiguration.EnvironmentVariables.Add("ResponseMessage", "Welcome, {name}");
-
+            DemoFunctionConfig.SetupTestConfig(featureContext);
             return StartInProcessFunctionsAsync(featureContext);
         }
 
         [BeforeFeature("usingIsolatedDemoFunctionPerFeatureWithAdditionalConfiguration")]
         public static Task StartIsolatedFunctionWithAdditionalConfigurationAsync(FeatureContext featureContext)
         {
-            FunctionConfiguration functionConfiguration = FunctionsBindings.GetFunctionConfiguration(featureContext);
-            functionConfiguration.EnvironmentVariables.Add("ResponseMessage", "Welcome, {name}");
-
+            DemoFunctionConfig.SetupTestConfig(featureContext);
             return StartIsolatedFunctionsAsync(featureContext);
         }
 
