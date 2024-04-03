@@ -3,6 +3,8 @@ parameters:
   netSdkVersion: '6.x'
   testTasks: 'Test,TestReport'
   postCustomEnvironmentVariables: []
+  additionalNetSdkVersions: []
+  includeNetSdkPreviewVersions: 'false'
 
 # resources:
   # repositories:
