@@ -5,6 +5,7 @@ parameters:
   postCustomEnvironmentVariables: []
   additionalNetSdkVersions: []
   includeNetSdkPreviewVersions: 'false'
+  jobName: ''
 
 # resources:
   # repositories:
