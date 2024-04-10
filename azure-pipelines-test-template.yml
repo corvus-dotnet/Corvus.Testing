@@ -16,6 +16,7 @@ parameters:
 
 jobs:
 - job: ${{ parameters.jobName }}
+  dependsOn: ['Build']
   pool:
     vmImage: ${{ parameters.vmImage }}
 
