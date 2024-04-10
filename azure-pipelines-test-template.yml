@@ -15,7 +15,7 @@ parameters:
   #     endpoint: corvus-dotnet-github
 
 jobs:
-- job: 'Test ${{ parameters.vmImage }}'
+- job: 'Test ${{ parameters.jobName }}'
   pool:
     vmImage: ${{ parameters.vmImage }}
 
