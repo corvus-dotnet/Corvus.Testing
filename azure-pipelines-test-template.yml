@@ -54,7 +54,7 @@ jobs:
         -SourcesDir $(Build.SourcesDirectory)
         -CoverageDir $(Build.SourcesDirectory)/CodeCoverage
         -LogLevel $(BuildScriptLogLevel)
-        -Tasks ${{ parameters.testTasks }}
+        -Tasks Build, ${{ parameters.testTasks }}
       pwsh: true
     name: RunTests
     displayName: 'Run Tests'
