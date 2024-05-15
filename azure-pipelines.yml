@@ -39,7 +39,7 @@ jobs:
 
 - template: azure-pipelines-test-template.yml
   parameters:
-    jobName: 'ubuntulatest'  
+    jobName: 'UbuntuBuildTest'  
     vmImage: 'ubuntu-latest'
     postCustomEnvironmentVariables:
       - task: Npm@1

@@ -48,6 +48,7 @@ jobs:
     inputs:
       targetType: 'filePath'
       filePath: "$(Build.SourcesDirectory)/build.ps1"
+      # We have to re-run the build because the build output from windows does not work when running the tests on ubuntu
       arguments: >
         -Configuration $(BuildConfiguration)
         -BuildRepositoryUri $(Build.Repository.Uri)
