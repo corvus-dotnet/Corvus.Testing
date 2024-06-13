@@ -1,10 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.8.34408.163
+VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevOps", "DevOps", "{B5276693-CCCC-4EB4-AA78-909D9C5F656E}"
 	ProjectSection(SolutionItems) = preProject
+		..\azure-pipelines-test-template.yml = ..\azure-pipelines-test-template.yml
 		..\azure-pipelines.release.yml = ..\azure-pipelines.release.yml
 		..\azure-pipelines.yml = ..\azure-pipelines.yml
 		..\GitVersion.yml = ..\GitVersion.yml
@@ -94,7 +95,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{BA7AE471-5DFA-4204-BB59-B4EFAC624086} = {C07A8D88-69A4-4ABC-A057-B09D55C6B61F}
 		{4F726825-01C5-4BCF-B82B-E26C14565EEF} = {C07A8D88-69A4-4ABC-A057-B09D55C6B61F}
-		{A82AEA52-81AA-4AAA-BEFE-8E28013E2A7A} = {C07A8D88-69A4-4ABC-A057-B09D55C6B61F}
 		{492124E6-F290-4C0E-AF91-C7E26BF83B2B} = {C07A8D88-69A4-4ABC-A057-B09D55C6B61F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

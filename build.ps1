@@ -136,7 +136,7 @@ $SkipPublish = $false
 #
 # Build process configuration
 #
-$SolutionToBuild = (Resolve-Path (Join-Path $here "Solutions\Corvus.Testing.sln")).Path
+$SolutionToBuild = (Resolve-Path (Join-Path $here "Solutions/Corvus.Testing.sln")).Path
 $ProjectsToPublish = @(
     # "Solutions/MySolution/MyWebSite/MyWebSite.csproj"
 )

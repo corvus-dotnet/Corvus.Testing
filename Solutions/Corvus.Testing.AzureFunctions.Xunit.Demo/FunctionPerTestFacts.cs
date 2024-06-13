@@ -38,10 +38,9 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
                 .CreateLogger("Xunit Demo tests");
 
             this.function = new FunctionsController(logger);
-            this.Port = PortFinder.FindAvailableTcpPort(50000, 60000);
         }
 
-        public int Port { get; }
+        public int Port { get; set; }
 
         private string Uri => $"http://localhost:{this.Port}/";
 
@@ -99,6 +98,8 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
 
         public async Task InitializeAsync()
         {
+            this.Port = PortFinder.FindAvailableTcpPort(50000, 60000);
+
             await this.function.StartFunctionsInstance(
                 "Corvus.Testing.AzureFunctions.DemoFunction.InProcess",
                 this.Port,

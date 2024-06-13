@@ -6,7 +6,7 @@ namespace Corvus.Testing.AzureFunctions
 {
     using System;
     using System.IO;
-
+    using System.Linq;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Logging.Abstractions;
 
@@ -41,20 +41,19 @@ namespace Corvus.Testing.AzureFunctions
         {
             logger ??= NullLogger.Instance;
 
-            string currentDirectory = Environment.CurrentDirectory.ToLowerInvariant();
+            string currentDirectory = Environment.CurrentDirectory;
 
-            string directoryExtension = @$"bin\release\{runtime}";
-            if (currentDirectory.Contains("debug"))
+            string buildConfiguration = "release";
+            if (currentDirectory.Contains("debug", StringComparison.InvariantCultureIgnoreCase))
             {
-                directoryExtension = @$"bin\debug\{runtime}";
+                buildConfiguration = "debug";
             }
 
             logger.LogDebug("Working directory is {WorkingDirectory}", currentDirectory);
 
             var candidate = new DirectoryInfo(currentDirectory);
-            bool candidateIsSuccessful = false;
 
-            while (!candidateIsSuccessful && candidate.Parent != null)
+            while (candidate.Parent != null)
             {
                 logger.LogTrace("Current candidate root directory is {CandidateRootDirectory}", candidate);
 
@@ -62,18 +61,33 @@ namespace Corvus.Testing.AzureFunctions
                 // never be the directory we want.
                 candidate = candidate.Parent;
 
-                string pathToTest = Path.Combine(candidate.FullName, pathFragment, directoryExtension);
-                candidateIsSuccessful = Directory.Exists(pathToTest);
-                logger.LogTrace(
-                    "Tested path {CandidateRootPath} with result: {CandidateRootPathExists}",
-                    pathToTest,
-                    candidateIsSuccessful ? "exists" : "not found");
+                string? GetChildFolderCaseInsensitive(string parent, string child)
+                {
+                    return Directory.EnumerateDirectories(parent).FirstOrDefault(fullFolderPath => Path.GetFileName(fullFolderPath).Equals(child, StringComparison.InvariantCultureIgnoreCase));
+                }
+
+                string? projectFolder = GetChildFolderCaseInsensitive(candidate.FullName, pathFragment);
+
+                if (projectFolder is not null)
+                {
+                    string? binFolder = GetChildFolderCaseInsensitive(projectFolder, "bin");
+                    if (binFolder is not null)
+                    {
+                        string? configFolder = GetChildFolderCaseInsensitive(binFolder, buildConfiguration);
+                        if (configFolder is not null)
+                        {
+                            string? targetFolder = GetChildFolderCaseInsensitive(configFolder, runtime);
+                            if (targetFolder is not null)
+                            {
+                                logger.LogDebug("Function root directory is {RootDirectory}", targetFolder);
+                                return targetFolder;
+                            }
+                        }
+                    }
+                }
             }
 
-            string root = candidate.FullName;
-
-            logger.LogDebug("Function root directory is {RootDirectory}", root);
-            return Path.Combine(root, pathFragment, directoryExtension);
+            throw new InvalidOperationException($"Failed to find {pathFragment}");
         }
     }
 }
