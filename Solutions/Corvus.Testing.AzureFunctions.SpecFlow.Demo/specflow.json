@@ -1,6 +1,0 @@
-{
-  "stepAssemblies": [
-    { "assembly": "Corvus.Testing.SpecFlow" },
-    { "assembly": "Corvus.Testing.AzureFunctions.SpecFlow" }
-  ]
-}

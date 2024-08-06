@@ -2,7 +2,7 @@
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
-namespace Corvus.Testing.SpecFlow.DemoFunction.InProcess
+namespace Corvus.Testing.ReqnRoll.DemoFunction.InProcess
 {
     using System.IO;
     using System.Threading.Tasks;

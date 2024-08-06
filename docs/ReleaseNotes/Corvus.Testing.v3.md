@@ -9,7 +9,7 @@ The main changes are:
 
 There are also breaking changes:
 
-* `Corvus.Testing.SpecFlow.NUnit` no longer references Moq; projects that were relying on this package to supply that dependency will now need to add their own reference if they want to continue using Moq
+* `Corvus.Testing.ReqnRoll.NUnit` no longer references Moq; projects that were relying on this package to supply that dependency will now need to add their own reference if they want to continue using Moq
 * if a process is already listening on the port you want the hosted function to use, we now throw an exception instead of ploughing on
 * The `CopyToEnvironmentVariables` extension method for `FunctionConfiguration` now takes an enumerable of `KeyValuePair<string, string?>` - the value type is now a nullable string for reasons described in https://github.com/corvus-dotnet/Corvus.Testing/issues/368
 

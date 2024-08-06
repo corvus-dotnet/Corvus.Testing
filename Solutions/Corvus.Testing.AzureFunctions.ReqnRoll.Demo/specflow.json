@@ -1,0 +1,6 @@
+{
+  "stepAssemblies": [
+    { "assembly": "Corvus.Testing.ReqnRoll" },
+    { "assembly": "Corvus.Testing.AzureFunctions.ReqnRoll" }
+  ]
+}
