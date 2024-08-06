@@ -158,6 +158,13 @@ $NuSpecFilesToPackage = @(
 #
 $ExcludeFilesFromCodeCoverage = ""
 
+task Install-AzureFunctionsSDK {
+    Write-Build White "Installing Azure Functions Core Tools..."
+    Start-Process -FilePath "npm" -ArgumentList "install -g azure-functions-core-tools@ --unsafe-perm true" -NoNewWindow -Wait
+}
+
+task PreTest, Install-AzureFunctionsSDK
+
 # Synopsis: Build, Test and Package
 task . FullBuild
 
@@ -170,9 +177,7 @@ task PreVersion {}
 task PostVersion {}
 task PreBuild {}
 task PostBuild {}
-task PreTest {
-    Start-Process -FilePath "npm" -ArgumentList "install -g azure-functions-core-tools@ --unsafe-perm true" -NoNewWindow -Wait
-}
+task PreTest {}
 task PostTest {}
 task PreTestReport {}
 task PostTestReport {}
