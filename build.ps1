@@ -1,3 +1,4 @@
+#Requires -Version 7
 <#
 .SYNOPSIS
     Runs a .NET flavoured build process.
@@ -132,6 +133,11 @@ $SkipAnalysis = $false
 $SkipPackage = $false
 $SkipPublish = $false
 
+
+# NOTE: Install the 'Endjin.RecommendedPractices.Build' VS Code extension to get handy
+#       snippets for enabling & configuring features in this build script.
+#       Once installed <CTRL-ALT-J> will open the snippet picker and you can type 'build'
+#       to see the available snippets.
 
 #
 # Build process configuration
