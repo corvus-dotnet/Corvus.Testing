@@ -163,7 +163,7 @@ task Install-AzureFunctionsSDK {
     Start-Process -FilePath "npm" -ArgumentList "install -g azure-functions-core-tools@ --unsafe-perm true" -NoNewWindow -Wait
 }
 
-task PreTest, Install-AzureFunctionsSDK
+task PreTest Init, Install-AzureFunctionsSDK
 
 # Synopsis: Build, Test and Package
 task . FullBuild
