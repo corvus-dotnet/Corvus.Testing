@@ -177,7 +177,7 @@ task PreVersion {}
 task PostVersion {}
 task PreBuild {}
 task PostBuild {}
-task PreTest {}
+task PreTest Init, Install-AzureFunctionsSDK, {}
 task PostTest {}
 task PreTestReport {}
 task PostTestReport {}
