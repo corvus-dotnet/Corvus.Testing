@@ -102,7 +102,7 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
             await this.function.StartFunctionsInstance(
                 "Corvus.Testing.AzureFunctions.DemoFunction.InProcess",
                 this.Port,
-                "net6.0");
+                "net8.0");
         }
 
         public Task DisposeAsync()
