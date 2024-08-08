@@ -73,6 +73,11 @@ namespace Corvus.Testing.AzureFunctions
 
             string root = candidate.FullName;
 
+            if (!Path.IsPathRooted(root))
+            {
+                root = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), root));
+            }
+
             logger.LogDebug("Function root directory is {RootDirectory}", root);
 
             return Path.GetFullPath(Path.Combine(root, pathFragment, directoryExtension));
