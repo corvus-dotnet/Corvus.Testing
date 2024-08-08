@@ -22,7 +22,7 @@ namespace Corvus.Testing.ReqnRoll.Demo.AzureFunctionsTesting
             return functionsController.StartFunctionsInstance(
                 "Corvus.Testing.AzureFunctions.DemoFunction.InProcess",
                 7075,
-                "net8.0",
+                "net6.0",
                 configuration: functionConfiguration);
         }
 
