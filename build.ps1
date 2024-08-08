@@ -161,7 +161,11 @@ $ExcludeFilesFromCodeCoverage = ""
 task Install-AzureFunctionsSDK {
     
     if ($IsWindows) {
-        $existingVersion = exec { & func --version } -ErrorAction SilentlyContinue
+        $existingVersion = ""
+        if ((Get-Command func -ErrorAction Ignore)) {
+            $existingVersion = exec { & func --version }
+        }
+
         if (!$existingVersion -or $existingVersion -notlike "4.*") {
             Write-Build White "Installing/updating Azure Functions Core Tools..."
             exec { & npm install -g azure-functions-core-tools@ --unsafe-perm true }
