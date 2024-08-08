@@ -3,14 +3,15 @@
 [![GitHub license](https://img.shields.io/badge/License-Apache%202-blue.svg)](https://raw.githubusercontent.com/corvus-dotnet/Corvus.Testing/main/LICENSE)
 [![IMM](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/total?cache=false)](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/total?cache=false)
 
-This provides a library of useful testing extensions, primarily focussed on ReqnRoll operations.
+This provides a library of useful testing extensions, primarily focussed on ReqnRoll operations in v4. v3 focuses on SpecFlow.
 
 It is built for .NET 6.0, and we support use on both .NET 6.0 and .NET 8.0. (If you require .NET Standard 2.0, use `Corvus.Testing` v1.)
 
-The ReqnRoll specific libraries contain additional bindings; to use these, you will need to add a `ReqnRoll.json` file to any project wishing to use them. Add entries to the `stepAssemblies` array for each of the Corvus libraries you need to use:
+The ReqnRoll specific libraries contain additional bindings; to use these, you will need to add a `reqnroll.json` file to any project wishing to use them. Add entries to the `stepAssemblies` array for each of the Corvus libraries you need to use:
 
 ```json
 {
+  "$schema": "https://schemas.reqnroll.net/reqnroll-config-latest.json",
   "stepAssemblies": [
     { "assembly": "Corvus.Testing.ReqnRoll" },
     { "assembly": "Corvus.Testing.AzureFunctions.ReqnRoll" },
@@ -153,7 +154,7 @@ choco install nodejs
 npm install -g azure-functions-core-tools@
 ```
 
->NOTE: You may need to reboot to get Visual Studio to 'see' the NodeJS installation.
+> NOTE: You may need to reboot to get Visual Studio to 'see' the NodeJS installation.
 
 The tests can be run from the command-line using:
 ```
@@ -171,13 +172,13 @@ For any licensing questions, please email [&#108;&#105;&#99;&#101;&#110;&#115;&#
 
 ## Project Sponsor
 
-This project is sponsored by [endjin](https://endjin.com), a UK based Microsoft Gold Partner for Cloud Platform, Data Platform, Data Analytics, DevOps, and a Power BI Partner.
+This project is sponsored by [endjin](https://endjin.com), a UK based Microsoft Partner.
 
 For more information about our products and services, or for commercial support of this project, please [contact us](https://endjin.com/contact-us). 
 
 We produce two free weekly newsletters; [Azure Weekly](https://azureweekly.info) for all things about the Microsoft Azure Platform, and [Power BI Weekly](https://powerbiweekly.info).
 
-Keep up with everything that's going on at endjin via our [blog](https://blogs.endjin.com/), follow us on [Twitter](https://twitter.com/endjin), or [LinkedIn](https://www.linkedin.com/company/1671851/).
+Keep up with everything that's going on at endjin via our [blog](https://endjin.com/blog), follow us on [X](https://x.com/endjin), or [LinkedIn](https://www.linkedin.com/company/endjin/).
 
 Our other Open Source projects can be found on [GitHub](https://endjin.com/open-source)
 
