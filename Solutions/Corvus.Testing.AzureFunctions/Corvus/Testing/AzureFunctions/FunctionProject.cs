@@ -1,4 +1,4 @@
-﻿// <copyright file="FunctionProject.cs" company="Endjin Limited">
+// <copyright file="FunctionProject.cs" company="Endjin Limited">
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
@@ -41,13 +41,13 @@ namespace Corvus.Testing.AzureFunctions
         {
             logger ??= NullLogger.Instance;
 
-            string currentDirectory = Environment.CurrentDirectory.ToLowerInvariant();
+            string currentDirectory = Environment.CurrentDirectory;
 
             string directoryExtension = Path.Combine("bin", "Release", runtime);
 
-            if (currentDirectory.Contains("debug"))
+            if (currentDirectory.Contains("Debug"))
             {
-                directoryExtension = Path.Combine("bin", "debug", runtime);
+                directoryExtension = Path.Combine("bin", "Debug", runtime);
             }
 
             logger.LogDebug("Working directory is {WorkingDirectory}", currentDirectory);

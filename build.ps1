@@ -159,8 +159,26 @@ $NuSpecFilesToPackage = @(
 $ExcludeFilesFromCodeCoverage = ""
 
 task Install-AzureFunctionsSDK {
-    Write-Build White "Installing Azure Functions Core Tools..."
-    Start-Process -FilePath "npm" -ArgumentList "install -g azure-functions-core-tools@ --unsafe-perm true" -NoNewWindow -Wait
+    
+    if ($IsWindows) {
+        $existingVersion = exec { & func --version } -ErrorAction SilentlyContinue
+        if (!$existingVersion -or $existingVersion -notlike "4.*") {
+            Write-Build White "Installing/updating Azure Functions Core Tools..."
+            exec { & npm install -g azure-functions-core-tools@ --unsafe-perm true }
+        }
+        else {
+            Write-Build Green "Azure Functions Core Tools already installed"
+        }
+    }
+    else {
+        # For the moment fail early when not running on Windows - currently there is
+        # a dependency on System.Management which is only available on Windows.
+        throw  "Using the Azure Functions Core Tools to run Specs is currently only supoprted on Windows."
+        
+        # NOTE: Slightly different install logic retained for future use, once above is resolved.
+        # Write-Build Yellow "Requires 'sudo' on Linux/MacOS"
+        # exec { & sudo npm install -g azure-functions-core-tools@ --unsafe-perm true }
+    }
 }
 
 # Synopsis: Build, Test and Package
