@@ -41,7 +41,7 @@ namespace Corvus.Testing.AzureFunctions.Xunit.Demo
             await this.function.StartFunctionsInstance(
                 "Corvus.Testing.AzureFunctions.DemoFunction.InProcess",
                 Port,
-                "net8.0",
+                "net6.0",
                 configuration: configuration);
         }
 
