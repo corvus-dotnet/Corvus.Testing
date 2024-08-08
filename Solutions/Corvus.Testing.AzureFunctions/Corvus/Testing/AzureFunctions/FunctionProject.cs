@@ -43,10 +43,11 @@ namespace Corvus.Testing.AzureFunctions
 
             string currentDirectory = Environment.CurrentDirectory.ToLowerInvariant();
 
-            string directoryExtension = @$"bin\release\{runtime}";
+            string directoryExtension = Path.Combine("bin","release", runtime);
+
             if (currentDirectory.Contains("debug"))
             {
-                directoryExtension = @$"bin\debug\{runtime}";
+                directoryExtension = Path.Combine("bin", "debug", runtime);
             }
 
             logger.LogDebug("Working directory is {WorkingDirectory}", currentDirectory);
