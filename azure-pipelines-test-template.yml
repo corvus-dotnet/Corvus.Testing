@@ -1,0 +1,71 @@
+parameters:
+  vmImage: ''
+  netSdkVersion: '6.x'
+  testTasks: 'Test,TestReport'
+  postCustomEnvironmentVariables: []
+  additionalNetSdkVersions: []
+  includeNetSdkPreviewVersions: 'false'
+  jobName: ''
+
+# resources:
+  # repositories:
+  #   - repository: recommended_practices
+  #     type: github
+  #     name: endjin/Endjin.RecommendedPractices.AzureDevopsPipelines.GitHub
+  #     endpoint: corvus-dotnet-github
+
+jobs:
+- job: ${{ parameters.jobName }}
+  dependsOn: ['Build']
+  pool:
+    vmImage: ${{ parameters.vmImage }}
+
+  variables:
+    BuildConfiguration: 'Release'
+    ${{ if or(variables['Endjin.BuildDiagnostics'], variables['Endjin.ShowEnvironment']) }}:
+      BuildScriptLogLevel: 'detailed'
+    ${{ else }}:
+      BuildScriptLogLevel: 'minimal'
+    DOTNET_CLI_TELEMETRY_OPTOUT: 1
+    DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+    PackagesOutputDirName: '_packages'
+  steps:
+  - template: templates/install-dotnet-sdks.yml@recommended_practices
+    parameters:
+      netSdkVersion: ${{ parameters.netSdkVersion }}
+      additionalNetSdkVersions: ${{ parameters.additionalNetSdkVersions }}
+      includeNetSdkPreviewVersions: ${{ parameters.includeNetSdkPreviewVersions }}
+  - task: DownloadPipelineArtifact@2
+    displayName: Retrieve Compilation Outputs
+    inputs:
+      buildType: 'current'
+      artifactName: build
+      targetPath: $(Build.SourcesDirectory)
+
+  - ${{ parameters.postCustomEnvironmentVariables }}
+
+  - task: PowerShell@2
+    inputs:
+      targetType: 'filePath'
+      filePath: "$(Build.SourcesDirectory)/build.ps1"
+      # We have to re-run the build because the build output from windows does not work when running the tests on ubuntu
+      arguments: >
+        -Configuration $(BuildConfiguration)
+        -BuildRepositoryUri $(Build.Repository.Uri)
+        -SourcesDir $(Build.SourcesDirectory)
+        -CoverageDir $(Build.SourcesDirectory)/CodeCoverage
+        -LogLevel $(BuildScriptLogLevel)
+        -Tasks Build, ${{ parameters.testTasks }}
+      pwsh: true
+    name: RunTests
+    displayName: 'Run Tests'
+    env:
+      NUGET_PACKAGES: $(Build.SourcesDirectory)/.nuget-packages
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)     # required by the custom test logger
+
+  - task: PublishCodeCoverageResults@1
+    displayName: 'Publish Code Coverage Report'
+    inputs:
+      codeCoverageTool: Cobertura
+      summaryFileLocation: '$(Build.SourcesDirectory)/CodeCoverage/Cobertura.xml'
+      reportDirectory: '$(Build.SourcesDirectory)/CodeCoverage'

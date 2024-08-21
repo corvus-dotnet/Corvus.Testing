@@ -30,8 +30,8 @@ namespace Corvus.Testing.AzureFunctions
 
             var portsInRangeInUse = IPGlobalProperties
                 .GetIPGlobalProperties()
-                .GetActiveTcpListeners()
-                .Select(e => e.Port)
+                .GetActiveTcpConnections()
+                .Select(e => e.LocalEndPoint.Port)
                 .Where(p => p >= lb && p < ub)
                 .ToHashSet();
 
