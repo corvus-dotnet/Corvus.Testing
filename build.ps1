@@ -158,31 +158,26 @@ $NuSpecFilesToPackage = @(
 #
 $ExcludeFilesFromCodeCoverage = ""
 
+# Bump version to one that supports installing on .NET 8.0
+$covenantVersion = "0.19.0"
+
 task Install-AzureFunctionsSDK {
     
-    if ($IsWindows) {
-        $existingVersion = ""
-        if ((Get-Command func -ErrorAction Ignore)) {
-            $existingVersion = exec { & func --version }
-        }
+    $existingVersion = ""
+    if ((Get-Command func -ErrorAction Ignore)) {
+        $existingVersion = exec { & func --version }
+    }
 
-        if (!$existingVersion -or $existingVersion -notlike "4.*") {
-            Write-Build White "Installing/updating Azure Functions Core Tools..."
+    if (!$existingVersion -or $existingVersion -notlike "4.*") {
+        Write-Build White "Installing/updating Azure Functions Core Tools..."
+        if ($IsWindows) {
             exec { & npm install -g azure-functions-core-tools@ --unsafe-perm true }
         }
         else {
-            Write-Build Green "Azure Functions Core Tools already installed"
+            Write-Build Yellow "NOTE: May require 'sudo' on Linux/MacOS"
+            exec { & sudo npm install -g azure-functions-core-tools@ --unsafe-perm true }
         }
-    }
-    else {
-        # For the moment fail early when not running on Windows - currently there is
-        # a dependency on System.Management which is only available on Windows.
-        throw  "Using the Azure Functions Core Tools to run Specs is currently only supoprted on Windows."
-        
-        # NOTE: Slightly different install logic retained for future use, once above is resolved.
-        # Write-Build Yellow "Requires 'sudo' on Linux/MacOS"
-        # exec { & sudo npm install -g azure-functions-core-tools@ --unsafe-perm true }
-    }
+    } 
 }
 
 task PreTest Init, Install-AzureFunctionsSDK

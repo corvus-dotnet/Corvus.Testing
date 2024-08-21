@@ -61,9 +61,8 @@ jobs:
 
   build:
     needs: prepareConfig
-    uses: endjin/Endjin.RecommendedPractices.GitHubActions/.github/workflows/scripted-build-pipeline.yml@feature/add-matrix-build
+    uses: endjin/Endjin.RecommendedPractices.GitHubActions/.github/workflows/scripted-build-matrix-pipeline.yml@feature/add-matrix-build
     with:
-      runsOn: 'windows-latest'
       netSdkVersion: '8.x'
       # workflow_dispatch inputs are always strings, the type property is just for the UI
       forcePublish: ${{ github.event.inputs.forcePublish == 'true' }}
@@ -73,6 +72,12 @@ jobs:
       # as defined in the 'environmentVariablesYaml' property above.
       compilePhaseEnv: ${{ needs.prepareConfig.outputs.RESOLVED_ENV_VARS }}
       testPhaseEnv: ${{ needs.prepareConfig.outputs.RESOLVED_ENV_VARS }}
+      testPhaseMatrixJson: |
+        {
+          "os": ["ubuntu-latest", "windows-latest"],
+          "dotnetFramework": ["net8.0"],
+          "exclude": []
+        }
       packagePhaseEnv: ${{ needs.prepareConfig.outputs.RESOLVED_ENV_VARS }}
       publishPhaseEnv: ${{ needs.prepareConfig.outputs.RESOLVED_ENV_VARS }}
     secrets:
