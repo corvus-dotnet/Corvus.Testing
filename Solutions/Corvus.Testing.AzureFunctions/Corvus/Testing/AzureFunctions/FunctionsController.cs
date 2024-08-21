@@ -230,6 +230,25 @@ namespace Corvus.Testing.AzureFunctions
                 {
                     proc.Kill();
                 }
+                catch (AggregateException ex)
+                {
+                    Console.WriteLine("Caught an AggregateException: " + ex.Message);
+                    foreach (var innerEx in ex.InnerExceptions)
+                    {
+                        if (innerEx is Win32Exception win32Ex)
+                        {
+                            if (win32Ex.ErrorCode == E_ACCESSDENIED)
+                            {
+                                Console.Error.WriteLine($"Access denied when trying to kill process id {pid}, '{proc.ProcessName}'");
+                                failedDueToAccessDenied = true;
+                            }
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                }
                 catch (Win32Exception x)
                     when (x.ErrorCode == E_ACCESSDENIED)
                 {
