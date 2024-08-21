@@ -13,6 +13,7 @@ namespace Corvus.Testing.AzureFunctions
     using System.Net.Http;
     using System.Net.NetworkInformation;
     using System.Net.Sockets;
+    using System.Runtime.InteropServices;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -198,12 +199,15 @@ namespace Corvus.Testing.AzureFunctions
                 return;
             }
 
-            using (var searcher =
-                   new ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" + pid))
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                foreach (ManagementObject mo in searcher.Get().Cast<ManagementObject>())
+                using (var searcher =
+                       new ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" + pid))
                 {
-                    KillProcessAndChildren(Convert.ToInt32(mo["ProcessID"]));
+                    foreach (ManagementObject mo in searcher.Get().Cast<ManagementObject>())
+                    {
+                        KillProcessAndChildren(Convert.ToInt32(mo["ProcessID"]));
+                    }
                 }
             }
 
@@ -228,7 +232,14 @@ namespace Corvus.Testing.AzureFunctions
 
                 try
                 {
-                    proc.Kill();
+                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                    {
+                        proc.Kill();
+                    }
+                    else
+                    {
+                        proc.Kill(entireProcessTree: true);
+                    }
                 }
                 catch (AggregateException ex)
                 {

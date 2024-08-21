@@ -1,5 +1,9 @@
 # Release notes for Corvus.Testing v3.
 
+## v3.1
+
+Added Linux support.
+
 ## v3.0
 
 The main changes are:
