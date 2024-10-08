@@ -1,3 +1,4 @@
+#Requires -Version 7
 <#
 .SYNOPSIS
     Runs a .NET flavoured build process.
@@ -133,6 +134,11 @@ $SkipPackage = $false
 $SkipPublish = $false
 
 
+# NOTE: Install the 'Endjin.RecommendedPractices.Build' VS Code extension to get handy
+#       snippets for enabling & configuring features in this build script.
+#       Once installed <CTRL-ALT-J> will open the snippet picker and you can type 'build'
+#       to see the available snippets.
+
 #
 # Build process configuration
 #
@@ -152,6 +158,28 @@ $NuSpecFilesToPackage = @(
 #
 $ExcludeFilesFromCodeCoverage = ""
 
+# Bump version to one that supports installing on .NET 8.0
+$covenantVersion = "0.19.0"
+
+task Install-AzureFunctionsSDK {
+    
+    $existingVersion = ""
+    if ((Get-Command func -ErrorAction Ignore)) {
+        $existingVersion = exec { & func --version }
+    }
+
+    if (!$existingVersion -or $existingVersion -notlike "4.*") {
+        Write-Build White "Installing/updating Azure Functions Core Tools..."
+        if ($IsWindows) {
+            exec { & npm install -g azure-functions-core-tools@ --unsafe-perm true }
+        }
+        else {
+            Write-Build Yellow "NOTE: May require 'sudo' on Linux/MacOS"
+            exec { & sudo npm install -g azure-functions-core-tools@ --unsafe-perm true }
+        }
+    } 
+}
+
 # Synopsis: Build, Test and Package
 task . FullBuild
 
@@ -164,7 +192,7 @@ task PreVersion {}
 task PostVersion {}
 task PreBuild {}
 task PostBuild {}
-task PreTest {}
+task PreTest Init, Install-AzureFunctionsSDK, {}
 task PostTest {}
 task PreTestReport {}
 task PostTestReport {}

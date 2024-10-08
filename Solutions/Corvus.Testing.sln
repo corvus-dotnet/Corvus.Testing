@@ -6,8 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevOps", "DevOps", "{B5276693-CCCC-4EB4-AA78-909D9C5F656E}"
 	ProjectSection(SolutionItems) = preProject
 		..\azure-pipelines-test-template.yml = ..\azure-pipelines-test-template.yml
-		..\azure-pipelines.release.yml = ..\azure-pipelines.release.yml
-		..\azure-pipelines.yml = ..\azure-pipelines.yml
 		..\GitVersion.yml = ..\GitVersion.yml
 		..\imm.yaml = ..\imm.yaml
 	EndProjectSection
@@ -26,19 +24,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.Testing.AzureFunctio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.Testing.AzureFunctions.Xunit.Demo", "Corvus.Testing.AzureFunctions.Xunit.Demo\Corvus.Testing.AzureFunctions.Xunit.Demo.csproj", "{BA7AE471-5DFA-4204-BB59-B4EFAC624086}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.Testing.AzureFunctions.SpecFlow.Demo", "Corvus.Testing.AzureFunctions.SpecFlow.Demo\Corvus.Testing.AzureFunctions.SpecFlow.Demo.csproj", "{4F726825-01C5-4BCF-B82B-E26C14565EEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.Testing.AzureFunctions.ReqnRoll.Demo", "Corvus.Testing.AzureFunctions.ReqnRoll.Demo\Corvus.Testing.AzureFunctions.ReqnRoll.Demo.csproj", "{4F726825-01C5-4BCF-B82B-E26C14565EEF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.Testing.AzureFunctions.SpecFlow", "Corvus.Testing.AzureFunctions.SpecFlow\Corvus.Testing.AzureFunctions.SpecFlow.csproj", "{A3C7BB3D-5C1B-4A59-9D1F-CC13BAEFCF45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.Testing.AzureFunctions.ReqnRoll", "Corvus.Testing.AzureFunctions.ReqnRoll\Corvus.Testing.AzureFunctions.ReqnRoll.csproj", "{A3C7BB3D-5C1B-4A59-9D1F-CC13BAEFCF45}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.Testing.AzureFunctions.DemoFunctions.InProcess", "Corvus.Testing.AzureFunctions.DemoFunction.InProcess\Corvus.Testing.AzureFunctions.DemoFunctions.InProcess.csproj", "{A82AEA52-81AA-4AAA-BEFE-8E28013E2A7A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.Testing.SpecFlow", "Corvus.Testing.SpecFlow\Corvus.Testing.SpecFlow.csproj", "{687664B5-226D-4CE7-B3AC-491F49990AA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.Testing.ReqnRoll", "Corvus.Testing.ReqnRoll\Corvus.Testing.ReqnRoll.csproj", "{687664B5-226D-4CE7-B3AC-491F49990AA7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.Testing.SpecFlow.Specs", "Corvus.Testing.SpecFlow.Specs\Corvus.Testing.SpecFlow.Specs.csproj", "{18EB9E01-82BC-4B4F-BB22-ED91D36D368F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.Testing.ReqnRoll.Specs", "Corvus.Testing.ReqnRoll.Specs\Corvus.Testing.ReqnRoll.Specs.csproj", "{18EB9E01-82BC-4B4F-BB22-ED91D36D368F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.Testing.SpecFlow.NUnit", "Corvus.Testing.SpecFlow.NUnit\Corvus.Testing.SpecFlow.NUnit.csproj", "{34AE7429-5F5E-4E47-9D21-841757243F78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.Testing.ReqnRoll.NUnit", "Corvus.Testing.ReqnRoll.NUnit\Corvus.Testing.ReqnRoll.NUnit.csproj", "{34AE7429-5F5E-4E47-9D21-841757243F78}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.Testing.AzureFunctions.SpecFlow.NUnit", "Corvus.Testing.AzureFunctions.SpecFlow.NUnit\Corvus.Testing.AzureFunctions.SpecFlow.NUnit.csproj", "{DC1B7B5A-8417-4696-B061-9C03EE933C02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.Testing.AzureFunctions.ReqnRoll.NUnit", "Corvus.Testing.AzureFunctions.ReqnRoll.NUnit\Corvus.Testing.AzureFunctions.ReqnRoll.NUnit.csproj", "{DC1B7B5A-8417-4696-B061-9C03EE933C02}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corvus.Testing.AzureFunctions.DemoFunctions.Isolated", "Corvus.Testing.AzureFunctions.DemoFunctions.Isolated\Corvus.Testing.AzureFunctions.DemoFunctions.Isolated.csproj", "{492124E6-F290-4C0E-AF91-C7E26BF83B2B}"
 EndProject

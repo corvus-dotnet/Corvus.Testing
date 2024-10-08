@@ -6,13 +6,16 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <Copyright>Copyright (c) Endjin Limited 2024. All rights reserved.</Copyright>
-    <NoWarn>RCS1194</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup>
     <IsTestProject>false</IsTestProject>
     <TestProject>false</TestProject>
   </PropertyGroup>
+  <ItemGroup>
+    <!-- This project takes depedency on nUnit that adds the TestContainer capability importing NUnit.props, but this is not a test project -->
+    <ProjectCapability Remove="TestContainer" />
+  </ItemGroup>
 
   <PropertyGroup>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
@@ -27,8 +30,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
-    <PackageReference Include="System.Management" Version="[4.7.*,)" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0" />
+    <PackageReference Include="Reqnroll" Version="2.0.3" />
   </ItemGroup>
-</Project>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Corvus.Testing.AzureFunctions\Corvus.Testing.AzureFunctions.csproj" />
+    <ProjectReference Include="..\Corvus.Testing.ReqnRoll\Corvus.Testing.ReqnRoll.csproj" />
+  </ItemGroup>
+  </Project>
