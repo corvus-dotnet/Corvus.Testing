@@ -2,18 +2,18 @@
 // Copyright (c) Endjin Limited. All rights reserved.
 // </copyright>
 
-namespace Corvus.Testing.SpecFlow.Demo.AzureFunctionsTesting
+namespace Corvus.Testing.ReqnRoll.Demo.AzureFunctionsTesting
 {
     using System.Net;
     using System.Net.Http;
     using System.Text;
     using System.Threading.Tasks;
     using Corvus.Testing.AzureFunctions;
-    using Corvus.Testing.AzureFunctions.SpecFlow;
+    using Corvus.Testing.AzureFunctions.ReqnRoll;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using NUnit.Framework;
-    using TechTalk.SpecFlow;
+    using Reqnroll;
 
     [Binding]
     public class StepBindings
@@ -34,7 +34,7 @@ namespace Corvus.Testing.SpecFlow.Demo.AzureFunctionsTesting
         {
             FunctionConfiguration functionConfiguration = FunctionsBindings.GetFunctionConfiguration(this.scenarioContext);
 
-            foreach (TableRow row in table.Rows)
+            foreach (DataTableRow row in table.Rows)
             {
                 functionConfiguration.EnvironmentVariables.Add(row[0], row[1]);
             }
@@ -56,7 +56,7 @@ namespace Corvus.Testing.SpecFlow.Demo.AzureFunctionsTesting
         public async Task WhenISendAPOSTRequestToWithDataInTheRequestBody(string uri, Table table)
         {
             var requestBody = new JObject();
-            foreach (TableRow row in table.Rows)
+            foreach (DataTableRow row in table.Rows)
             {
                 requestBody.Add(row[0], row[1]);
             }
@@ -69,17 +69,17 @@ namespace Corvus.Testing.SpecFlow.Demo.AzureFunctionsTesting
         [Then("I receive a (.*) response code")]
         public void ThenIReceiveAResponseCode(int expectedCode)
         {
-            Assert.IsNotNull(this.lastHttpResponseMessage, "Could not verify last response status code as there is no last response");
-            Assert.AreEqual((HttpStatusCode)expectedCode, this.lastHttpResponseMessage!.StatusCode);
+            Assert.That(this.lastHttpResponseMessage, Is.Not.Null, "Could not verify last response status code as there is no last response");
+            Assert.That(this.lastHttpResponseMessage!.StatusCode, Is.EqualTo((HttpStatusCode)expectedCode));
         }
 
         [Then("the response body contains the text '(.*)'")]
         public async Task ThenTheResponseBodyContainsTheText(string expectedContent)
         {
-            Assert.IsNotNull(this.lastHttpResponseMessage, "Could not verify last response status code as there is no last response");
+            Assert.That(this.lastHttpResponseMessage, Is.Not.Null, "Could not verify last response status code as there is no last response");
             string actualContent = await this.lastHttpResponseMessage!.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            Assert.AreEqual(expectedContent, actualContent);
+            Assert.That(expectedContent, Is.Not.Null, actualContent);
         }
     }
 }
