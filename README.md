@@ -2,7 +2,7 @@
 
 SpecFlow [End of Life has been announced](https://reqnroll.net/news/2025/01/specflow-end-of-life-has-been-announced/). We're currently in the process of migrating all of our projects over to [Reqnroll](https://reqnroll.net/).
 
-One learning we've made from this project is that combining the core testing framework and a platform (i.e. Azure Functions) in to the same project can be painful as the two technologies evolve at different rates, so we've decided to split the features out into two separate repositories.
+One learning we've made from this project is that combining the core testing framework and a platform (i.e. Azure Functions) in to the same repository can be painful as the two technologies evolve at different rates, so we've decided to split the features out into two separate repositories.
 
 - [Corvus.Testing.ReqnRoll](https://github.com/corvus-dotnet/Corvus.Testing.ReqnRoll)
 - [Corvus.Testing.AzureFunctions.ReqnRoll](https://github.com/corvus-dotnet/Corvus.Testing.AzureFunctions.ReqnRoll)
@@ -11,13 +11,17 @@ This migration may cause a security warning as [Corvus.Testing.AzureFunctions nu
 
 ## New Packages
 
-- 📦[Corvus.Testing.ReqnRoll](https://www.nuget.org/packages/Corvus.Testing.ReqnRoll)
-- 📦[Corvus.Testing.ReqnRoll.NUnit](https://www.nuget.org/packages/Corvus.Testing.ReqnRoll.NUnit)
-- 📦[Corvus.Testing.ReqnRoll.MSTest](https://www.nuget.org/packages/Corvus.Testing.ReqnRoll.MSTest)
-- 📦[Corvus.Testing.AzureFunctions](https://www.nuget.org/packages/Corvus.Testing.AzureFunctions)
-- 📦[Corvus.Testing.AzureFunctions.ReqnRoll](https://www.nuget.org/packages/Corvus.Testing.AzureFunctions.ReqnRoll)
-- 📦[Corvus.Testing.AzureFunctions.ReqnRoll.NUnit](https://www.nuget.org/packages/Corvus.Testing.AzureFunctions.ReqnRoll.NUnit)
-- 📦[Corvus.Testing.CosmosDb.Reqnroll](https://www.nuget.org/packages/Corvus.Testing.CosmosDb.Reqnroll)
+| Package                                                                                                                 | NuGet                                                                                                                                                                     | Description                                                                                                 |
+|-------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
+| [Corvus.Testing.ReqnRoll](https://github.com/corvus-dotnet/Corvus.Testing.ReqnRoll)                                     | [![NuGet](https://img.shields.io/nuget/v/Corvus.Testing.ReqnRoll.svg)](https://www.nuget.org/packages/Corvus.Testing.ReqnRoll/)                                           | Core ReqnRoll testing functionality                                                                         |
+| [Corvus.Testing.ReqnRoll.NUnit](https://github.com/corvus-dotnet/Corvus.Testing.ReqnRoll)                               | [![NuGet](https://img.shields.io/nuget/v/Corvus.Testing.ReqnRoll.NUnit.svg)](https://www.nuget.org/packages/Corvus.Testing.ReqnRoll.NUnit/)                               | NUnit integration for ReqnRoll testing                                                                      |
+| [Corvus.Testing.ReqnRoll.MSTest](https://github.com/corvus-dotnet/Corvus.Testing.ReqnRoll)                              | [![NuGet](https://img.shields.io/nuget/v/Corvus.Testing.ReqnRoll.MSTest.svg)](https://www.nuget.org/packages/Corvus.Testing.ReqnRoll.MSTest/)                             | MSTest integration for ReqnRoll testing                                                                     |
+| [Corvus.Testing.AzureFunctions](https://github.com/corvus-dotnet/Corvus.Testing.AzureFunctions.ReqnRoll)                | [![NuGet](https://img.shields.io/nuget/v/Corvus.Testing.AzureFunctions.svg)](https://www.nuget.org/packages/Corvus.Testing.AzureFunctions/)                               | Core functionality for managing Azure Functions instances                                                   |
+| [Corvus.Testing.AzureFunctions.ReqnRoll](https://github.com/corvus-dotnet/Corvus.Testing.AzureFunctions.ReqnRoll)       | [![NuGet](https://img.shields.io/nuget/v/Corvus.Testing.AzureFunctions.ReqnRoll.svg)](https://www.nuget.org/packages/Corvus.Testing.AzureFunctions.ReqnRoll/)             | ReqnRoll integration for BDD testing                                                                        |
+| [Corvus.Testing.AzureFunctions.ReqnRoll.NUnit](https://github.com/corvus-dotnet/Corvus.Testing.AzureFunctions.ReqnRoll) | [![NuGet](https://img.shields.io/nuget/v/Corvus.Testing.AzureFunctions.ReqnRoll.NUnit.svg)](https://www.nuget.org/packages/Corvus.Testing.AzureFunctions.ReqnRoll.NUnit/) | A metapackage that encapsulates the required dependencies when using Corvus.Testing.AzureFunctions.ReqnRoll |
+| [Corvus.Testing.CosmosDb.Reqnroll](https://github.com/corvus-dotnet/Corvus.Extensions.CosmosDb)                         | [![NuGet](https://img.shields.io/nuget/v/Corvus.Testing.CosmosDb.Reqnroll.svg)](https://www.nuget.org/packages/Corvus.Testing.CosmosDb.Reqnroll/)                         | ReqnRoll integration for testing with Cosmos DB v3 SDK (Legacy)                                                            |
+
+
 
 # Corvus.Testing (Deprecated)
 [![Build Status](https://dev.azure.com/endjin-labs/Corvus.Testing/_apis/build/status/corvus-dotnet.Corvus.Testing?branchName=main)](https://dev.azure.com/endjin-labs/Corvus.Testing/_build/latest?definitionId=4&branchName=main)
