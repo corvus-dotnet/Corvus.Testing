@@ -1,4 +1,25 @@
-# Corvus.Testing
+# NOTICE. We are in the process of archiving this project as SpecFlow has been Sunset.
+
+SpecFlow [End of Life has been announced](https://reqnroll.net/news/2025/01/specflow-end-of-life-has-been-announced/). We're currently in the process of migrating all of our projects over to [Reqnroll](https://reqnroll.net/).
+
+One learning we've made from this project is that combining the core testing framework and a platform (i.e. Azure Functions) in to the same project can be painful as the two technologies evolve at different rates, so we've decided to split the features out into two separate repositories.
+
+- [Corvus.Testing.ReqnRoll](https://github.com/corvus-dotnet/Corvus.Testing.ReqnRoll)
+- [Corvus.Testing.AzureFunctions.ReqnRoll](https://github.com/corvus-dotnet/Corvus.Testing.AzureFunctions.ReqnRoll)
+
+This migration may cause a security warning as [Corvus.Testing.AzureFunctions nuget package](https://www.nuget.org/packages/Corvus.Testing.AzureFunctions) (from v5.0) is now published by [Corvus.Testing.AzureFunctions.ReqnRoll](https://github.com/corvus-dotnet/Corvus.Testing.AzureFunctions.ReqnRoll). 
+
+## New Packages
+
+- 📦[Corvus.Testing.ReqnRoll](https://www.nuget.org/packages/Corvus.Testing.ReqnRoll)
+- 📦[Corvus.Testing.ReqnRoll.NUnit](https://www.nuget.org/packages/Corvus.Testing.ReqnRoll.NUnit)
+- 📦[Corvus.Testing.ReqnRoll.MSTest](https://www.nuget.org/packages/Corvus.Testing.ReqnRoll.MSTest)
+- 📦[Corvus.Testing.AzureFunctions](https://www.nuget.org/packages/Corvus.Testing.AzureFunctions)
+- 📦[Corvus.Testing.AzureFunctions.ReqnRoll](https://www.nuget.org/packages/Corvus.Testing.AzureFunctions.ReqnRoll)
+- 📦[Corvus.Testing.AzureFunctions.ReqnRoll.NUnit](https://www.nuget.org/packages/Corvus.Testing.AzureFunctions.ReqnRoll.NUnit)
+- 📦[Corvus.Testing.CosmosDb.Reqnroll](https://www.nuget.org/packages/Corvus.Testing.CosmosDb.Reqnroll)
+
+# Corvus.Testing (Deprecated)
 [![Build Status](https://dev.azure.com/endjin-labs/Corvus.Testing/_apis/build/status/corvus-dotnet.Corvus.Testing?branchName=main)](https://dev.azure.com/endjin-labs/Corvus.Testing/_build/latest?definitionId=4&branchName=main)
 [![GitHub license](https://img.shields.io/badge/License-Apache%202-blue.svg)](https://raw.githubusercontent.com/corvus-dotnet/Corvus.Testing/main/LICENSE)
 [![IMM](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/total?cache=false)](https://imm.endjin.com/api/imm/github/corvus-dotnet/Corvus.Testing/total?cache=false)
