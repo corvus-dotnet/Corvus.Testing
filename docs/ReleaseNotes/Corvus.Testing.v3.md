@@ -1,5 +1,10 @@
 # Release notes for Corvus.Testing v3.
 
+## v3.2
+
+Upgrade Microsoft.NET.Test.Sdk to Version 17.11.1.
+Update Azure.Functions packages to latest versions.
+
 ## v3.1
 
 Added Linux support.
