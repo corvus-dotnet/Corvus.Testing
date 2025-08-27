@@ -66,9 +66,10 @@ namespace Corvus.Testing.AzureFunctions
                     return Directory.EnumerateDirectories(parent).FirstOrDefault(fullFolderPath => Path.GetFileName(fullFolderPath).Equals(child, StringComparison.InvariantCultureIgnoreCase));
                 }
 
-                string? projectFolder = GetChildFolderCaseInsensitive(candidate.FullName, pathFragment);
+                // assume pathFragment is in the correct case
+                string? projectFolder = Path.Combine(candidate.FullName, pathFragment);
 
-                if (projectFolder is not null)
+                if (Directory.Exists(projectFolder))
                 {
                     string? binFolder = GetChildFolderCaseInsensitive(projectFolder, "bin");
                     if (binFolder is not null)
